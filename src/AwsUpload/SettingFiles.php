@@ -22,7 +22,7 @@ class SettingFiles
      *
      * @return array
      */
-    public function getList()
+    public static function getList()
     {
         $path = SettingFolder::getPath();
         $files = scandir($path);
@@ -41,7 +41,7 @@ class SettingFiles
      *
      * @return array
      */
-    public function getObject($key)
+    public static function getObject($key)
     {
         $path = SettingFolder::getPath();
 
