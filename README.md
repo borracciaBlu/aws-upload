@@ -1,27 +1,13 @@
 
 # aws-upload
-Script to upload on aws using rsync.
 [![Build Status](https://travis-ci.org/borracciaBlu/aws-upload.svg?branch=master)](https://travis-ci.org/borracciaBlu/aws-upload)
-[![Turbo Commit](https://img.shields.io/badge/Turbo_Commit-on-3DD1F2.svg)](https://github.com/labs-js/turbo-git/blob/master/README.md)
+[![Turbo Commit](https://img.shields.io/badge/Turbo_Commit-on-3DD1F2.svg)](https://github.com/labs-js/turbo-git/blob/master/README.md)  
+A delicious CLI Tool for uploading files to ec2.
 
 ## How to install the script
 
     cp ~/aws-upload.php /usr/bin/aws-upload
     chmod +x /usr/bin/aws-upload
-
-## How to install the oh-my-zsh plugin
-
-Assuming that you have already oh-my-zsh installed.
-
-###Copy the plugin:
-
-    mkdir ~/.oh-my-zsh/plugins/aws-upload/
-    cp aws-upload.plugin.zsh ~/.oh-my-zsh/plugins/aws-upload/aws-upload.plugin.zsh
-    
-###Enable the plugin:
-
-    vim ~/.zshrc 
-    plugins=(history grunt laravel laravel5 git composer tmuxinator aws-upload)
 
 ## How to generate a project file
 

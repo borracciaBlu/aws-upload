@@ -1,6 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 0.1.0 - 2017-03-06
+### Changed
+- README.md removed aws-upload.plugin.zsh
+
+### Fixed  
+- Fixed phpunit.xml.dist .travis.yml
+
 ## 0.0.3 - 2017-03-06
 ### Added  
 - Added .travis.yml phpunit.xml.dist
