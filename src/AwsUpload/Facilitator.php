@@ -85,7 +85,7 @@ EOT;
 <y>Miscellaneous Options:</y>
 
    <g>-h|--help</g>                 Prints this usage information.
-   <g>--version</g>                 Prints the version and exits.
+   <g>-V|--version</g>                 Prints the version and exits.
 
 Configuration Options:
 

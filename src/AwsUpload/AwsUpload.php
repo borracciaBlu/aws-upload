@@ -78,6 +78,10 @@ class AwsUpload
             $this->cmdHelp();
         }
 
+        if ($this->args['version']) {
+            $this->cmdVersion();
+        }
+
         if ($this->args['projs']) {
             $this->cmdProjs();
         }
@@ -91,7 +95,9 @@ class AwsUpload
 
             $this->cmdUpload($proj, $env);
         } else {
-            echo 'wow';
+            Facilitator::banner();
+            Facilitator::version();
+            $this->cmdHelp();
         }
 
     }
@@ -108,6 +114,17 @@ class AwsUpload
         if ($this->is_verbose) {
             echo $text . "\n\n";
         }
+    }
+
+    /**
+     * Method used to print the version.
+     *
+     * @return void
+     */
+    public function cmdVersion()
+    {
+        Facilitator::version();
+        exit(0);
     }
 
     /**
