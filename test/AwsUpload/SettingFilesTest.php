@@ -17,7 +17,7 @@ class SettingFilesTest extends BaseTestCase
 
     public function testGetListOneFile()
     {
-    	$filesystem = new Filesystem();
+        $filesystem = new Filesystem();
         $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{}');
 
         $list = SettingFiles::getList();
@@ -27,7 +27,7 @@ class SettingFilesTest extends BaseTestCase
 
     public function testGetListMoreFiles()
     {
-    	$filesystem = new Filesystem();
+        $filesystem = new Filesystem();
         $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{}');
         $filesystem->dumpFile($this->directory . '/project-1.prod.json', '{}');
         $filesystem->dumpFile($this->directory . '/project-1.staging.json', '{}');
@@ -39,7 +39,7 @@ class SettingFilesTest extends BaseTestCase
 
     public function testGetObject()
     {
-    	$filesystem = new Filesystem();
+        $filesystem = new Filesystem();
         $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{"pem": "", "local":"", "remote":"", "exclude":[""]}');
 
         $settings = SettingFiles::getObject('project-1.dev');
@@ -94,5 +94,4 @@ class SettingFilesTest extends BaseTestCase
         $this->assertEquals(['project-1', 'project-2'], $projs);
         $this->assertEquals(['dev'], $envs);
     }
-
-} 
+}

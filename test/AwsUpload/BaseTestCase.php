@@ -34,5 +34,4 @@ abstract class BaseTestCase extends TestCase
         $filesystem = new Filesystem();
         $filesystem->remove($this->directory);
     }
-
-} 
+}

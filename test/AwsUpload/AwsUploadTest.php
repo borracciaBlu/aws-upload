@@ -53,5 +53,4 @@ class AwsUploadTest extends BaseTestCase
 
         $this->assertEquals('project-1 project-2', $projs);
     }
-
-} 
+}

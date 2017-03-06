@@ -34,8 +34,8 @@ class AwsUpload
 
     /**
      * Initializes the command.
-     * 
-     * The main purpose is to define the args for the script 
+     *
+     * The main purpose is to define the args for the script
      * and populate `$thhis->args`.
      */
     public function __construct()
@@ -99,7 +99,6 @@ class AwsUpload
             Facilitator::version();
             $this->cmdHelp();
         }
-
     }
 
     /**
@@ -205,10 +204,10 @@ class AwsUpload
      *     1 - get [$proj].[$env].json file
      *     2 - convert the file to an obj
      *     3 - run rsync with the details in the obj
-     * 
+     *
      * @param string $proj It defines the project you want to upload.
      * @parma string $env  It defines the environment you want to upload to.
-     * 
+     *
      * @return void
      */
     public function cmdUpload($proj, $env)
@@ -235,7 +234,7 @@ class AwsUpload
     /**
      * Method to check if there are spare wild arguments to use as
      * input to select the project and the environment.
-     * 
+     *
      * @return boolean
      */
     public function hasWildArgs()
@@ -248,10 +247,10 @@ class AwsUpload
 
     /**
      * Get the wild argument.
-     * 
+     *
      * The case is when someone is typing:
-     *     aws-upload proj env 
-     * 
+     *     aws-upload proj env
+     *
      * @return array
      */
     public function getWildArgs()
@@ -270,5 +269,4 @@ class AwsUpload
 
         return $args;
     }
-
 }

@@ -23,7 +23,9 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit --colors=always test/AwsUpload"
+        "test": "vendor/bin/phpunit --colors=always test/AwsUpload",
+        "cs": "phpcs --standard=PSR2 src/AwsUpload",
+        "cbf": "phpcbf --standard=PSR2 src/AwsUpload"
     },
     "bin": ["aws-upload"]
 }

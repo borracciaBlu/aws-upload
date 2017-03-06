@@ -26,8 +26,9 @@ class SettingFolder
         $userDir = getenv($userEnv);
 
         if (!$userDir) {
-            throw new RuntimeException('The '. $userEnv
-                .' or AWSUPLOAD_HOME environment variable must be set for aws-upload to run correctly');
+            $msg = 'The '. $userEnv .' or AWSUPLOAD_HOME environment variable '.
+                   'must be set for aws-upload to run correctly';
+            throw new RuntimeException($msg);
         }
 
         return rtrim(strtr($userDir, '\\', '/'), '/');
@@ -67,10 +68,8 @@ class SettingFolder
 
         if (!is_dir($home)) {
             if (!mkdir($home, 0777, true)) {
-                throw new RuntimeException(sprintf(
-                    'Unable to create aws-upload home directory "%s"',
-                    $home
-                ));
+                $msg = 'Unable to create aws-upload home directory "%s"';
+                throw new RuntimeException(sprintf($msg, $home));
             }
         }
 

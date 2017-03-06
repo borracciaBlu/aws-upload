@@ -22,13 +22,13 @@ class Facilitator
      * MAJOR version when you make incompatible API changes,
      * MINOR version when you add functionality in a backwards-compatible manner, and
      * PATCH version when you make backwards-compatible bug fixes.
-     * 
+     *
      * @see http://semver.org/
      * @var string VERSION
      */
     const VERISON = '0.0.1';
 
-    static public function color($text)
+    public static function color($text)
     {
         $text = str_replace("<r>", "\e[31m", $text);
         $text = str_replace("</r>", "\e[30", $text);
@@ -45,7 +45,7 @@ class Facilitator
      *
      * @return  void
      */
-    static public function banner()
+    public static function banner()
     {
         $banner = <<<EOT
                                        _                 _ 
@@ -61,17 +61,17 @@ EOT;
         echo self::color("<g>".$banner."</g>");
     }
 
-    static public function version()
+    public static function version()
     {
         $msg = "<g>aws-upload</g> version <y>" . self::VERISON . "</y> \n";
-        echo self::color($msg); 
+        echo self::color($msg);
     }
 
 
     /**
      * Show the help message.
      */
-    static public function help()
+    public static function help()
     {
         $msg = <<<EOT
 <y>Usage:</y>
@@ -100,7 +100,7 @@ Configuration Options:
   --generate-configuration  Generate configuration file with suggested settings.
 
 EOT;
-        echo self::color($msg); 
+        echo self::color($msg);
     }
 
 
@@ -128,10 +128,11 @@ EOT;
         foreach ($projs as $proj) {
             $next .= "  +  \e[32m" . $proj . "\e[0m\n";
         }
-//             homebrew/php/php70-v8js                      homebrew/php/php71-yaml
-// homebrew/php/php70-xdebug                    homebrew/php/php71
-// To install one of them, run (for example):
-//   brew install homebrew/php/php70-amqp
+
+        //             homebrew/php/php70-v8js                      homebrew/php/php71-yaml
+        // homebrew/php/php70-xdebug                    homebrew/php/php71
+        // To install one of them, run (for example):
+        //   brew install homebrew/php/php70-amqp
 
         echo $msg . $next . "\n";
         exit(0);

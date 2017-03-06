@@ -14,5 +14,4 @@ class SettingFolderTest extends BaseTestCase
 
         $this->assertEquals($this->directory, $home);
     }
-
-} 
+}
