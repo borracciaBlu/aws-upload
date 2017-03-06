@@ -26,7 +26,7 @@ class Facilitator
      * @see http://semver.org/
      * @var string VERSION
      */
-    const VERISON = '0.0.2';
+    const VERISON = '0.0.3';
 
     public static function color($text)
     {
