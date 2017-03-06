@@ -12,18 +12,19 @@
 
 namespace AwsUpload;
 
+use AwsUpload\Facilitator;
 use AwsUpload\SettingFolder;
 
 class SettingFiles
 {
     /**
-     * Returns the location of the user directory from the environment
+     * Returns the list or setting files in the aws-upload folder.
      *
      * @return array
      */
-    function getList()
+    public function getList()
     {
-        $home = SettingFolder::getPath();
+        $path = SettingFolder::getPath();
         $files = scandir($path);
 
         // clean . and ..
@@ -33,13 +34,73 @@ class SettingFiles
         return $files;
     }
 
-    function getObject($key)
+    /**
+     * Returns the list or setting files in the aws-upload folder.
+     *
+     * @param string $key The setting file identifier.
+     *
+     * @return array
+     */
+    public function getObject($key)
     {
-        $home = SettingFolder::getPath();
+        $path = SettingFolder::getPath();
 
-        $string = file_get_contents($home . '/' . $key . '.json');
-        $settings = (object) json_decode($string, true);
+        $content = file_get_contents($path . '/' . $key . '.json');
+        $settings = (object) json_decode($content, true);
 
         return $settings;
+    }
+
+    /**
+     * Method used to get the projects available.
+     *
+     * @return array
+     */
+    public static function getProjs()
+    {
+        $files = SettingFiles::getList();
+
+        $projs = [];
+        foreach ($files as $key) {
+            list($proj, $env, $ext) = explode(".", $key);
+
+            if (!in_array($proj, $projs)) {
+                $projs[] = $proj;
+            }
+        }
+
+        return $projs;
+    }
+
+    /**
+     * Method used to print the environments available for a project.
+     *
+     * @param string $projFilter The project for which we want the envs.
+     *
+     * @return array | string
+     */
+    public static function getEnvs($projFilter)
+    {
+        $files = SettingFiles::getList();
+        $store = array();
+        foreach ($files as $filename) {
+            list($proj, $env, $ext) = explode(".", $filename);
+
+            if (!isset($store[$proj])) {
+                $store[$proj] = array();
+            }
+
+            $store[$proj][] = $env;
+        }
+
+        $envs    = array();
+        $envsRaw = isset($store[$projFilter]) ? $store[$projFilter] : array();
+        foreach ($envsRaw as $env) {
+            if (!in_array($env, $envs)) {
+                $envs[] = $env;
+            }
+        }
+
+        return $envs;
     }
 }

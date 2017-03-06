@@ -1,0 +1,9 @@
+#!/usr/bin/php
+<?php
+
+require __DIR__.'/../vendor/autoload.php';
+
+use AwsUpload\AwsUpload;
+
+$aws = new AwsUpload();
+$aws->run();
