@@ -14,9 +14,34 @@ namespace AwsUpload;
 
 class Rsync
 {
+    /**
+     * It contains the text version of the command to run.
+     * 
+     * @var string
+     */
     public $cmd;
+
+    /**
+     * It containg the settings object
+     *
+     * Eg:
+     * { pem , exclude, remote, local }
+     * 
+     * @var object
+     */
     public $settings;
 
+    /**
+     * Method to initiate the rsync settings object
+     *
+     * The setting object is a object version of one of the files in the
+     * aws-upload folder.
+     *
+     * @see  SettingFiles::getObjcet($key)
+     *
+     * @param  object $setting The object version of one of the 
+     *                         files in the aws-upload dir.
+     */
     public function __construct($settings)
     {
         if (empty($settings)) {
@@ -31,7 +56,11 @@ class Rsync
         $this->cmd = $this->buildCmd();
     }
 
-
+    /**
+     * Method to build the rsync command from the settings object
+     *
+     * @return string The rsync command. 
+     */
     public function buildCmd()
     {
         $settings = $this->settings;
@@ -42,13 +71,18 @@ class Rsync
                 $cmd .= " --exclude " . $elem . " ";
             }
         }
-        $cmd .= " --exclude .DS_Store ";
 
+        $cmd .= " --exclude .DS_Store ";
         $cmd .= $settings->local . " " . $settings->remote . "";
 
         return $cmd;
     }
 
+    /**
+     * Method to run the rsync command
+     *
+     * @return void
+     */
     public function run()
     {
         $escaped_command = $this->cmd;
