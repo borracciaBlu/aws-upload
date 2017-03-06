@@ -14,8 +14,11 @@
     bootstrap = "vendor/autoload.php" >
 
   <testsuites>
-    <testsuite name="Project Test Suite">
-      <directory>test</directory>
+    <testsuite name="aws-uploa Test Suite" >
+            <!-- <directory>./tests/AwsUpload/</directory> -->
+      <file>./test/AwsUpload/SettingFilesTest.php</file>
+      <file>./test/AwsUpload/SettingFolderTest.php</file>
+      <file>./test/AwsUpload/AwsUploadTest.php </file>
     </testsuite>
   </testsuites>
 
