@@ -1,13 +1,13 @@
 
 # aws-upload
-[![Build Status](https://travis-ci.org/borracciaBlu/aws-upload.svg?branch=master)](https://travis-ci.org/borracciaBlu/aws-upload)
-[![Turbo Commit](https://img.shields.io/badge/Turbo_Commit-on-3DD1F2.svg)](https://github.com/labs-js/turbo-git/blob/master/README.md)  
 A delicious CLI Tool for uploading files to ec2.
 
-## How to install the script
+[![Build Status](https://travis-ci.org/borracciaBlu/aws-upload.svg?branch=master)](https://travis-ci.org/borracciaBlu/aws-upload)
+[![Turbo Commit](https://img.shields.io/badge/Turbo_Commit-on-3DD1F2.svg)](https://github.com/labs-js/turbo-git/blob/master/README.md)  
 
-    cp ~/aws-upload.php /usr/bin/aws-upload
-    chmod +x /usr/bin/aws-upload
+## How to install
+
+    composer require global "aws-upload/aws-upload"
 
 ## How to generate a project file
 
