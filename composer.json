@@ -2,6 +2,14 @@
     "name": "aws-upload/aws-upload",
     "description": "aws-upload - A delicious CLI Tool for uploading files to ec2",
     "keywords": ["rsync","upload", "aws", "cli", "ec2"],
+    "homepage": "https://github.com/borracciaBlu/aws-upload",
+    "authors": [
+        {
+            "name": "Marco Buttini",
+            "email": "marco.asdman@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",    
     "license": "MIT",
     "type": "library",
     "require": {
