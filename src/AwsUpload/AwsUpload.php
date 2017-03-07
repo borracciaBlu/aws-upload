@@ -19,6 +19,18 @@ use AwsUpload\SettingFiles;
 class AwsUpload
 {
     /**
+     * Given a version number MAJOR.MINOR.PATCH, increment the:
+     *
+     * MAJOR version when you make incompatible API changes,
+     * MINOR version when you add functionality in a backwards-compatible manner, and
+     * PATCH version when you make backwards-compatible bug fixes.
+     *
+     * @see http://semver.org/
+     * @var string VERSION
+     */
+    public $verison;
+
+    /**
      * It defines if the class is running under phpunit.
      *
      * The issue is all the time we have exit(0) becuase it kills the
@@ -48,8 +60,10 @@ class AwsUpload
      * The main purpose is to define the args for the script
      * and populate `$thhis->args`.
      */
-    public function __construct()
+    public function __construct($verison = 'test')
     {
+        $this->version = $verison;
+
         $strict = in_array('--strict', $_SERVER['argv']);
         $arguments = new Arguments(compact('strict'));
 
@@ -106,7 +120,7 @@ class AwsUpload
             $this->cmdUpload($proj, $env);
         } else {
             Facilitator::banner();
-            Facilitator::version();
+            Facilitator::version($this->version);
             $this->cmdHelp();
         }
     }
@@ -114,7 +128,7 @@ class AwsUpload
     /**
      * Method used to avoid the issue in testing caused by exit(0)
      *
-     * It does need is_phpunit as true for working properly.
+     * It does $this->versionneed is_phpunit as true for working properly.
      *
      * @param string $status The code we want the script to exit.
      *
@@ -150,7 +164,7 @@ class AwsUpload
      */
     public function cmdVersion()
     {
-        Facilitator::version();
+        Facilitator::version($this->version);
         $this->graceExit(0);
     }
 

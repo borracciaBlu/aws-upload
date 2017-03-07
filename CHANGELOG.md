@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 1.0.3 - 2017-03-07
+### Changed
+- Fixed issues installation on packagist   
+- Added version on construct 
+- README.md update installation
+
 ## 0.1.2 - 2017-03-07
 ### Changed
 - Improved tests for AwsUpload, Facilitator, Rsync   
