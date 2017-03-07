@@ -16,7 +16,7 @@ class Rsync
 {
     /**
      * It contains the text version of the command to run.
-     * 
+     *
      * @var string
      */
     public $cmd;
@@ -26,7 +26,7 @@ class Rsync
      *
      * Eg:
      * { pem , exclude, remote, local }
-     * 
+     *
      * @var object
      */
     public $settings;
@@ -37,19 +37,15 @@ class Rsync
      * The setting object is a object version of one of the files in the
      * aws-upload folder.
      *
-     * @see  SettingFiles::getObjcet($key)
+     * @see SettingFiles::getObjcet($key)
      *
-     * @param  object $setting The object version of one of the 
-     *                         files in the aws-upload dir.
+     * @param object $setting The object version of one of the
+     *                        files in the aws-upload dir.
      */
     public function __construct($settings)
     {
-        if (empty($settings)) {
-            throw new Exception("You MUST provide a settings object as parameter", 1);
-        }
-
         if (!is_object($settings)) {
-            throw new Exception("Settings has to be an objec", 1);
+            throw new \Exception("Settings has to be an objec", 1);
         }
 
         $this->settings = $settings;
@@ -59,7 +55,7 @@ class Rsync
     /**
      * Method to build the rsync command from the settings object
      *
-     * @return string The rsync command. 
+     * @return string The rsync command.
      */
     public function buildCmd()
     {

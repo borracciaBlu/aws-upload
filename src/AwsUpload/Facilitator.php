@@ -28,10 +28,24 @@ class Facilitator
      */
     const VERISON = '0.1.0';
 
+    /**
+     * Method to color the bash output.
+     *
+     * The method is going to replace some custom tags with the equivalent
+     * color in bash.
+     *
+     * Eg:
+     *     <r> -> \e[31m
+     *     <g> -> \e[32m
+     *     <y> -> \e[33m
+     *
+     * @param string $text The text to parse and inject with the colors.
+     * @return string
+     */
     public static function color($text)
     {
         $text = str_replace("<r>", "\e[31m", $text);
-        $text = str_replace("</r>", "\e[30", $text);
+        $text = str_replace("</r>", "\e[0m", $text);
         $text = str_replace("<g>", "\e[32m", $text);
         $text = str_replace("</g>", "\e[0m", $text);
         $text = str_replace('<y>', "\e[33m", $text);
@@ -41,7 +55,7 @@ class Facilitator
     }
 
     /**
-     * Show the help message.
+     * Method to echo the aws-upload banner.
      *
      * @return  void
      */
@@ -61,15 +75,21 @@ EOT;
         echo self::color("<g>".$banner."</g>");
     }
 
+    /**
+     * Method to echo the current version.
+     *
+     * @return void
+     */
     public static function version()
     {
         $msg = "<g>aws-upload</g> version <y>" . self::VERISON . "</y> \n";
         echo self::color($msg);
     }
 
-
     /**
-     * Show the help message.
+     * Method to echo the help message.
+     *
+     * @return void
      */
     public static function help()
     {
@@ -103,38 +123,39 @@ EOT;
         echo self::color($msg);
     }
 
-
+    /**
+     * Method to echo the help message about no project.
+     *
+     * @return void
+     */
     public static function onNoProjects()
     {
         $msg = "It seems that you don't have any project setup." . "\n\n";
 
         echo $msg;
-        exit(0);
     }
 
     /**
-     * Error rised when the project selected doesn't exist.
+     * Method to echo the help message about when the project
+     * selected doesn't exist.
      *
-     * @param string $projFilter the project name.
+     * @param string $projFilter The project name.
      *
      * @return void
      */
     public static function onGetEnvsForProj($projFilter)
     {
         $projs = SettingFiles::getProjs();
-        $msg = "The project \e[31m". $projFilter ."\e[0m you are tring to use doesn't exist." . "\n\n";
+        $msg = "The project <r>". $projFilter ."</r> you are tring to use doesn't exist." . "\n\n";
 
         $next = "These are the available projects: \n\n" ;
         foreach ($projs as $proj) {
-            $next .= "  +  \e[32m" . $proj . "\e[0m\n";
+            $next .= "  +  <g>" . $proj . "</g>\n";
         }
 
-        //             homebrew/php/php70-v8js                      homebrew/php/php71-yaml
-        // homebrew/php/php70-xdebug                    homebrew/php/php71
-        // To install one of them, run (for example):
-        //   brew install homebrew/php/php70-amqp
+        $next .= "\nTo get the envs from one of them, run (for example):\n\n" .
+                 "   aws-upload -e " . $projs[0] . "\n";
 
-        echo $msg . $next . "\n";
-        exit(0);
+        echo self::color($msg . $next . "\n");
     }
 }

@@ -55,7 +55,7 @@ class SettingFilesTest extends BaseTestCase
         $this->assertEquals([], $projs);
     }
 
-    public function testGetProjs_OneFile()
+    public function testGetProjsOneFile()
     {
         $filesystem = new Filesystem();
         $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{}');
@@ -67,7 +67,7 @@ class SettingFilesTest extends BaseTestCase
         $this->assertEquals(['dev'], $envs);
     }
 
-    public function testGetProjs_tMoreFilesSameProj()
+    public function testGetProjsMoreFilesSameProj()
     {
         $filesystem = new Filesystem();
         $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{}');
@@ -81,7 +81,7 @@ class SettingFilesTest extends BaseTestCase
         $this->assertEquals(['dev', 'prod', 'staging'], $envs);
     }
     
-    public function testGetProjs_MoreFilesDiffProj()
+    public function testGetProjsMoreFilesDiffProj()
     {
         $filesystem = new Filesystem();
         $filesystem->dumpFile($this->directory . '/project-2.dev.json', '{}');

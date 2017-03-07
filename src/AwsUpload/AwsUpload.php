@@ -19,6 +19,16 @@ use AwsUpload\SettingFiles;
 class AwsUpload
 {
     /**
+     * It defines if the class is running under phpunit.
+     *
+     * The issue is all the time we have exit(0) becuase it kills the
+     * execution of phpunit.
+     *
+     * @var bool
+     */
+    public $is_phpunit = false;
+
+    /**
      * It containst to arguments passed to the shell script.
      *
      * @var array
@@ -102,6 +112,24 @@ class AwsUpload
     }
 
     /**
+     * Method used to avoid the issue in testing caused by exit(0)
+     *
+     * It does need is_phpunit as true for working properly.
+     *
+     * @param string $status The code we want the script to exit.
+     *
+     * @return int | exit
+     */
+    public function graceExit($status)
+    {
+        if ($this->is_phpunit) {
+            return $status;
+        }
+
+        exit(0);
+    }
+
+    /**
      * Method used to print additional text with the flag verbose.
      *
      * @param string $text
@@ -123,7 +151,7 @@ class AwsUpload
     public function cmdVersion()
     {
         Facilitator::version();
-        exit(0);
+        $this->graceExit(0);
     }
 
     /**
@@ -135,7 +163,7 @@ class AwsUpload
     {
         Facilitator::help();
         echo "\n\n";
-        exit(0);
+        $this->graceExit(0);
     }
 
     /**
@@ -157,12 +185,14 @@ class AwsUpload
         $projs = SettingFiles::getProjs();
         if (count($projs) === 0 && ! $quiet) {
             Facilitator::onNoProjects();
+            $this->graceExit(0);
+            return;
         }
 
         $projs = implode(' ', $projs);
 
         echo $projs . "\n";
-        exit(0);
+        $this->graceExit(0);
     }
 
     /**
@@ -184,18 +214,21 @@ class AwsUpload
         $projs = SettingFiles::getProjs();
         if (count($projs) === 0 && ! $quiet) {
             Facilitator::onNoProjects();
+            $this->graceExit(0);
+            return;
         }
 
         $envs = SettingFiles::getEnvs($projFilter);
         if (count($envs) === 0 && ! $quiet) {
             Facilitator::onGetEnvsForProj($projFilter);
+            $this->graceExit(0);
+            return;
         }
         $envs = implode(' ', $envs);
 
         echo $envs . "\n";
-        exit(0);
+        $this->graceExit(0);
     }
-
 
     /**
      * Method to run the rsync cmd.
@@ -225,7 +258,7 @@ class AwsUpload
 
         if ($this->args['simulate']) {
             echo 'Simulation mode' . "\n";
-            exit(0);
+            $this->graceExit(0);
         }
 
         $rsync->run();
