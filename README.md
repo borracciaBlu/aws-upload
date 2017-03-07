@@ -8,7 +8,7 @@ A delicious CLI Tool for uploading files to ec2.
 
 ## How to install
 
-    composer require global "aws-upload/aws-upload"
+    composer global require aws-upload/aws-upload
 
 ## How to generate a project file
 
