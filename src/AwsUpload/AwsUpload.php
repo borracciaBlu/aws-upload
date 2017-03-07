@@ -314,6 +314,6 @@ class AwsUpload
             }
         }
 
-        return $args;
+        return array_values($args);
     }
 }
