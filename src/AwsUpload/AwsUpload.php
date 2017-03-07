@@ -28,7 +28,7 @@ class AwsUpload
      * @see http://semver.org/
      * @var string VERSION
      */
-    public $verison;
+    public $version;
 
     /**
      * It defines if the class is running under phpunit.

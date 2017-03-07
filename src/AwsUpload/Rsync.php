@@ -39,8 +39,8 @@ class Rsync
      *
      * @see SettingFiles::getObjcet($key)
      *
-     * @param object $setting The object version of one of the
-     *                        files in the aws-upload dir.
+     * @param object $settings The object version of one of the
+     *                         files in the aws-upload dir.
      */
     public function __construct($settings)
     {
