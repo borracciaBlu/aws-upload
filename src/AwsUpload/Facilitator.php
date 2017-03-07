@@ -26,7 +26,7 @@ class Facilitator
      * @see http://semver.org/
      * @var string VERSION
      */
-    const VERISON = '0.1.0';
+    const VERISON = '0.1.2';
 
     /**
      * Method to color the bash output.

@@ -3,6 +3,7 @@
 A delicious CLI Tool for uploading files to ec2.
 
 [![Build Status](https://travis-ci.org/borracciaBlu/aws-upload.svg?branch=master)](https://travis-ci.org/borracciaBlu/aws-upload)
+[![Latest Stable Version](https://poser.pugx.org/aws-upload/aws-upload/version)](https://packagist.org/packages/aws-upload/aws-upload)
 [![Turbo Commit](https://img.shields.io/badge/Turbo_Commit-on-3DD1F2.svg)](https://github.com/labs-js/turbo-git/blob/master/README.md)  
 
 ## How to install

@@ -1,9 +1,15 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## 0.1.0 - 2017-03-06
+## 0.1.2 - 2017-03-07
 ### Changed
-- README.md removed aws-upload.plugin.zsh
+- Improved tests for AwsUpload, Facilitator, Rsync   
+- Added graceExit() for phpunit  
+- README.md removed aws-upload.plugin.zsh  
+
+## 0.1.0 - 2017-03-06  
+### Changed  
+- README.md removed aws-upload.plugin.zsh  
 
 ### Fixed  
 - Fixed phpunit.xml.dist .travis.yml

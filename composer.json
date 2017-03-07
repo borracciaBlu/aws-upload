@@ -1,7 +1,7 @@
 {
     "name": "aws-upload/aws-upload",
-    "description": "aws-upload is a CLI Tool to manage rsync",
-    "keywords": ["rsync","upload"],
+    "description": "aws-upload - A delicious CLI Tool for uploading files to ec2",
+    "keywords": ["rsync","upload", "aws", "cli", "ec2"],
     "license": "MIT",
     "type": "library",
     "require": {
