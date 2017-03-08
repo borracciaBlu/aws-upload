@@ -1,6 +1,6 @@
 <?php
 /**
- * aws-upload - aws-upload is a CLI Tool to manage rsync
+ * aws-upload - 🌈 A delicious CLI Tool for uploading files to ec2
  *
  * This source file is subject to the MIT license that is bundled
  * with this package in the file LICENSE.
@@ -13,6 +13,7 @@
 namespace AwsUpload;
 
 use cli\Arguments;
+use AwsUpload\Check;
 use AwsUpload\Rsync;
 use AwsUpload\SettingFiles;
 
@@ -260,6 +261,11 @@ class AwsUpload
     public function cmdUpload($proj, $env)
     {
         $key = $proj . "." . $env;
+        if (!Check::fileExists($key)) {
+            Facilitator::onNoFileFound($proj, $env);
+            $this->graceExit(0);
+        }
+
         $settings = SettingFiles::getObject($key);
         $rsync = new Rsync($settings);
 
@@ -307,7 +313,7 @@ class AwsUpload
         // remove script name
         unset($args[0]);
 
-        $toDelete = array('-v', '--verbose', '--simulate');
+        $toDelete = array('-v', '--verbose', '--simulate', '-q', '--quiet');
         foreach ($args as $key => $arg) {
             if (in_array($arg, $toDelete)) {
                 unset($args[$key]);

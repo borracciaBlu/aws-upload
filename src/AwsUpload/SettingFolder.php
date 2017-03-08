@@ -1,6 +1,6 @@
 <?php
 /**
- * aws-upload - aws-upload is a CLI Tool to manage rsync
+ * aws-upload - 🌈 A delicious CLI Tool for uploading files to ec2
  *
  * This source file is subject to the MIT license that is bundled
  * with this package in the file LICENSE.

@@ -1,6 +1,6 @@
 <?php
 /**
- * aws-upload - aws-upload is a CLI Tool to manage rsync
+ * aws-upload - 🌈 A delicious CLI Tool for uploading files to ec2
  *
  * This source file is subject to the MIT license that is bundled
  * with this package in the file LICENSE.
@@ -25,11 +25,24 @@ class SettingFiles
     public static function getList()
     {
         $path = SettingFolder::getPath();
-        $files = scandir($path);
+        $items = scandir($path);
 
         // clean . and ..
-        unset($files[0]);
-        unset($files[1]);
+        unset($items[0]);
+        unset($items[1]);
+
+        $files = array();
+        foreach ($items as $key => $item) {
+            if (is_dir($path . "/" . $item)) {
+                continue;
+            }
+
+            if (strpos($item, ".json") === false) {
+                continue;
+            }
+
+            $files[] = $item;
+        }
 
         return $files;
     }

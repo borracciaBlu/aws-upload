@@ -1,6 +1,6 @@
 <?php
 /**
- * aws-upload - aws-upload is a CLI Tool to manage rsync
+ * aws-upload - 🌈 A delicious CLI Tool for uploading files to ec2
  *
  * This source file is subject to the MIT license that is bundled
  * with this package in the file LICENSE.
@@ -12,6 +12,7 @@
 
 namespace AwsUpload;
 
+use cli\Table;
 use AwsUpload\SettingFiles;
 
 class Facilitator
@@ -112,7 +113,9 @@ EOT;
      */
     public static function onNoProjects()
     {
-        $msg = "It seems that you don't have any project setup." . "\n\n";
+        $msg = "It seems that you don't have any project setup.\n"
+             // . "Try to type: aws-upload new\n"
+             . "\n";
 
         echo $msg;
     }
@@ -139,5 +142,47 @@ EOT;
                  "   aws-upload -e " . $projs[0] . "\n";
 
         echo self::color($msg . $next . "\n");
+    }
+
+    /**
+     * Method to echo the help message about when the pair project
+     * environment doesn't exist.
+     *
+     * So actually, we check that project.env.json it does exist
+     * otherwise we print this message.
+     *
+     * @param string $project The project name.
+     * @param string $env     The env name.
+     *
+     * @return void
+     */
+    public static function onNoFileFound($project, $env)
+    {
+        $msg = "It seems that there is <r>NO</r> setting files for <y>" . $project
+              ."</y>, <y>" . $env ."</y>\n";
+        echo self::color($msg . "\n");
+
+        $files = SettingFiles::getList();
+        if (count($files) === 0) {
+            self::onNoProjects();
+            return;
+        }
+
+        $headers = array('Project', 'Environment');
+        $data = array();
+        foreach ($files as $file) {
+            list($proj, $env, $ext) = explode(".", $file);
+            $proj = self::color("<g>" . $proj . "</g>");
+            $env = self::color("<g>" . $env . "</g>");
+            
+            $data[] = array($proj, $env);
+        }
+
+        $table = new Table();
+        $table->setHeaders($headers);
+        $table->setRows($data);
+        $table->display();
+
+        echo "\n";
     }
 }

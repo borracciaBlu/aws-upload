@@ -1,6 +1,19 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 1.0.5 - 2017-03-08
+### Changed
+- Updated all the initial doc block in each file 
+
+### Fixed
+- Fixed SettingFiles::getList() to exclude folders from the returned array
+- Fixed AwsUpload::getWildArgs() to avoid collisions with -q and --quiet  
+
+## 1.0.4 - 2017-03-07
+### Fixed
+- Fixed position of the bin script from bin to root. `mv bin/aws-upload aws-upload` .
+- Fixed in `aws-upload` the way to import `autoload.php` 
+
 ## 1.0.3 - 2017-03-07
 ### Changed
 - Fixed issues installation on packagist   

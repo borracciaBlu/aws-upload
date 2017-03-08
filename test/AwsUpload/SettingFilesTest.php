@@ -73,6 +73,7 @@ class SettingFilesTest extends BaseTestCase
         $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{}');
         $filesystem->dumpFile($this->directory . '/project-1.prod.json', '{}');
         $filesystem->dumpFile($this->directory . '/project-1.staging.json', '{}');
+        $filesystem->dumpFile($this->directory . '/old/project-2.staging.json', '{}');
 
         $projs = SettingFiles::getProjs();
         $envs = SettingFiles::getEnvs('project-1');
