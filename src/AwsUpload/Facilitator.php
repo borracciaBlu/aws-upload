@@ -84,18 +84,19 @@ EOT;
     public static function help()
     {
         $msg = <<<EOT
+        
 <y>Usage:</y>
   aws-upload [options] [project] [environment]
 
 <y>Output Options:</y>
 
-  <g>-v|--verbose</g>              Output more verbose information.
-  <g>-q|--quiet</g>                Checks that version is greater than min and exits.
+  <g>-v|--verbose</g>                Output more verbose information.
+  <g>-q|--quiet</g>                  Checks that version is greater than min and exits.
 
 <y>Miscellaneous Options:</y>
 
-   <g>-h|--help</g>                 Prints this usage information.
-   <g>-V|--version</g>              Prints the version and exits.
+   <g>-h|--help</g>                  Prints this usage information.
+   <g>-V|--version</g>               Prints the version and exits.
 
 <y>Configuration Options:</y>
 

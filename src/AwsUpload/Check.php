@@ -23,7 +23,7 @@ class Check
      *
      * @return bool
      */
-    public function fileExists($key)
+    public static function fileExists($key)
     {
         $path = SettingFolder::getPath();
 
