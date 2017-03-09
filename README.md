@@ -13,6 +13,9 @@ A delicious CLI Tool for uploading files to ec2.
 ## Add Super Powers
 
 ## Demo
+<p align="center">
+  <img src="https://cloud.githubusercontent.com/assets/2061731/23747869/51d51c6e-0515-11e7-9a72-25d134380d1f.gif" alt="aws-upload Demo"/>
+</p>
 
 ## How it works?
 
