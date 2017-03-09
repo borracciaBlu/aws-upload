@@ -6,16 +6,14 @@ A delicious CLI Tool for uploading files to ec2.
 [![Latest Stable Version](https://poser.pugx.org/aws-upload/aws-upload/version)](https://packagist.org/packages/aws-upload/aws-upload)
 [![Turbo Commit](https://img.shields.io/badge/Turbo_Commit-on-3DD1F2.svg)](https://github.com/labs-js/turbo-git/blob/master/README.md)  
 
+<p align="center">
+  <img src="https://cloud.githubusercontent.com/assets/2061731/23747869/51d51c6e-0515-11e7-9a72-25d134380d1f.gif" alt="aws-upload Demo"/>
+</p>
+
 ## How to install
 
     composer global require aws-upload/aws-upload
 
-## Add Super Powers
-
-## Demo
-<p align="center">
-  <img src="https://cloud.githubusercontent.com/assets/2061731/23747869/51d51c6e-0515-11e7-9a72-25d134380d1f.gif" alt="aws-upload Demo"/>
-</p>
 
 ## How it works?
 
@@ -55,6 +53,7 @@ Some cases of files and command.
 ### The setting file content
 This is the structure of a setting file. As you can see there are 4 main parts: `pem`, `local`, `remote`, `exclude`.
 
+```json
     {
         "pem" : "/home/keys/your-key.pem",
         "local" : "/var/www/project/*",
@@ -67,7 +66,7 @@ This is the structure of a setting file. As you can see there are 4 main parts: 
             "node_modules/"
         ]
     }
-    
+```
  
 **pem** | *string*:  it contains the path to your pem key.  
 **local** | *string*: it contains the path to the directory you want to upload to your ec2 server.  
