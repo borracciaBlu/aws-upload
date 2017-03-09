@@ -1,6 +1,16 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 1.0.6 - 2017-03-09
+### Added
+- Added demo in README.md
+- Added What?, Why?, Why Not?,  
+- Added test for Check
+
+### Fixed
+- Check::fileExists as static
+- help output, fixed allign
+
 ## 1.0.5 - 2017-03-08
 ### Changed
 - Updated all the initial doc block in each file 
