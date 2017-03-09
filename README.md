@@ -10,18 +10,28 @@ A delicious CLI Tool for uploading files to ec2.
   <img src="https://cloud.githubusercontent.com/assets/2061731/23747869/51d51c6e-0515-11e7-9a72-25d134380d1f.gif" alt="aws-upload Demo"/>
 </p>
 
+## What?
+aws-upload allow you to rapid upload files from cli in an efficient way (tnx rsync).
+You define a setting file for your project, and then you have just to tab.
+aws-upload will let compress and upload only the files you change it. You can even setup different environments for the same project.
+
+## Why?
+If you have a lot of small projects with different environments, without a proper deployment system, and you don't want to remember all the time the rsync cmd (or worst manually upload using FileZilla), aws-upload is definitely for you.
+
+## Why not?
+If you are playing with a huge project, you should have a proper deployment automation in place, maybe with some CI system. 
+
 ## How to install
 
     composer global require aws-upload/aws-upload
-
 
 ## How it works?
 
 All the times you'll type `aws-upload [project] [env]`, `aws-upload` will:
 
 1 - check if in `~/.aws-upload/` you have a setting file called `project.env.json`  
-2 - read the settings stored in it  
-3 - upload the files for you  
+2 - read the settings from it  
+3 - upload the files for you through rsync/ssh  
 
 ## The Setting File
 
