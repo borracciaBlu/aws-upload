@@ -83,7 +83,17 @@ class AwsUpload
             )
         );
 
+        // collect all the errors rised by cli\Arguments
+        // [cli\Arguments] no value given for -e
+        // /vendor/wp-cli/php-cli-tools/lib/cli/Arguments.php:433
+        // /vendor/wp-cli/php-cli-tools/lib/cli/Arguments.php:465
+        // /vendor/wp-cli/php-cli-tools/lib/cli/Arguments.php:402
+        // /src/AwsUpload/AwsUpload.php:86
+        $errorHandler = function () {
+        };
+        set_error_handler($errorHandler);
         $arguments->parse();
+        restore_error_handler();
 
         $this->args = $arguments;
     }
