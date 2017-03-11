@@ -126,7 +126,8 @@ class AwsUpload
         }
 
         if ($this->hasWildArgs()) {
-            list($proj, $env) = $this->getWildArgs();
+            $items = $this->getWildArgs();
+            list($proj, $env) = $this->extractProjEnv($items);
 
             $this->cmdUpload($proj, $env);
         } else {
@@ -331,5 +332,29 @@ class AwsUpload
         }
 
         return array_values($args);
+    }
+
+    public function extractProjEnv($items)
+    {
+        $proj = 'no-project-given';
+        $env  = 'no-environment-given';
+
+        // reorder items in array
+        if (is_array($items)) {
+            $items = array_values($items);
+        }
+
+        if (count($items) === 1) {
+            if (strpos($items[0], '.') !== false) {
+                $items = explode('.', $items[0]);
+            }
+        }
+
+        if (count($items) === 2) {
+            $proj = $items[0];
+            $env  = $items[1];
+        }
+
+        return array($proj, $env);
     }
 }
