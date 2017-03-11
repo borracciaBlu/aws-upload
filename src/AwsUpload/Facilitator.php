@@ -29,6 +29,7 @@ class Facilitator
      *     <y> -> \e[33m
      *
      * @param string $text The text to parse and inject with the colors.
+     *
      * @return string
      */
     public static function color($text)
@@ -61,13 +62,14 @@ class Facilitator
                                 |_|                        
 
 EOT;
-        echo self::color("<g>".$banner."</g>");
+        echo self::color("<g>" . $banner . "</g>");
     }
 
     /**
      * Method to echo the current version.
      *
-     * @param  string $version The version.
+     * @param string $version The version.
+     *
      * @return void
      */
     public static function version($version)
@@ -114,9 +116,9 @@ EOT;
      */
     public static function onNoProjects()
     {
-        $msg = "It seems that you don't have any project setup.\n"
-             // . "Try to type: aws-upload new\n"
-             . "\n";
+        $msg = "It seems that you don't have any project setup.\n" .
+               // . "Try to type: aws-upload new\n"
+               "\n";
 
         echo $msg;
     }
@@ -132,9 +134,9 @@ EOT;
     public static function onGetEnvsForProj($projFilter)
     {
         $projs = SettingFiles::getProjs();
-        $msg = "The project <r>". $projFilter ."</r> you are tring to use doesn't exist." . "\n\n";
+        $msg = "The project <r>" . $projFilter . "</r> you are tring to use doesn't exist." . "\n\n";
 
-        $next = "These are the available projects: \n\n" ;
+        $next = "These are the available projects: \n\n";
         foreach ($projs as $proj) {
             $next .= "  +  <g>" . $proj . "</g>\n";
         }
@@ -159,8 +161,8 @@ EOT;
      */
     public static function onNoFileFound($project, $env)
     {
-        $msg = "It seems that there is <r>NO</r> setting files for <y>" . $project
-              ."</y>, <y>" . $env ."</y>\n";
+        $msg = "It seems that there is <r>NO</r> setting files for <y>" . $project .
+               "</y>, <y>" . $env . "</y>\n";
         echo self::color($msg . "\n");
 
         $files = SettingFiles::getList();

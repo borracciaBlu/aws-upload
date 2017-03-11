@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 1.1.0 - 2017-03-11
+### Added
+- Added ability to use double notation or key notation
+- error handle for cli/Arguments
+
 ## 1.0.6 - 2017-03-09
 ### Added
 - Added demo in README.md

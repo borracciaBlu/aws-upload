@@ -12,7 +12,6 @@
 
 namespace AwsUpload;
 
-use AwsUpload\Facilitator;
 use AwsUpload\SettingFolder;
 
 class SettingFiles

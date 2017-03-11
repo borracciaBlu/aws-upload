@@ -142,9 +142,9 @@ class AwsUpload
      *
      * It does $this->versionneed is_phpunit as true for working properly.
      *
-     * @param string $status The code we want the script to exit.
+     * @param int $status The code we want the script to exit.
      *
-     * @return int | exit
+     * @return int|void
      */
     public function graceExit($status)
     {
@@ -152,13 +152,13 @@ class AwsUpload
             return $status;
         }
 
-        exit(0);
+        exit($status);
     }
 
     /**
      * Method used to print additional text with the flag verbose.
      *
-     * @param string $text
+     * @param string $text The text to prin in verbose state
      *
      * @return void
      */
@@ -209,7 +209,7 @@ class AwsUpload
         $quiet = $this->args['quiet'];
 
         $projs = SettingFiles::getProjs();
-        if (count($projs) === 0 && ! $quiet) {
+        if (count($projs) === 0 && !$quiet) {
             Facilitator::onNoProjects();
             $this->graceExit(0);
             return;
@@ -238,14 +238,14 @@ class AwsUpload
         $projFilter = $this->args['envs'];
 
         $projs = SettingFiles::getProjs();
-        if (count($projs) === 0 && ! $quiet) {
+        if (count($projs) === 0 && !$quiet) {
             Facilitator::onNoProjects();
             $this->graceExit(0);
             return;
         }
 
         $envs = SettingFiles::getEnvs($projFilter);
-        if (count($envs) === 0 && ! $quiet) {
+        if (count($envs) === 0 && !$quiet) {
             Facilitator::onGetEnvsForProj($projFilter);
             $this->graceExit(0);
             return;
@@ -265,7 +265,7 @@ class AwsUpload
      *     3 - run rsync with the details in the obj
      *
      * @param string $proj It defines the project you want to upload.
-     * @parma string $env  It defines the environment you want to upload to.
+     * @param string $env  It defines the environment you want to upload to.
      *
      * @return void
      */
@@ -334,6 +334,17 @@ class AwsUpload
         return array_values($args);
     }
 
+    /**
+     * Method to extract the project and the environment from an array
+     *
+     * This method is to cover two cases:
+     * - aws-upload proj env // double notation
+     * - aws-upload proj.env // key notation
+     *
+     * @param array $items It contains all the extra args.
+     *
+     * @return array        The array will contain 2 elements in any case.
+     */
     public function extractProjEnv($items)
     {
         $proj = 'no-project-given';
