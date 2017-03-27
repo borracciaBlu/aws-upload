@@ -64,12 +64,12 @@ class Rsync
      
         if (isset($settings->exclude) && is_array($settings->exclude)) {
             foreach ($settings->exclude as $elem) {
-                $cmd .= " --exclude " . $elem . " ";
+                $cmd .= " --exclude " . escapeshellarg($elem) . " ";
             }
         }
 
         $cmd .= " --exclude .DS_Store ";
-        $cmd .= $settings->local . " " . $settings->remote . "";
+        $cmd .= $settings->local . " " . escapeshellarg($settings->remote);
 
         return $cmd;
     }

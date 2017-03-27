@@ -26,7 +26,7 @@ class SettingFolder
         $userDir = getenv($userEnv);
 
         if (!$userDir) {
-            $msg = 'The '. $userEnv .' or AWSUPLOAD_HOME environment variable '.
+            $msg = 'The ' . $userEnv . ' or AWSUPLOAD_HOME environment variable '.
                    'must be set for aws-upload to run correctly';
             throw new RuntimeException($msg);
         }
@@ -47,9 +47,9 @@ class SettingFolder
             $userDir = self::getUserDir();
 
             if (defined('PHP_WINDOWS_VERSION_MAJOR')) {
-                $home = $userDir.'/Aws-upload';
+                $home = $userDir . '/Aws-upload';
             } else {
-                $home = $userDir.'/.aws-upload';
+                $home = $userDir . '/.aws-upload';
             }
         }
 
