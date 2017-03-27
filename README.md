@@ -87,3 +87,11 @@ In particular [*user*]@[*host*]:[*remotePath*] where:
 - *user* is you user on your server. Possibles values [ec2-user, ubuntu]
 - *host* is your ec2 host name. Similar value [ec2-xxx-xxx-xxx-xxx.compute-1.amazonaws.com]  
 - *remotePath* is the folder you want to upload your project to. It's the folder on your server.
+
+## Enabling tab-completion
+
+In order to achieve the tab-completion like in the screen shot you have to install `aws-upload-zsh`.  
+`aws-upload-zsh` is the oh-my-zsh plugin to boost your productivity with `aws-upload`.  
+
+To install `aws-upload-zsh` follow the instructions [here](https://github.com/borracciaBlu/aws-upload-zsh).
+
