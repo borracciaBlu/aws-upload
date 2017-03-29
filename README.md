@@ -25,6 +25,14 @@ If you are playing with a huge project, you should have a proper deployment auto
 
     composer global require aws-upload/aws-upload
 
+
+## Enabling tab-completion
+
+In order to achieve the tab-completion like in the screen shot you have to install `aws-upload-zsh`.  
+`aws-upload-zsh` is the oh-my-zsh plugin to boost your productivity with `aws-upload`.  
+
+To install `aws-upload-zsh` follow the instructions [here](https://github.com/borracciaBlu/aws-upload-zsh).
+
 ## How it works?
 
 All the times you'll type `aws-upload [project] [env]`, `aws-upload` will:
@@ -39,6 +47,8 @@ The setting file name use the convetion `[project].[env].json` where:
 
  - *project* is the name of the project 
  - *env* is the environment
+
+The folder that contains all the setting files is `~/.aws-upload/`.
 
 ### Setting file name examples
 
@@ -87,11 +97,3 @@ In particular [*user*]@[*host*]:[*remotePath*] where:
 - *user* is you user on your server. Possibles values [ec2-user, ubuntu]
 - *host* is your ec2 host name. Similar value [ec2-xxx-xxx-xxx-xxx.compute-1.amazonaws.com]  
 - *remotePath* is the folder you want to upload your project to. It's the folder on your server.
-
-## Enabling tab-completion
-
-In order to achieve the tab-completion like in the screen shot you have to install `aws-upload-zsh`.  
-`aws-upload-zsh` is the oh-my-zsh plugin to boost your productivity with `aws-upload`.  
-
-To install `aws-upload-zsh` follow the instructions [here](https://github.com/borracciaBlu/aws-upload-zsh).
-
