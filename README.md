@@ -7,7 +7,7 @@ A delicious CLI Tool for uploading files to ec2.
 [![Turbo Commit](https://img.shields.io/badge/Turbo_Commit-on-3DD1F2.svg)](https://github.com/labs-js/turbo-git/blob/master/README.md)  
 
 <p align="center">
-  <img src="https://cloud.githubusercontent.com/assets/2061731/23747869/51d51c6e-0515-11e7-9a72-25d134380d1f.gif" alt="aws-upload Demo"/>
+  <img src="https://cloud.githubusercontent.com/assets/2061731/24436410/0e6f00c6-1487-11e7-9e79-dc6ecd5ab152.gif" alt="aws-upload Demo"/>
 </p>
 
 ## What?
