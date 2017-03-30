@@ -1,44 +1,55 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 1.1.1 - 2017-03-30
+### Added
+- escapeshellargs  
+
+### Changed
+- Improved `--help`: added description for `--simulate`
+- Improved instruction for `aws-upload-zsh`
+- Improved demo
+
 ## 1.1.0 - 2017-03-11
 ### Added
-- Added ability to use double notation or key notation
-- error handle for cli/Arguments
+- Ability to use double notation or key notation  
+- Error handle for cli/Arguments  
 
-## 1.0.6 - 2017-03-09
-### Added
-- Added demo in README.md
-- Added What?, Why?, Why Not?,  
-- Added test for Check
+## 1.0.6 - 2017-03-09  
+### Added  
+- Demo in README.md  
+- What?, Why?, Why Not?,    
+- Test for Check  
 
 ### Fixed
 - Check::fileExists as static
-- help output, fixed allign
+- Help output, fixed allign
 
 ## 1.0.5 - 2017-03-08
 ### Changed
 - Updated all the initial doc block in each file 
 
 ### Fixed
-- Fixed SettingFiles::getList() to exclude folders from the returned array
-- Fixed AwsUpload::getWildArgs() to avoid collisions with -q and --quiet  
+- Fix SettingFiles::getList() to exclude folders from the returned array
+- Fix AwsUpload::getWildArgs() to avoid collisions with -q and --quiet  
 
 ## 1.0.4 - 2017-03-07
 ### Fixed
-- Fixed position of the bin script from bin to root. `mv bin/aws-upload aws-upload` .
-- Fixed in `aws-upload` the way to import `autoload.php` 
+- Fix position of the bin script from bin to root. `mv bin/aws-upload aws-upload` .
+- Fix in `aws-upload` the way to import `autoload.php` 
 
 ## 1.0.3 - 2017-03-07
 ### Changed
-- Fixed issues installation on packagist   
-- Added version on construct 
+- Fix issues installation on packagist   
+- Version on construct 
 - README.md update installation
 
 ## 0.1.2 - 2017-03-07
+### Added 
+- graceExit() for phpunit  
+
 ### Changed
 - Improved tests for AwsUpload, Facilitator, Rsync   
-- Added graceExit() for phpunit  
 - README.md removed aws-upload.plugin.zsh  
 
 ## 0.1.0 - 2017-03-06  
