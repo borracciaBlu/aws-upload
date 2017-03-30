@@ -94,6 +94,7 @@ EOT;
 
   <g>-v|--verbose</g>                Output more verbose information.
   <g>-q|--quiet</g>                  Checks that version is greater than min and exits.
+  <g>--simulate</g>                  It simulates the rsync command without upload anything.
 
 <y>Miscellaneous Options:</y>
 
