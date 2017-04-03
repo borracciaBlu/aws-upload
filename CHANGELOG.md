@@ -1,6 +1,14 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 1.1.2 - 2017-04-03
+### Added
+- Output to manage colors, exit, stdout
+
+### Changed
+- Now Facilitator contains only che text for each message  
+- Cleanup AwsUpload::run
+
 ## 1.1.1 - 2017-03-30
 ### Added
 - escapeshellargs  

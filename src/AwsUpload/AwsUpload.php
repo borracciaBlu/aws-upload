@@ -15,6 +15,7 @@ namespace AwsUpload;
 use cli\Arguments;
 use AwsUpload\Check;
 use AwsUpload\Rsync;
+use AwsUpload\Output;
 use AwsUpload\SettingFiles;
 
 class AwsUpload
@@ -42,6 +43,13 @@ class AwsUpload
     public $is_phpunit = false;
 
     /**
+     * It define if aws-upload has to print additional info.
+     *
+     * @var bool
+     */
+    protected $is_verbose = false;
+
+    /**
      * It containst to arguments passed to the shell script.
      *
      * @var array
@@ -49,11 +57,11 @@ class AwsUpload
     protected $args;
 
     /**
-     * It define if aws-upload has to print additional info.
+     * It containst output class to manage the script output.
      *
-     * @var bool
+     * @var Output
      */
-    protected $is_verbose = false;
+    protected $out;
 
     /**
      * Initializes the command.
@@ -63,6 +71,7 @@ class AwsUpload
      */
     public function __construct($verison = 'test')
     {
+
         $this->version = $verison;
 
         $strict = in_array('--strict', $_SERVER['argv']);
@@ -96,6 +105,7 @@ class AwsUpload
         restore_error_handler();
 
         $this->args = $arguments;
+        $this->out = new Output();
     }
 
     /**
@@ -126,44 +136,36 @@ class AwsUpload
         }
 
         if ($this->hasWildArgs()) {
-            $items = $this->getWildArgs();
-            list($proj, $env) = $this->extractProjEnv($items);
-
-            $this->cmdUpload($proj, $env);
+            $this->cmdUpload();
         } else {
             $this->cmdFullInfo();
         }
     }
 
-    /**
-     * Method used to avoid the issue in testing caused by exit(0)
-     *
-     * It does $this->versionneed is_phpunit as true for working properly.
-     *
-     * @param int $status The code we want the script to exit.
-     *
-     * @return int|void
-     */
-    public function graceExit($status)
+    public function display($msg, $status)
     {
-        if ($this->is_phpunit) {
-            return $status;
-        }
+        $this->out->is_phpunit = $this->is_phpunit;
+        $this->out->render($msg);
+        $this->out->graceExit($status);
+    }
 
-        exit($status);
+    public function inline($msg)
+    {
+        $this->out->is_phpunit = $this->is_phpunit;
+        $this->out->render($msg);
     }
 
     /**
      * Method used to print additional text with the flag verbose.
      *
-     * @param string $text The text to prin in verbose state
+     * @param string $msg The text to print in verbose state
      *
      * @return void
      */
-    public function verbose($text)
+    public function verbose($msg)
     {
         if ($this->is_verbose) {
-            echo $text . "\n\n";
+            $this->inline($msg . "\n\n");
         }
     }
 
@@ -174,8 +176,9 @@ class AwsUpload
      */
     public function cmdVersion()
     {
-        Facilitator::version($this->version);
-        $this->graceExit(0);
+        $msg = Facilitator::version($this->version);
+
+        $this->display($msg, 0);
     }
 
     /**
@@ -185,9 +188,9 @@ class AwsUpload
      */
     public function cmdHelp()
     {
-        Facilitator::help();
-        echo "\n\n";
-        $this->graceExit(0);
+        $msg = Facilitator::help();
+
+        $this->display($msg, 0);
     }
 
     /**
@@ -201,11 +204,11 @@ class AwsUpload
      */
     public function cmdFullInfo()
     {
-        Facilitator::banner();
-        Facilitator::version($this->version);    
-        Facilitator::help();
-        echo "\n\n";
-        $this->graceExit(0);
+        $msg = Facilitator::banner();
+        $msg .= Facilitator::version($this->version);
+        $msg .= Facilitator::help();
+
+        $this->display($msg, 0);
     }
 
     /**
@@ -223,18 +226,19 @@ class AwsUpload
     public function cmdProjs()
     {
         $quiet = $this->args['quiet'];
-
         $projs = SettingFiles::getProjs();
+
         if (count($projs) === 0 && !$quiet) {
-            Facilitator::onNoProjects();
-            $this->graceExit(0);
+            $msg = Facilitator::onNoProjects();
+
+            $this->display($msg, 0);
             return;
         }
 
         $projs = implode(' ', $projs);
+        $msg = $projs . "\n";
 
-        echo $projs . "\n";
-        $this->graceExit(0);
+        $this->display($msg, 0);
     }
 
     /**
@@ -255,21 +259,24 @@ class AwsUpload
 
         $projs = SettingFiles::getProjs();
         if (count($projs) === 0 && !$quiet) {
-            Facilitator::onNoProjects();
-            $this->graceExit(0);
+            $msg = Facilitator::onNoProjects();
+
+            $this->display($msg, 0);
             return;
         }
 
         $envs = SettingFiles::getEnvs($projFilter);
         if (count($envs) === 0 && !$quiet) {
-            Facilitator::onGetEnvsForProj($projFilter);
-            $this->graceExit(0);
+            $msg = Facilitator::onGetEnvsForProj($projFilter);
+
+            $this->display($msg, 0);
             return;
         }
-        $envs = implode(' ', $envs);
 
-        echo $envs . "\n";
-        $this->graceExit(0);
+        $envs = implode(' ', $envs);
+        $msg = $envs . "\n";
+
+        $this->display($msg, 0);
     }
 
     /**
@@ -285,27 +292,30 @@ class AwsUpload
      *
      * @return void
      */
-    public function cmdUpload($proj, $env)
+    public function cmdUpload()
     {
+        $items = $this->getWildArgs();
+        list($proj, $env) = $this->extractProjEnv($items);
+
         $key = $proj . "." . $env;
         if (!Check::fileExists($key)) {
-            Facilitator::onNoFileFound($proj, $env);
-            $this->graceExit(0);
+            $msg = Facilitator::onNoFileFound($proj, $env);
+            
+            $this->display($msg, 0);
+            return;
         }
 
         $settings = SettingFiles::getObject($key);
         $rsync = new Rsync($settings);
 
-        echo "=================================" . "\n";
-        echo "Proj: " . escapeshellarg($proj) . "\n";
-        echo "Env: " . escapeshellarg($env) . "\n";
-        echo "Cmd: " . "\n";
-        echo $rsync->cmd . "\n";
-        echo "=================================" . "\n";
+        $msg = Facilitator::rsyncBanner($proj, $env, $rsync->cmd);
+        $this->inline($msg);
 
         if ($this->args['simulate']) {
-            echo 'Simulation mode' . "\n";
-            $this->graceExit(0);
+            $msg = 'Simulation mode' . "\n";
+
+            $this->display($msg, 0);
+            return;
         }
 
         $rsync->run();
@@ -359,7 +369,7 @@ class AwsUpload
      *
      * @param array $items It contains all the extra args.
      *
-     * @return array        The array will contain 2 elements in any case.
+     * @return array       The array will contain 2 elements in any case.
      */
     public function extractProjEnv($items)
     {

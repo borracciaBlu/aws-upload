@@ -13,37 +13,11 @@
 namespace AwsUpload;
 
 use cli\Table;
+use AwsUpload\Output;
 use AwsUpload\SettingFiles;
 
 class Facilitator
 {
-    /**
-     * Method to color the bash output.
-     *
-     * The method is going to replace some custom tags with the equivalent
-     * color in bash.
-     *
-     * Eg:
-     *     <r> -> \e[31m
-     *     <g> -> \e[32m
-     *     <y> -> \e[33m
-     *
-     * @param string $text The text to parse and inject with the colors.
-     *
-     * @return string
-     */
-    public static function color($text)
-    {
-        $text = str_replace("<r>", "\e[31m", $text);
-        $text = str_replace("</r>", "\e[0m", $text);
-        $text = str_replace("<g>", "\e[32m", $text);
-        $text = str_replace("</g>", "\e[0m", $text);
-        $text = str_replace('<y>', "\e[33m", $text);
-        $text = str_replace('</y>', "\e[0m", $text);
-
-        return  "$text";
-    }
-
     /**
      * Method to echo the aws-upload banner.
      *
@@ -62,7 +36,7 @@ class Facilitator
                                 |_|                        
 
 EOT;
-        echo self::color("<g>" . $banner . "</g>");
+        return "<g>" . $banner . "</g>";
     }
 
     /**
@@ -75,7 +49,7 @@ EOT;
     public static function version($version)
     {
         $msg = "<g>aws-upload</g> version <y>" . $version . "</y> \n";
-        echo self::color($msg);
+        return $msg;
     }
 
     /**
@@ -106,8 +80,26 @@ EOT;
    <g>-p|--projs</g>                 Print all the projects.
    <g>-e|--envs <proj></g>           Print all the environments for a specific project.
 
+
 EOT;
-        echo self::color($msg);
+        return $msg;
+    }
+
+    public static function rsyncBanner($proj, $env, $cmd)
+    {
+        $proj = escapeshellarg($proj);
+        $env = escapeshellarg($env);
+
+        $msg = <<<EOT
+=================================
+Proj:  $proj
+Env: $env
+Cmd:
+$cmd
+=================================
+
+EOT;
+        return $msg;
     }
 
     /**
@@ -121,7 +113,7 @@ EOT;
                // . "Try to type: aws-upload new\n"
                "\n";
 
-        echo $msg;
+        return $msg;
     }
 
     /**
@@ -145,7 +137,7 @@ EOT;
         $next .= "\nTo get the envs from one of them, run (for example):\n\n" .
                  "   aws-upload -e " . $projs[0] . "\n";
 
-        echo self::color($msg . $next . "\n");
+        return $msg . $next . "\n";
     }
 
     /**
@@ -163,12 +155,11 @@ EOT;
     public static function onNoFileFound($project, $env)
     {
         $msg = "It seems that there is <r>NO</r> setting files for <y>" . $project .
-               "</y>, <y>" . $env . "</y>\n";
-        echo self::color($msg . "\n");
+               "</y>, <y>" . $env . "</y>\n\n";
 
         $files = SettingFiles::getList();
         if (count($files) === 0) {
-            self::onNoProjects();
+            static::onNoProjects();
             return;
         }
 
@@ -176,8 +167,8 @@ EOT;
         $data = array();
         foreach ($files as $file) {
             list($proj, $env, $ext) = explode(".", $file);
-            $proj = self::color("<g>" . $proj . "</g>");
-            $env = self::color("<g>" . $env . "</g>");
+            $proj = Output::color("<g>" . $proj . "</g>");
+            $env = Output::color("<g>" . $env . "</g>");
             
             $data[] = array($proj, $env);
         }
@@ -185,8 +176,11 @@ EOT;
         $table = new Table();
         $table->setHeaders($headers);
         $table->setRows($data);
-        $table->display();
 
-        echo "\n";
+        foreach ($table->getDisplayLines() as $key => $line) {
+            $msg .= $line . "\n";
+        }
+
+        return $msg;
     }
 }

@@ -9,5 +9,5 @@ if (file_exists(__DIR__.'/../../autoload.php')) {
 
 use AwsUpload\AwsUpload;
 
-$aws = new AwsUpload('1.1.1');
+$aws = new AwsUpload('1.1.2');
 $aws->run();
