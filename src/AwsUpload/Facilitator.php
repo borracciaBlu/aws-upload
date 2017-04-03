@@ -21,7 +21,7 @@ class Facilitator
     /**
      * Method to echo the aws-upload banner.
      *
-     * @return  void
+     * @return string
      */
     public static function banner()
     {
@@ -44,7 +44,7 @@ EOT;
      *
      * @param string $version The version.
      *
-     * @return void
+     * @return string
      */
     public static function version($version)
     {
@@ -55,7 +55,7 @@ EOT;
     /**
      * Method to echo the help message.
      *
-     * @return void
+     * @return string
      */
     public static function help()
     {
@@ -85,6 +85,15 @@ EOT;
         return $msg;
     }
 
+    /**
+     * Method to echo the aws-upload banner.
+     *
+     * @param string $proj The project name.
+     * @param string $env  The env name.
+     * @param string $cmd  The rsync cmd.
+     *
+     * @return string
+     */
     public static function rsyncBanner($proj, $env, $cmd)
     {
         $proj = escapeshellarg($proj);
@@ -105,7 +114,7 @@ EOT;
     /**
      * Method to echo the help message about no project.
      *
-     * @return void
+     * @return string
      */
     public static function onNoProjects()
     {
@@ -122,7 +131,7 @@ EOT;
      *
      * @param string $projFilter The project name.
      *
-     * @return void
+     * @return string
      */
     public static function onGetEnvsForProj($projFilter)
     {
@@ -150,7 +159,7 @@ EOT;
      * @param string $project The project name.
      * @param string $env     The env name.
      *
-     * @return void
+     * @return string
      */
     public static function onNoFileFound($project, $env)
     {

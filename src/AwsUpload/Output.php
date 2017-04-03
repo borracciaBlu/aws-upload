@@ -82,7 +82,6 @@ class Output
      */
     public function render($text)
     {
-        $text = $text;
         $text = $this->color($text);
 
         if ($this->is_phpunit) {

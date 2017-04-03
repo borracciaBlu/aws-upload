@@ -142,6 +142,17 @@ class AwsUpload
         }
     }
 
+    /**
+     * Method to wrap render and graceExit.
+     *
+     * The main idea is to setup the system to print with exit
+     * and be ready for phpunit.
+     *
+     * @param string|null $msg
+     * @param integer $status
+     *
+     * @return  void
+     */
     public function display($msg, $status)
     {
         $this->out->is_phpunit = $this->is_phpunit;
@@ -149,6 +160,16 @@ class AwsUpload
         $this->out->graceExit($status);
     }
 
+    /**
+     * Method to wrap render and graceExit.
+     *
+     * The main idea is to setup the system to print and be ready
+     * for phpunit.
+     *
+     * @param string|null $msg
+     *
+     * @return  void
+     */
     public function inline($msg)
     {
         $this->out->is_phpunit = $this->is_phpunit;
@@ -286,9 +307,6 @@ class AwsUpload
      *     1 - get [$proj].[$env].json file
      *     2 - convert the file to an obj
      *     3 - run rsync with the details in the obj
-     *
-     * @param string $proj It defines the project you want to upload.
-     * @param string $env  It defines the environment you want to upload to.
      *
      * @return void
      */
