@@ -131,9 +131,7 @@ class AwsUpload
 
             $this->cmdUpload($proj, $env);
         } else {
-            Facilitator::banner();
-            Facilitator::version($this->version);
-            $this->cmdHelp();
+            $this->cmdFullInfo();
         }
     }
 
@@ -187,6 +185,24 @@ class AwsUpload
      */
     public function cmdHelp()
     {
+        Facilitator::help();
+        echo "\n\n";
+        $this->graceExit(0);
+    }
+
+    /**
+     * Method used to print the full aws-upload info.
+     *
+     * -  banner
+     * -  version
+     * -  help
+     *
+     * @return void
+     */
+    public function cmdFullInfo()
+    {
+        Facilitator::banner();
+        Facilitator::version($this->version);    
         Facilitator::help();
         echo "\n\n";
         $this->graceExit(0);

@@ -9,6 +9,9 @@ require_once __DIR__ . '/BaseTestCase.php';
 class AwsUploadTest extends BaseTestCase
 {
 
+    /**
+     * Check cmdProj with no projects
+     */
     public function testCmdProjsExpectedNoProjectMsg()
     {
         $this->expectOutputString("It seems that you don't have any project setup.\n\n");
