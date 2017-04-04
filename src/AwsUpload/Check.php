@@ -29,4 +29,24 @@ class Check
 
         return file_exists($path . '/' . $key . '.json');
     }
+
+    /**
+     * Method to check if a give key is valid.
+     *
+     * The rules are:
+     * - only one .
+     *
+     * @param string $key The setting file name without the extenion.
+     *
+     * @return bool
+     */
+    public static function isValidKey($key)
+    {
+        $isValid = false;
+
+        $parts = explode('.', $key);
+        $isValid = (count($parts) === 2);
+
+        return $isValid;
+    }
 }

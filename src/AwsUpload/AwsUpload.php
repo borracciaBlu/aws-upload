@@ -91,6 +91,13 @@ class AwsUpload
                 'description' => 'Print all the environments'
             )
         );
+        $arguments->addOption(
+            array('new', 'n'),
+            array(
+                'default'     => '',
+                'description' => 'Create a new setting file'
+            )
+        );
 
         // collect all the errors rised by cli\Arguments
         // [cli\Arguments] no value given for -e
@@ -133,6 +140,10 @@ class AwsUpload
 
         if ($this->args['envs']) {
             $this->cmdEnvs();
+        }
+
+        if ($this->args['new']) {
+            $this->cmdNew();
         }
 
         if ($this->hasWildArgs()) {
@@ -298,6 +309,37 @@ class AwsUpload
         $msg = $envs . "\n";
 
         $this->display($msg, 0);
+    }
+
+    public function cmdNew()
+    {
+        $key = $this->args['new'];
+        if (empty($key)) {
+            $msg = Facilitator::onNoProjects();
+
+            $this->display($msg, 0);
+            return;
+        }
+
+        if (!Check::isValidKey($key)) {
+            $msg = Facilitator::onNoValidKey($key);
+
+            $this->display($msg, 0);
+            return;
+        }
+
+        if (Check::fileExists($key)) {
+            $msg = Facilitator::onKeyAlreadyExists($key);
+
+            $this->display($msg, 0);
+            return;
+        }
+
+        SettingFiles::create($key);
+        $msg = Facilitator::onNewSettingFileSuccess($key);
+
+        $this->display($msg, 0);
+        return;
     }
 
     /**

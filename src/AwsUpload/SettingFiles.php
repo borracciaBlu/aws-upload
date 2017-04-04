@@ -115,4 +115,21 @@ class SettingFiles
 
         return $envs;
     }
+
+    public static function create($key)
+    {
+        $template = "{\n"
+                  . '   "pem": "/home/ssh/key.pem",' . "\n"
+                  . '   "local": "/home/project/*",' . "\n"
+                  . '   "remote": "ubuntu@xxx.xxx.xxx.xxx:/var/www/project",' . "\n"
+                  . '   "exclude": [' . "\n"
+                  . '       ".env",' . "\n"
+                  . '       ".git/",' . "\n"
+                  . '       "node_modules"' . "\n"
+                  . '   ]' . "\n"
+                  . "}\n";
+        $path = SettingFolder::getPath();
+
+        file_put_contents($path . '/' . $key . '.json', $template);
+    }
 }

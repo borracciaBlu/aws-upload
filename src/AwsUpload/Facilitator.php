@@ -15,6 +15,7 @@ namespace AwsUpload;
 use cli\Table;
 use AwsUpload\Output;
 use AwsUpload\SettingFiles;
+use AwsUpload\SettingFolder;
 
 class Facilitator
 {
@@ -79,6 +80,7 @@ EOT;
 
    <g>-p|--projs</g>                 Print all the projects.
    <g>-e|--envs <proj></g>           Print all the environments for a specific project.
+   <g>-n|--new <proj>.<env></g>      Create a new setting file.
 
 
 EOT;
@@ -118,9 +120,9 @@ EOT;
      */
     public static function onNoProjects()
     {
-        $msg = "It seems that you don't have any project setup.\n" .
-               // . "Try to type: aws-upload new\n"
-               "\n";
+        $msg = "It seems that you don't have any project setup.\nTry to type:\n\n"
+             . "    <g>aws-upload new project.test</g>\n"
+             . "\n";
 
         return $msg;
     }
@@ -163,14 +165,83 @@ EOT;
      */
     public static function onNoFileFound($project, $env)
     {
+        $files = SettingFiles::getList();
+        if (count($files) === 0) {
+            $msg = static::onNoProjects();
+            return $msg;
+        }
+
         $msg = "It seems that there is <r>NO</r> setting files for <y>" . $project .
                "</y>, <y>" . $env . "</y>\n\n";
 
+        $msg .= static::getProjEnvTable();
+
+        return $msg;
+    }
+
+    /**
+     * Method support if in AwsUpload::new the key is not valid.
+     *
+     * @param string $key The key prompted.
+     *
+     * @return string
+     */
+    public static function onNoValidKey($key)
+    {
+        $msg = "It seems that the key <y>" . $key . "</y> is not valid:\n\n"
+             . "Please try to use this format:\n"
+             . "    - [project].[environmet]\n\n"
+             . "Examples of valid key to create a new setting file:\n"
+             . "    - <g>my-site.staging</g>\n"
+             . "    - <g>my-site.dev</g>\n"
+             . "    - <g>my-site.prod</g>\n\n"
+             . "Tips on choosing the key name:\n"
+             . "    - for [project] and [environmet] try to be: short, sweet, to the point\n"
+             . "    - use only one 'dot' . in the name\n"
+             . "\n";
+        return $msg;
+    }
+
+    /**
+     * Method to support if in AwsUpload::new the key already exists.
+     *
+     * @param string $key E.g: proj.env
+     *
+     * @return string
+     */
+    public static function onKeyAlreadyExists($key)
+    {
+        $msg = "It seems that the key <y>" . $key . "</y> already exists try to use another one.\n\n"
+             . "Please consider you already have the following elements:\n"
+             . static::getProjEnvTable()
+             . "\n";
+        return $msg;
+    }
+
+    /**
+     * Method to support if when AwsUpload::new is successfull.
+     *
+     * @param string $key E.g: proj.env
+     *
+     * @return string
+     */
+    public static function onNewSettingFileSuccess($key)
+    {
+        $msg = "The setting file <y>" . $key . ".json</y> has been created succesfully.\n\n"
+             . "To edit the file type:\n"
+             . "    vim " . SettingFolder::getPath() . "/" . $key . ".json\n"
+             . "\n";
+        return $msg;
+    }
+
+    /**
+     * Method to get the proj/env table.
+     *
+     * @return string
+     */
+    public static function getProjEnvTable()
+    {
         $files = SettingFiles::getList();
-        if (count($files) === 0) {
-            static::onNoProjects();
-            return;
-        }
 
         $headers = array('Project', 'Environment');
         $data = array();
@@ -186,6 +257,7 @@ EOT;
         $table->setHeaders($headers);
         $table->setRows($data);
 
+        $msg = '';
         foreach ($table->getDisplayLines() as $key => $line) {
             $msg .= $line . "\n";
         }

@@ -12,16 +12,18 @@ class AwsUploadTest extends BaseTestCase
     /**
      * Check cmdProj with no projects
      */
-    public function testCmdProjsExpectedNoProjectMsg()
+    public function test_cmdProjs_noProjects_expectedNoProjectMsg()
     {
-        $this->expectOutputString("It seems that you don't have any project setup.\n\n");
+        $this->expectOutputString("It seems that you don't have any project setup.\nTry to type:\n\n"
+             . "    \e[32maws-upload new project.test\e[0m\n"
+             . "\n");
 
         $aws = new AwsUpload();
         $aws->is_phpunit = true;
         $projs = $aws->cmdProjs();
     }
 
-    public function testCmdProjsOneFileExpectedProjName()
+    public function test_cmdProjs_oneFile_expectedProjName()
     {
         $this->expectOutputString("project-1\n");
         
@@ -33,7 +35,7 @@ class AwsUploadTest extends BaseTestCase
         $projs = $aws->cmdProjs();
     }
 
-    public function testCmdProjsMoreFilesSameProjExpectedProjName()
+    public function test_cmdProjs_moreFilesSameProj_expectedProjName()
     {
         $this->expectOutputString("project-1\n");
 
@@ -47,7 +49,7 @@ class AwsUploadTest extends BaseTestCase
         $projs = $aws->cmdProjs();
     }
     
-    public function testCmdProjsMoreFilesDiffProjExpectedProjsName()
+    public function test_cmdProjs_moreFilesDiffProj_expectedProjsName()
     {
         $this->expectOutputString("project-1 project-2\n");
 
@@ -61,10 +63,12 @@ class AwsUploadTest extends BaseTestCase
         $projs = $aws->cmdProjs();
     }
 
-    public function testCmdEnvExpectedNoProjectMsg()
+    public function test_cmdEnvs_noProjects_expectedNoProjectMsg()
     {
-        $this->expectOutputString("It seems that you don't have any project setup.\n\n");
-        
+        $this->expectOutputString("It seems that you don't have any project setup.\nTry to type:\n\n"
+             . "    \e[32maws-upload new project.test\e[0m\n"
+             . "\n");
+
         self::clearArgv();
         self::pushToArgv(array('asd.php', '-e', 'proj-3'));
 
@@ -73,7 +77,7 @@ class AwsUploadTest extends BaseTestCase
         $projs = $aws->cmdEnvs();
     }
 
-    public function testCmdEnvMoreFilesSameProjExpectedProposeAlternative()
+    public function test_cmdEnvs_moreFilesSameProj_expectedProposeAlternative()
     {
         $this->expectOutputString("The project \e[31mproj-3\e[0m you are tring to use doesn't exist.
 
@@ -128,7 +132,7 @@ To get the envs from one of them, run (for example):
         $_SERVER['argc'] += count($args);
     }
 
-    public function testHasWildArgsBasic()
+    public function test_hasWildArgs_noArgs_false()
     {
         self::clearArgv();
         self::pushToArgv(array('asd.php'));
@@ -138,7 +142,7 @@ To get the envs from one of them, run (for example):
         $this->assertEquals(false, $hasWildArgs);
     }
 
-    public function testHasWildArgsBasicWithNoise()
+    public function test_hasWildArgs_noise_false()
     {
     
         self::clearArgv();
@@ -149,7 +153,7 @@ To get the envs from one of them, run (for example):
         $this->assertEquals(false, $hasWildArgs);
     }
 
-    public function testHasWildArgsBasicWithNoisePositive()
+    public function test_hasWildArgs_yesWithNoise_true()
     {
         self::clearArgv();
         self::pushToArgv(array('asd.php', 'proj', 'env', '-v', '--verbose', '--simulate'));
