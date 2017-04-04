@@ -8,23 +8,24 @@ require_once __DIR__ . '/BaseTestCase.php';
 class RsyncTest extends BaseTestCase
 {
 
-    public function testRsyncNoObjString()
+    public function test_new_string_exception()
     {
         $this->expectException(Exception::class);
         $rsync = new Rsync('');
     }
 
-    public function testRsyncNoObjArray()
+    public function test_new_array_exception()
     {
         $this->expectException(Exception::class);
         $rsync = new Rsync(array());
     }
 
-    public function testRsyncCorrect()
+    public function test_buildCmd_object_true()
     {
-        $cmd = 'rsync -ravze "ssh -i /Users/jhon.doe/Documents/certificates/site.pem"  --exclude .env  '
-             . '--exclude .git/  --exclude .DS_Store /Users/jhon.doe/Documents/w/html/ '
-             . 'ec2-user@ec2-xx-xx-xx-xx.ap-southeast-2.compute.amazonaws.com:/var/www/html/site';
+        $cmd = 'rsync -ravze "ssh -i /Users/jhon.doe/Documents/certificates/site.pem"  --exclude \'.env\'  '
+             . '--exclude \'.git/\'  --exclude .DS_Store /Users/jhon.doe/Documents/w/html/ '
+             . '\'ec2-user@ec2-xx-xx-xx-xx.ap-southeast-2.compute.amazonaws.com:/var/www/html/site\'';
+
         $setting = (object) array(
             "pem" => "/Users/jhon.doe/Documents/certificates/site.pem",
             "local" => "/Users/jhon.doe/Documents/w/html/",

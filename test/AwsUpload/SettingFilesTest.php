@@ -8,14 +8,14 @@ require_once __DIR__ . '/BaseTestCase.php';
 class SettingFilesTest extends BaseTestCase
 {
 
-    public function testGetListNoFiles()
+    public function test_getList_noFiles_true()
     {
         $list = SettingFiles::getList();
 
         $this->assertCount(0, $list);
     }
 
-    public function testGetListOneFile()
+    public function test_getList_oneFile_true()
     {
         $filesystem = new Filesystem();
         $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{}');
@@ -25,7 +25,7 @@ class SettingFilesTest extends BaseTestCase
         $this->assertCount(1, $list);
     }
 
-    public function testGetListMoreFiles()
+    public function test_getList_moreFiles_true()
     {
         $filesystem = new Filesystem();
         $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{}');
@@ -37,7 +37,7 @@ class SettingFilesTest extends BaseTestCase
         $this->assertCount(3, $list);
     }
 
-    public function testGetObject()
+    public function test_getObject_oneFile_true()
     {
         $filesystem = new Filesystem();
         $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{"pem": "", "local":"", "remote":"", "exclude":[""]}');
@@ -48,7 +48,7 @@ class SettingFilesTest extends BaseTestCase
         $this->assertEquals($sample, $settings);
     }
 
-    public function testGetProjs()
+    public function test_getProjs_noProjects_true()
     {
         $projs = SettingFiles::getProjs();
 

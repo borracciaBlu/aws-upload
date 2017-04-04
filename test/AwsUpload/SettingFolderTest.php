@@ -8,7 +8,7 @@ require_once __DIR__ . '/BaseTestCase.php';
 class SettingFolderTest extends BaseTestCase
 {
 
-    public function testGetPath()
+    public function test_getPath_useAwsuploadHome_true()
     {
         $home = SettingFolder::getPath();
 

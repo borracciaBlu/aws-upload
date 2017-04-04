@@ -15,10 +15,12 @@
 
   <testsuites>
     <testsuite name="aws-uploa Test Suite" >
-            <!-- <directory>./tests/AwsUpload/</directory> -->
       <file>./test/AwsUpload/SettingFilesTest.php</file>
       <file>./test/AwsUpload/SettingFolderTest.php</file>
       <file>./test/AwsUpload/AwsUploadTest.php </file>
+      <file>./test/AwsUpload/CheckTest.php</file>
+      <file>./test/AwsUpload/OutputTest.php</file>
+      <file>./test/AwsUpload/RsyncTest.php</file>
     </testsuite>
   </testsuites>
 
