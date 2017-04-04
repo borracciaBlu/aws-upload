@@ -1,6 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 1.2.1 - 2017-04-02  
+### Added  
+- Add new feature `aws-upload new proj.env` to create new project setting   
+ 
+### Changed  
+- Update convention phpunit methods   
+
 ## 1.1.2 - 2017-04-03
 ### Added
 - Output to manage colors, exit, stdout
