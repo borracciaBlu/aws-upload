@@ -12,7 +12,7 @@
 
 namespace AwsUpload;
 
-use AwsUpload\SettingFiles;
+use AwsUpload\SettingFolder;
 
 class Check
 {
@@ -42,8 +42,6 @@ class Check
      */
     public static function isValidKey($key)
     {
-        $isValid = false;
-
         $parts = explode('.', $key);
         $isValid = (count($parts) === 2);
 

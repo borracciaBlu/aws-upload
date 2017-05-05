@@ -116,6 +116,13 @@ class SettingFiles
         return $envs;
     }
 
+    /**
+     * Method used to create a setting file.
+     *
+     * @param string $key The project identifier proj.envs .
+     *
+     * @return void
+     */
     public static function create($key)
     {
         $template = "{\n"
@@ -131,5 +138,54 @@ class SettingFiles
         $path = SettingFolder::getPath();
 
         file_put_contents($path . '/' . $key . '.json', $template);
+    }
+
+    /**
+     * Method used to edit a setting file.
+     *
+     * @param string $key The project identifier proj.envs .
+     *
+     * @return void
+     */
+    public static function edit($key)
+    {
+        $path = SettingFolder::getPath();
+
+        system('$EDITOR ' . $path . '/' . $key . '.json  < `tty` > `tty`');
+    }
+
+    /**
+     * Method to extract the project and the environment from an array
+     *
+     * This method is to cover two cases:
+     * - aws-upload proj env // double notation
+     * - aws-upload proj.env // key notation
+     *
+     * @param array $items It contains all the extra args.
+     *
+     * @return array       The array will contain 2 elements in any case.
+     */
+    public static function extractProjEnv($items)
+    {
+        $proj = 'no-project-given';
+        $env  = 'no-environment-given';
+
+        // reorder items in array
+        if (is_array($items)) {
+            $items = array_values($items);
+        }
+
+        if (count($items) === 1) {
+            if (strpos($items[0], '.') !== false) {
+                $items = explode('.', $items[0]);
+            }
+        }
+
+        if (count($items) === 2) {
+            $proj = $items[0];
+            $env  = $items[1];
+        }
+
+        return array($proj, $env);
     }
 }

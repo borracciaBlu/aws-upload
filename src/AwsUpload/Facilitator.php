@@ -158,12 +158,12 @@ EOT;
      * So actually, we check that project.env.json it does exist
      * otherwise we print this message.
      *
-     * @param string $project The project name.
+     * @param string $project The project name or key.
      * @param string $env     The env name.
      *
      * @return string
      */
-    public static function onNoFileFound($project, $env)
+    public static function onNoFileFound($project, $env = null)
     {
         $files = SettingFiles::getList();
         if (count($files) === 0) {
@@ -173,6 +173,11 @@ EOT;
 
         $msg = "It seems that there is <r>NO</r> setting files for <y>" . $project .
                "</y>, <y>" . $env . "</y>\n\n";
+
+        if (is_null($env)) {
+            $msg = "It seems that there is <r>NO</r> setting files for <y>" . $project .
+               "</y>\n\n";
+        }
 
         $msg .= static::getProjEnvTable();
 
@@ -229,8 +234,22 @@ EOT;
     {
         $msg = "The setting file <y>" . $key . ".json</y> has been created succesfully.\n\n"
              . "To edit the file type:\n"
-             . "    vim " . SettingFolder::getPath() . "/" . $key . ".json\n"
+             . "    aws-upload edit " . $key . "\n"
              . "\n";
+        return $msg;
+    }
+
+    /**
+     * Method to support if when AwsUpload::edit is successfull.
+     *
+     * @param string $key E.g: proj.env
+     *
+     * @return string
+     */
+    public static function onEditSettingFileSuccess($key)
+    {
+        $msg = "The setting file <y>" . $key . ".json</y> has been edited succesfully.\n\n";
+
         return $msg;
     }
 

@@ -13,10 +13,7 @@
 namespace AwsUpload;
 
 use cli\Arguments;
-use AwsUpload\Check;
-use AwsUpload\Rsync;
 use AwsUpload\Output;
-use AwsUpload\SettingFiles;
 
 class AwsUpload
 {
@@ -47,14 +44,21 @@ class AwsUpload
      *
      * @var bool
      */
-    protected $is_verbose = false;
+    public $is_verbose = false;
+
+    /**
+     * It define if aws-upload has to print additional info.
+     *
+     * @var bool
+     */
+    public $is_quiet = false;
 
     /**
      * It containst to arguments passed to the shell script.
      *
      * @var array
      */
-    protected $args;
+    public $args;
 
     /**
      * It containst output class to manage the script output.
@@ -74,9 +78,7 @@ class AwsUpload
 
         $this->version = $verison;
 
-        $strict = in_array('--strict', $_SERVER['argv']);
-        $arguments = new Arguments(compact('strict'));
-
+        $arguments = new Arguments();
         $arguments->addFlag(array('quiet', 'q'), 'Turn off verboseness, without being quiet');
         $arguments->addFlag(array('verbose', 'v'), 'Increase the verbosity of messages');
         $arguments->addFlag(array('version', 'V'), 'Display this application version');
@@ -96,6 +98,13 @@ class AwsUpload
             array(
                 'default'     => '',
                 'description' => 'Create a new setting file'
+            )
+        );
+        $arguments->addOption(
+            array('edit', 'E'),
+            array(
+                'default'     => '',
+                'description' => 'Edit a setting file'
             )
         );
 
@@ -125,32 +134,48 @@ class AwsUpload
         if ($this->args['verbose']) {
             $this->is_verbose = true;
         }
-
-        if ($this->args['help']) {
-            $this->cmdHelp();
+        
+        if ($this->args['quiet']) {
+            $this->is_quiet = true;
         }
 
-        if ($this->args['version']) {
-            $this->cmdVersion();
+        $cmdName = $this->getCmdName();
+        $cmd = new $cmdName($this);
+        $cmd->run();
+    }
+
+    /**
+     * Method to decide which cmd to run.
+     *
+     * @return void
+     */
+    public function getCmdName()
+    {
+        $cmd = '';
+        $cmdList = array(
+            "help" => "AwsUpload\Command\Help",
+            "version" => "AwsUpload\Command\Version",
+            "projs" => "AwsUpload\Command\ListProjects",
+            "envs" => "AwsUpload\Command\ListEnvironments",
+            "new" => "AwsUpload\Command\NewSettingFile",
+            "edit" => "AwsUpload\Command\EditSettingFile",
+        );
+
+        foreach ($cmdList as $arg => $cmdName) {
+            if ($this->args[$arg] && empty($cmd)) {
+                $cmd = $cmdName;
+            }
         }
 
-        if ($this->args['projs']) {
-            $this->cmdProjs();
+        if (empty($cmd)) {
+            $cmd = 'AwsUpload\Command\FullInfo';
+
+            if ($this->hasWildArgs()) {
+                $cmd = 'AwsUpload\Command\Upload';
+            }
         }
 
-        if ($this->args['envs']) {
-            $this->cmdEnvs();
-        }
-
-        if ($this->args['new']) {
-            $this->cmdNew();
-        }
-
-        if ($this->hasWildArgs()) {
-            $this->cmdUpload();
-        } else {
-            $this->cmdFullInfo();
-        }
+        return $cmd;
     }
 
     /**
@@ -202,186 +227,6 @@ class AwsUpload
     }
 
     /**
-     * Method used to print the version.
-     *
-     * @return void
-     */
-    public function cmdVersion()
-    {
-        $msg = Facilitator::version($this->version);
-
-        $this->display($msg, 0);
-    }
-
-    /**
-     * Method used to print the help.
-     *
-     * @return void
-     */
-    public function cmdHelp()
-    {
-        $msg = Facilitator::help();
-
-        $this->display($msg, 0);
-    }
-
-    /**
-     * Method used to print the full aws-upload info.
-     *
-     * -  banner
-     * -  version
-     * -  help
-     *
-     * @return void
-     */
-    public function cmdFullInfo()
-    {
-        $msg = Facilitator::banner();
-        $msg .= Facilitator::version($this->version);
-        $msg .= Facilitator::help();
-
-        $this->display($msg, 0);
-    }
-
-    /**
-     * Method used to print the projects available.
-     *
-     * The main idea is that you can get the projects from the files in
-     * the aws-upload home folder.
-     * Eg:
-     *     - proj-1.dev.json    -> proj: proj-1
-     *     - proj-1.stagin.json -> proj: proj-1
-     *     - proj-2.prod.json   -> proj: proj-2
-     *
-     * @return void
-     */
-    public function cmdProjs()
-    {
-        $quiet = $this->args['quiet'];
-        $projs = SettingFiles::getProjs();
-
-        if (count($projs) === 0 && !$quiet) {
-            $msg = Facilitator::onNoProjects();
-
-            $this->display($msg, 0);
-            return;
-        }
-
-        $projs = implode(' ', $projs);
-        $msg = $projs . "\n";
-
-        $this->display($msg, 0);
-    }
-
-    /**
-     * Method used to print the environments available for a project.
-     *
-     * The main idea is that for each project you have different envs.
-     * Eg:
-     *     - proj.dev.json    -> env: dev
-     *     - proj.stagin.json -> env: staging
-     *     - proj.prod.json   -> env: prod
-     *
-     * @return void
-     */
-    public function cmdEnvs()
-    {
-        $quiet      = $this->args['quiet'];
-        $projFilter = $this->args['envs'];
-
-        $projs = SettingFiles::getProjs();
-        if (count($projs) === 0 && !$quiet) {
-            $msg = Facilitator::onNoProjects();
-
-            $this->display($msg, 0);
-            return;
-        }
-
-        $envs = SettingFiles::getEnvs($projFilter);
-        if (count($envs) === 0 && !$quiet) {
-            $msg = Facilitator::onGetEnvsForProj($projFilter);
-
-            $this->display($msg, 0);
-            return;
-        }
-
-        $envs = implode(' ', $envs);
-        $msg = $envs . "\n";
-
-        $this->display($msg, 0);
-    }
-
-    public function cmdNew()
-    {
-        $key = $this->args['new'];
-        if (empty($key)) {
-            $msg = Facilitator::onNoProjects();
-
-            $this->display($msg, 0);
-            return;
-        }
-
-        if (!Check::isValidKey($key)) {
-            $msg = Facilitator::onNoValidKey($key);
-
-            $this->display($msg, 0);
-            return;
-        }
-
-        if (Check::fileExists($key)) {
-            $msg = Facilitator::onKeyAlreadyExists($key);
-
-            $this->display($msg, 0);
-            return;
-        }
-
-        SettingFiles::create($key);
-        $msg = Facilitator::onNewSettingFileSuccess($key);
-
-        $this->display($msg, 0);
-        return;
-    }
-
-    /**
-     * Method to run the rsync cmd.
-     *
-     * The main idea is:
-     *     1 - get [$proj].[$env].json file
-     *     2 - convert the file to an obj
-     *     3 - run rsync with the details in the obj
-     *
-     * @return void
-     */
-    public function cmdUpload()
-    {
-        $items = $this->getWildArgs();
-        list($proj, $env) = $this->extractProjEnv($items);
-
-        $key = $proj . "." . $env;
-        if (!Check::fileExists($key)) {
-            $msg = Facilitator::onNoFileFound($proj, $env);
-            
-            $this->display($msg, 0);
-            return;
-        }
-
-        $settings = SettingFiles::getObject($key);
-        $rsync = new Rsync($settings);
-
-        $msg = Facilitator::rsyncBanner($proj, $env, $rsync->cmd);
-        $this->inline($msg);
-
-        if ($this->args['simulate']) {
-            $msg = 'Simulation mode' . "\n";
-
-            $this->display($msg, 0);
-            return;
-        }
-
-        $rsync->run();
-    }
-
-    /**
      * Method to check if there are spare wild arguments to use as
      * input to select the project and the environment.
      *
@@ -418,40 +263,5 @@ class AwsUpload
         }
 
         return array_values($args);
-    }
-
-    /**
-     * Method to extract the project and the environment from an array
-     *
-     * This method is to cover two cases:
-     * - aws-upload proj env // double notation
-     * - aws-upload proj.env // key notation
-     *
-     * @param array $items It contains all the extra args.
-     *
-     * @return array       The array will contain 2 elements in any case.
-     */
-    public function extractProjEnv($items)
-    {
-        $proj = 'no-project-given';
-        $env  = 'no-environment-given';
-
-        // reorder items in array
-        if (is_array($items)) {
-            $items = array_values($items);
-        }
-
-        if (count($items) === 1) {
-            if (strpos($items[0], '.') !== false) {
-                $items = explode('.', $items[0]);
-            }
-        }
-
-        if (count($items) === 2) {
-            $proj = $items[0];
-            $env  = $items[1];
-        }
-
-        return array($proj, $env);
     }
 }

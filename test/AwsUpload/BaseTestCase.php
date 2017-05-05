@@ -34,4 +34,31 @@ abstract class BaseTestCase extends TestCase
         $filesystem = new Filesystem();
         $filesystem->remove($this->directory);
     }
+
+    /**
+     * Clear the $_SERVER['argv'] array
+     */
+    public static function clearArgv()
+    {
+        $_SERVER['argv'] = array();
+        $_SERVER['argc'] = 0;
+    }
+
+    /**
+     * Add one or more element(s) at the end of the $_SERVER['argv'] array
+     *
+     * @param array $args Value to add to the argv array.
+     */
+    public static function pushToArgv($args)
+    {
+        if (is_string($args)) {
+            $args = explode(' ', $args);
+        }
+
+        foreach ($args as $arg) {
+            array_push($_SERVER['argv'], $arg);
+        }
+
+        $_SERVER['argc'] += count($args);
+    }
 }
