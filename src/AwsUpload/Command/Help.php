@@ -22,10 +22,10 @@ class Help extends BasicCommand
      *
      * @return void
      */
-	public function run()
-	{
+    public function run()
+    {
         $msg = Facilitator::help();
 
         $this->app->display($msg, 0);
-	}
+    }
 }

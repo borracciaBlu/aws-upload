@@ -31,9 +31,9 @@ class Upload extends BasicCommand
      *
      * @return void
      */
-	public function run()
-	{
- 		$items = $this->app->getWildArgs();
+    public function run()
+    {
+        $items = $this->app->getWildArgs();
         list($proj, $env) = SettingFiles::extractProjEnv($items);
 
         $key = $proj . "." . $env;
@@ -58,5 +58,5 @@ class Upload extends BasicCommand
         }
 
         $rsync->run();
-	}
+    }
 }

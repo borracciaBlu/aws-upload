@@ -17,6 +17,8 @@
     <testsuite name="aws-upload Test Suite" >
       <file>./test/AwsUpload/Command/ListProjectsTest.php</file>
       <file>./test/AwsUpload/Command/ListEnvironmentsTest.php</file>
+      <file>./test/AwsUpload/Command/NewSettingsFileTest.php</file>
+      <file>./test/AwsUpload/Command/EditSettingsFileTest.php</file>
       <file>./test/AwsUpload/SettingFilesTest.php</file>
       <file>./test/AwsUpload/SettingFolderTest.php</file>
       <file>./test/AwsUpload/AwsUploadTest.php </file>

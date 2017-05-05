@@ -24,8 +24,8 @@ class NewSettingFile extends BasicCommand
      *
      * @return void
      */
-	public function run()
-	{
+    public function run()
+    {
         $key = $this->app->args['new'];
         if (empty($key)) {
             $msg = Facilitator::onNoProjects();
@@ -52,5 +52,5 @@ class NewSettingFile extends BasicCommand
         $msg = Facilitator::onNewSettingFileSuccess($key);
 
         $this->app->display($msg, 0);
-	}
+    }
 }

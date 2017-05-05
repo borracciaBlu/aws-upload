@@ -26,12 +26,12 @@ class FullInfo extends BasicCommand
      *
      * @return void
      */
-	public function run()
-	{
+    public function run()
+    {
         $msg = Facilitator::banner();
         $msg .= Facilitator::version($this->app->version);
         $msg .= Facilitator::help();
 
         $this->app->display($msg, 0);
-	}
+    }
 }

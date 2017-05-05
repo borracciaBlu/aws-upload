@@ -30,8 +30,8 @@ class ListProjects extends BasicCommand
      *
      * @return void
      */
-	public function run()
-	{
+    public function run()
+    {
         $quiet = $this->app->is_quiet;
         $projs = SettingFiles::getProjs();
 
@@ -46,5 +46,5 @@ class ListProjects extends BasicCommand
         $msg = $projs . "\n";
 
         $this->app->display($msg, 0);
-	}
+    }
 }

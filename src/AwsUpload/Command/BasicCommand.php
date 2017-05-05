@@ -14,23 +14,21 @@ namespace AwsUpload\Command;
 
 abstract class BasicCommand implements Command
 {
-	/**
-	 * 
-	 */
-	public $app;
+    /**
+     * The AwsUpload object
+     */
+    public $app;
 
-	/**
-	 * [__construct description]
-	 * @param [type] $app [description]
-	 */
-	public function __construct($app)
-	{
-		$this->app = $app;
-	}
+    /**
+     * Initializes the command.
+     *
+     * The main purpose is to define the app for the script
+     * and populate `$this->app`.
+     */
+    public function __construct($app)
+    {
+        $this->app = $app;
+    }
 
-	/**
-	 * [run description]
-	 * @return [type] [description]
-	 */
-	abstract public function run();
+    abstract public function run();
 }

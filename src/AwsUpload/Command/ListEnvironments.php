@@ -29,8 +29,8 @@ class ListEnvironments extends BasicCommand
      *
      * @return void
      */
-	public function run()
-	{
+    public function run()
+    {
         $quiet      = $this->app->is_quiet;
         $projFilter = $this->app->args['envs'];
 
@@ -54,5 +54,5 @@ class ListEnvironments extends BasicCommand
         $msg = $envs . "\n";
 
         $this->app->display($msg, 0);
-	}
+    }
 }

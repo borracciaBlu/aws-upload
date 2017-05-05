@@ -47,7 +47,7 @@ class AwsUpload
     public $is_verbose = false;
 
     /**
-     * It define if aws-upload has to print additional info.
+     * It define if aws-upload has to stay quiet and do not print additional information.
      *
      * @var bool
      */

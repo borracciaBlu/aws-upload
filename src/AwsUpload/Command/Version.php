@@ -22,10 +22,10 @@ class Version extends BasicCommand
      *
      * @return void
      */
-	public function run()
-	{
+    public function run()
+    {
         $msg = Facilitator::version($this->app->version);
 
         $this->app->display($msg, 0);
-	}
+    }
 }

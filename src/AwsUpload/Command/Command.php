@@ -14,5 +14,5 @@ namespace AwsUpload\Command;
 
 interface Command
 {
-	public function run();
+    public function run();
 }

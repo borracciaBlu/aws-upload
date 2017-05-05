@@ -1,6 +1,14 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 1.3.1 - 2017-05-05  
+### Added  
+- Add new feature `aws-upload edit proj.env` to edit setting files  
+ 
+### Changed  
+- Update convention phpunit methods   
+- Update way to instantiate a command in AwsUpload::run  
+
 ## 1.2.1 - 2017-04-02  
 ### Added  
 - Add new feature `aws-upload new proj.env` to create new project setting   

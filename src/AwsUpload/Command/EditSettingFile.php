@@ -24,8 +24,8 @@ class EditSettingFile extends BasicCommand
      *
      * @return void
      */
-	public function run()
-	{
+    public function run()
+    {
         $key = $this->app->args['edit'];
         if (empty($key)) {
             $msg = Facilitator::onNoProjects();
@@ -55,5 +55,5 @@ class EditSettingFile extends BasicCommand
         $msg = Facilitator::onEditSettingFileSuccess($key);
 
         $this->app->display($msg, 0);
-	}
+    }
 }
