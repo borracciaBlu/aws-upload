@@ -37,6 +37,28 @@ class SettingFilesTest extends BaseTestCase
         $this->assertCount(3, $list);
     }
 
+    public function test_getKeys_oneFile_true()
+    {
+        $filesystem = new Filesystem();
+        $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{}');
+
+        $list = SettingFiles::getKeys();
+
+        $this->assertCount(1, $list);
+    }
+
+    public function test_getKeys_moreFiles_true()
+    {
+        $filesystem = new Filesystem();
+        $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{}');
+        $filesystem->dumpFile($this->directory . '/project-1.prod.json', '{}');
+        $filesystem->dumpFile($this->directory . '/project-1.staging.json', '{}');
+
+        $list = SettingFiles::getKeys();
+
+        $this->assertCount(3, $list);
+    }
+
     public function test_getObject_oneFile_true()
     {
         $filesystem = new Filesystem();

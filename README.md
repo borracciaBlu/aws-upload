@@ -33,6 +33,22 @@ In order to achieve the tab-completion like in the screen shot you have to insta
 
 To install `aws-upload-zsh` follow the instructions [here](https://github.com/borracciaBlu/aws-upload-zsh).
 
+## Create your first setting file
+
+To create a setting file you can use `aws-upload new [project.env]`.
+
+    // Examples
+
+    // Project:     blog
+    // Environment: dev
+    // Key:         blog.dev
+    aws-upload new blog.dev
+
+    // Project:     client-A
+    // Environment: prod
+    // Key:         client-A.prod
+    aws-upload new client-A.prod
+
 ## How it works?
 
 All the times you'll type `aws-upload [project] [env]`, `aws-upload` will:
