@@ -15,7 +15,6 @@ namespace AwsUpload;
 use cli\Table;
 use AwsUpload\Output;
 use AwsUpload\SettingFiles;
-use AwsUpload\SettingFolder;
 
 class Facilitator
 {
@@ -78,9 +77,11 @@ EOT;
 
 <y>Configuration Options:</y>
 
+   <g>-k|--keys</g>                  Print all the projects' keys.
    <g>-p|--projs</g>                 Print all the projects.
    <g>-e|--envs <proj></g>           Print all the environments for a specific project.
    <g>-n|--new <proj>.<env></g>      Create a new setting file.
+   <g>-E|--edit <proj>.<env></g>     Edit a setting file.
 
 
 EOT;

@@ -83,6 +83,7 @@ class AwsUpload
         $arguments->addFlag(array('verbose', 'v'), 'Increase the verbosity of messages');
         $arguments->addFlag(array('version', 'V'), 'Display this application version');
         $arguments->addFlag(array('help', 'h'), 'Display this help message');
+        $arguments->addFlag(array('keys', 'k'), 'Print all the projects\' keys');
         $arguments->addFlag(array('projs', 'p'), 'Print all the projects');
         $arguments->addFlag('simulate', 'Simulate the command without to upload anything');
 
@@ -147,7 +148,7 @@ class AwsUpload
     /**
      * Method to decide which cmd to run.
      *
-     * @return void
+     * @return string
      */
     public function getCmdName()
     {
@@ -155,6 +156,7 @@ class AwsUpload
         $cmdList = array(
             "help" => "AwsUpload\Command\Help",
             "version" => "AwsUpload\Command\Version",
+            "keys" => "AwsUpload\Command\ListKeys",
             "projs" => "AwsUpload\Command\ListProjects",
             "envs" => "AwsUpload\Command\ListEnvironments",
             "new" => "AwsUpload\Command\NewSettingFile",

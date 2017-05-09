@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 1.4.1 - 2017-05-09  
+### Added  
+- Add new feature `aws-upload keys` to get projects' keys  
+
 ## 1.3.1 - 2017-05-05  
 ### Added  
 - Add new feature `aws-upload edit proj.env` to edit setting files  

@@ -12,10 +12,9 @@
 
 namespace AwsUpload\Command;
 
-use AwsUpload\Facilitator;
-
 use AwsUpload\Check;
 use AwsUpload\Rsync;
+use AwsUpload\Facilitator;
 use AwsUpload\SettingFiles;
 use AwsUpload\Command\BasicCommand;
 

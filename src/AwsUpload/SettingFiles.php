@@ -64,6 +64,27 @@ class SettingFiles
     }
 
     /**
+     * Method used to get the projects' key available.
+     *
+     * @return array
+     */
+    public static function getKeys()
+    {
+        $files = SettingFiles::getList();
+
+        $keys = array();
+        foreach ($files as $fileName) {
+            $key = str_replace('.json', '', $fileName);
+
+            if (!in_array($key, $keys)) {
+                $keys[] = $key;
+            }
+        }
+
+        return $keys;        
+    }
+
+    /**
      * Method used to get the projects available.
      *
      * @return array
@@ -72,7 +93,7 @@ class SettingFiles
     {
         $files = SettingFiles::getList();
 
-        $projs = [];
+        $projs = array();
         foreach ($files as $key) {
             list($proj, $env, $ext) = explode(".", $key);
 
