@@ -85,6 +85,8 @@ class AwsUpload
         $arguments->addFlag(array('help', 'h'), 'Display this help message');
         $arguments->addFlag(array('keys', 'k'), 'Print all the projects\' keys');
         $arguments->addFlag(array('projs', 'p'), 'Print all the projects');
+        $arguments->addFlag(array('selfupdate'), 'Updates aws-upload to the latest version');
+        $arguments->addFlag(array('self-update'), 'Updates aws-upload to the latest version');
         $arguments->addFlag('simulate', 'Simulate the command without to upload anything');
 
         $arguments->addOption(
@@ -161,6 +163,8 @@ class AwsUpload
             "envs" => "AwsUpload\Command\ListEnvironments",
             "new" => "AwsUpload\Command\NewSettingFile",
             "edit" => "AwsUpload\Command\EditSettingFile",
+            "selfupdate" => "AwsUpload\Command\SelfUpdate",
+            "self-update" => "AwsUpload\Command\SelfUpdate",
         );
 
         foreach ($cmdList as $arg => $cmdName) {

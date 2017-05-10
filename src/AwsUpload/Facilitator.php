@@ -75,13 +75,15 @@ EOT;
    <g>-h|--help</g>                  Prints this usage information.
    <g>-V|--version</g>               Prints the version and exits.
 
-<y>Configuration Options:</y>
+<y>Available commands:</y>
 
    <g>-k|--keys</g>                  Print all the projects' keys.
    <g>-p|--projs</g>                 Print all the projects.
    <g>-e|--envs <proj></g>           Print all the environments for a specific project.
    <g>-n|--new <proj>.<env></g>      Create a new setting file.
    <g>-E|--edit <proj>.<env></g>     Edit a setting file.
+   <g>self-update</g>                Updates aws-upload to the latest version.
+   <g>selfupdate</g>                 Updates aws-upload to the latest version.
 
 
 EOT;
