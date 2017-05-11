@@ -10,9 +10,9 @@
  * @license   http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
-namespace AwsUpload;
+namespace AwsUpload\Setting;
 
-use AwsUpload\SettingFolder;
+use AwsUpload\Setting\SettingFolder;
 
 class SettingFiles
 {
@@ -47,6 +47,21 @@ class SettingFiles
     }
 
     /**
+     * Returns the setting file path from a key.
+     *
+     * @param string $key The setting file identifier.
+     *
+     * @return array
+     */
+    public static function getPath($key)
+    {
+        $path = SettingFolder::getPath();
+        $path = $path . '/' . $key . '.json';
+        
+        return $path;
+    }
+
+    /**
      * Returns the list or setting files in the aws-upload folder.
      *
      * @param string $key The setting file identifier.
@@ -55,9 +70,9 @@ class SettingFiles
      */
     public static function getObject($key)
     {
-        $path = SettingFolder::getPath();
+        $path = static::getPath($key);
 
-        $content = file_get_contents($path . '/' . $key . '.json');
+        $content = file_get_contents($path);
         $settings = (object) json_decode($content, true);
 
         return $settings;

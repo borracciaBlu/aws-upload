@@ -1,6 +1,6 @@
 <?php
 
-use AwsUpload\SettingFolder;
+use AwsUpload\Setting\SettingFolder;
 use Symfony\Component\Filesystem\Filesystem;
 
 require_once __DIR__ . '/BaseTestCase.php';
