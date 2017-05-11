@@ -13,8 +13,8 @@
 namespace AwsUpload;
 
 use cli\Table;
-use AwsUpload\Output;
-use AwsUpload\SettingFiles;
+use AwsUpload\Io\Output;
+use AwsUpload\Setting\SettingFiles;
 
 class Facilitator
 {
@@ -82,6 +82,7 @@ EOT;
    <g>-e|--envs <proj></g>           Print all the environments for a specific project.
    <g>-n|--new <proj>.<env></g>      Create a new setting file.
    <g>-E|--edit <proj>.<env></g>     Edit a setting file.
+   <g>-c|--check <proj>.<env></g>    Check a setting file for debug.
    <g>self-update</g>                Updates aws-upload to the latest version.
    <g>selfupdate</g>                 Updates aws-upload to the latest version.
 
@@ -113,6 +114,72 @@ $cmd
 =================================
 
 EOT;
+        return $msg;
+    }
+
+    /**
+     * Method to echo the aws-upload check report.
+     *
+     * @param array $report The report value
+     *
+     * @return string
+     */
+    public static function reportBanner($report)
+    {
+        // Json
+        $msg = "File analysing:\n"
+             . "<y>" . $report['path'] . "</y>" . "\n";
+
+        $msg .= ($report['is_valid_json']) ? "Json:            <g>VALID</g>\n": "Json:            <r>INVALID</r>\n";
+
+        if (!$report['is_valid_json']) {
+            switch (json_last_error()) {
+                case JSON_ERROR_NONE:
+                    $error = ' - No errors';
+                break;
+                case JSON_ERROR_DEPTH:
+                    $error = ' - Maximum stack depth exceeded';
+                break;
+                case JSON_ERROR_STATE_MISMATCH:
+                    $error = ' - Underflow or the modes mismatch';
+                break;
+                case JSON_ERROR_CTRL_CHAR:
+                    $error = ' - Unexpected control character found';
+                break;
+                case JSON_ERROR_SYNTAX:
+                    $error = ' - Syntax error, malformed JSON';
+                break;
+                case JSON_ERROR_UTF8:
+                    $error = ' - Malformed UTF-8 characters, possibly incorrectly encoded';
+                break;
+                default:
+                    $error = ' - Unknown error';
+                break;
+            }
+
+             $msg .= $error . "\n";
+        }
+
+        // Pem
+        $msg .= "\nPem File:\n"
+             . "<y>" . $report['pem'] . "</y>" . "\n";
+        $msg .= ($report['pem_exists']) ?   "Pem:              <g>EXISTS</g>\n": "Pem:              <r>NOT EXISTS</r>\n";
+
+        if ($report['pem_exists']) {
+            $msg .= "Pem Perm:         ";
+            $msg .= ($report['pem_perms'] === '400') ?  "<g>". $report['pem_perms'] . "</g>" : "<r>". $report['pem_perms'] . "</r>";
+            $msg .= "\n";
+
+            if ($report['pem_perms'] !== '400') {
+                $msg .=  'Try to type: chmod 400 ' . $report['pem'] . "\n";
+            }
+        }
+
+        // Local
+        $msg .= "\nLocal Folder:\n"
+             . "<y>" . $report['local'] . "</y>" . "\n";
+        $msg .= ($report['local_exists']) ? "Local Folder:     <g>EXISTS</g>\n": "Local Folder:     <r>NOT EXISTS</r>\n";
+
         return $msg;
     }
 
