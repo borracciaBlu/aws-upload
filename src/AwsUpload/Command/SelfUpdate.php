@@ -12,8 +12,8 @@
 
 namespace AwsUpload\Command;
 
-use AwsUpload\Command\Command;
 use AwsUpload\Facilitator;
+use AwsUpload\Command\Command;
 
 class SelfUpdate extends BasicCommand
 {

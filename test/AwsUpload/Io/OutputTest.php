@@ -2,7 +2,7 @@
 
 use AwsUpload\Io\Output;
 
-require_once __DIR__ . '/BaseTestCase.php';
+require_once __DIR__ . '/../BaseTestCase.php';
 
 
 class OutputTest extends BaseTestCase

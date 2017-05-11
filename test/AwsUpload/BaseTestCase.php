@@ -17,6 +17,7 @@ abstract class BaseTestCase extends TestCase
      */
     public function setUp()
     {
+        $this->directoryBuild = __DIR__.'/../../build/';
         $this->directory = __DIR__.'/../../build/' . strtolower(get_class($this));
         putenv("AWSUPLOAD_HOME=" . $this->directory);
 
@@ -33,6 +34,7 @@ abstract class BaseTestCase extends TestCase
 
         $filesystem = new Filesystem();
         $filesystem->remove($this->directory);
+        $filesystem->remove($this->directoryBuild);
     }
 
     /**
