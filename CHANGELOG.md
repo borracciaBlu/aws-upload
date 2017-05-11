@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 1.6.1 - 2017-05-11  
+### Added  
+- Add new feature `aws-upload selfupdate` to self update `aws-upload`.
+- Add new feature `aws-upload check proj.env` to check for json syntax, pem permission, and local forlder.   
+
 ## 1.4.1 - 2017-05-09  
 ### Added  
 - Add new feature `aws-upload keys` to get projects' keys  
