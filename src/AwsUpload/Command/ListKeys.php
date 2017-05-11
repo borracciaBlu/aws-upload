@@ -12,9 +12,9 @@
 
 namespace AwsUpload\Command;
 
-use AwsUpload\Command\Command;
 use AwsUpload\Facilitator;
-use AwsUpload\SettingFiles;
+use AwsUpload\Command\Command;
+use AwsUpload\Setting\SettingFiles;
 
 class ListKeys extends BasicCommand
 {

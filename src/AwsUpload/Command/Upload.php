@@ -15,7 +15,7 @@ namespace AwsUpload\Command;
 use AwsUpload\Check;
 use AwsUpload\Rsync;
 use AwsUpload\Facilitator;
-use AwsUpload\SettingFiles;
+use AwsUpload\Setting\SettingFiles;
 use AwsUpload\Command\BasicCommand;
 
 class Upload extends BasicCommand

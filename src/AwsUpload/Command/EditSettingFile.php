@@ -14,8 +14,8 @@ namespace AwsUpload\Command;
 
 use AwsUpload\Check;
 use AwsUpload\Facilitator;
-use AwsUpload\SettingFiles;
 use AwsUpload\Command\Command;
+use AwsUpload\Setting\SettingFiles;
 
 class EditSettingFile extends BasicCommand
 {

@@ -1,6 +1,6 @@
 <?php
 
-use AwsUpload\Output;
+use AwsUpload\Io\Output;
 use AwsUpload\AwsUpload;
 use AwsUpload\Facilitator;
 use Symfony\Component\Filesystem\Filesystem;
