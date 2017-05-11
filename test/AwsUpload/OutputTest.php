@@ -1,6 +1,6 @@
 <?php
 
-use AwsUpload\Output;
+use AwsUpload\Io\Output;
 
 require_once __DIR__ . '/BaseTestCase.php';
 
