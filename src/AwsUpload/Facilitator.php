@@ -82,6 +82,7 @@ EOT;
    <g>-e|--envs <proj></g>           Print all the environments for a specific project.
    <g>-n|--new <proj>.<env></g>      Create a new setting file.
    <g>-E|--edit <proj>.<env></g>     Edit a setting file.
+   <g>-cp|--copy <src> <dest></g>    Copy a setting file.
    <g>-c|--check <proj>.<env></g>    Check a setting file for debug.
    <g>self-update</g>                Updates aws-upload to the latest version.
    <g>selfupdate</g>                 Updates aws-upload to the latest version.
@@ -192,6 +193,20 @@ EOT;
     {
         $msg = "It seems that you don't have any project setup.\nTry to type:\n\n"
              . "    <g>aws-upload new project.test</g>\n"
+             . "\n";
+
+        return $msg;
+    }
+
+    /**
+     * Method to echo the help message about no project.
+     *
+     * @return string
+     */
+    public static function onNoCopyArgs()
+    {
+        $msg = "It seems that you don't proper arguments for this command.\nTry to type:\n\n"
+             . "    <g>aws-upload copy oldproject.test project.test</g>\n"
              . "\n";
 
         return $msg;

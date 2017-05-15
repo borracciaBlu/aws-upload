@@ -191,6 +191,23 @@ class SettingFiles
     }
 
     /**
+     * Method to copy a setting file
+     *
+     * @param  string $oldKey The key for the exisiting setting.
+     * @param  string $newKey The key for the new setting.
+     *
+     * @return void
+     */
+    public static function copy($oldKey, $newKey)
+    {
+        $path = SettingFolder::getPath();
+        $source = $path . '/' . $oldKey . '.json';
+        $dest   = $path . '/' . $newKey . '.json';
+
+        copy($source, $dest);
+    }
+
+    /**
      * Method to extract the project and the environment from an array
      *
      * This method is to cover two cases:

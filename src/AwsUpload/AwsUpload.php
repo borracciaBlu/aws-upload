@@ -110,10 +110,17 @@ class AwsUpload
             )
         );
         $arguments->addOption(
+            array('copy', 'cp'),
+            array(
+                'default'     => '',
+                'description' => 'Copy a setting file'
+            )
+        );
+        $arguments->addOption(
             array('check', 'c'),
             array(
                 'default'     => '',
-                'description' => 'Edit a setting file'
+                'description' => 'Check a setting file'
             )
         );
 
@@ -170,6 +177,7 @@ class AwsUpload
             "new" => "AwsUpload\Command\NewSettingFile",
             "edit" => "AwsUpload\Command\EditSettingFile",
             "check" => "AwsUpload\Command\CheckSettingFile",
+            "copy" => "AwsUpload\Command\CopySettingFile",
             "selfupdate" => "AwsUpload\Command\SelfUpdate",
             "self-update" => "AwsUpload\Command\SelfUpdate",
         );
