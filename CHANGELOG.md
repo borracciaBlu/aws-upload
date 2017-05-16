@@ -1,6 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 1.7.1 - 2017-05-11  
+### Added  
+- Add new feature `aws-upload copy proj.env newproj.dev` to copy a setting file. 
+
+### Bugfix
+- Fixed phpunit names on test
+
 ## 1.6.1 - 2017-05-11  
 ### Added  
 - Add new feature `aws-upload selfupdate` to self update `aws-upload`.
