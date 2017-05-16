@@ -51,7 +51,7 @@ class SettingFiles
      *
      * @param string $key The setting file identifier.
      *
-     * @return array
+     * @return string
      */
     public static function getPath($key)
     {

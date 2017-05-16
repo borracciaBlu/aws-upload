@@ -127,61 +127,93 @@ EOT;
      */
     public static function reportBanner($report)
     {
+        // Labels
+        $valid_labels = array("VALID", "INVALID");
+        $exist_labels = array("EXISTS", "NOT EXISTS");
+        $perms_labels = array($report['pem_perms'], $report['pem_perms']);
+
+        $is_valid_json = static::plot($report['is_valid_json'], $valid_labels);
+        $pem_exists    = static::plot($report['pem_exists'], $exist_labels);
+        $local_exists  = static::plot($report['local_exists'], $exist_labels);
+        $is_400_perms  = static::plot(($report['pem_perms'] === '400'), $perms_labels);
+
         // Json
         $msg = "File analysing:\n"
-             . "<y>" . $report['path'] . "</y>" . "\n";
-
-        $msg .= ($report['is_valid_json']) ? "Json:            <g>VALID</g>\n": "Json:            <r>INVALID</r>\n";
+             . "<y>" . $report['path'] . "</y>" . "\n"
+             . "Json:             ". $is_valid_json . "\n";
 
         if (!$report['is_valid_json']) {
-            switch (json_last_error()) {
-                case JSON_ERROR_NONE:
-                    $error = ' - No errors';
-                break;
-                case JSON_ERROR_DEPTH:
-                    $error = ' - Maximum stack depth exceeded';
-                break;
-                case JSON_ERROR_STATE_MISMATCH:
-                    $error = ' - Underflow or the modes mismatch';
-                break;
-                case JSON_ERROR_CTRL_CHAR:
-                    $error = ' - Unexpected control character found';
-                break;
-                case JSON_ERROR_SYNTAX:
-                    $error = ' - Syntax error, malformed JSON';
-                break;
-                case JSON_ERROR_UTF8:
-                    $error = ' - Malformed UTF-8 characters, possibly incorrectly encoded';
-                break;
-                default:
-                    $error = ' - Unknown error';
-                break;
-            }
-
-             $msg .= $error . "\n";
+            $msg .= static::getJsonError() . "\n";
         }
 
         // Pem
-        $msg .= "\nPem File:\n"
-             . "<y>" . $report['pem'] . "</y>" . "\n";
-        $msg .= ($report['pem_exists']) ?   "Pem:              <g>EXISTS</g>\n": "Pem:              <r>NOT EXISTS</r>\n";
+        $msg .= "\n" 
+              . "Pem File:\n"
+              . "<y>" . $report['pem'] . "</y>" . "\n"
+              . "Pem:              ". $pem_exists . "\n";
 
         if ($report['pem_exists']) {
-            $msg .= "Pem Perm:         ";
-            $msg .= ($report['pem_perms'] === '400') ?  "<g>". $report['pem_perms'] . "</g>" : "<r>". $report['pem_perms'] . "</r>";
-            $msg .= "\n";
+            $msg .= "Pem Perm:         " . $is_400_perms . "\n";
 
-            if ($report['pem_perms'] !== '400') {
+            if (!$is_400_perms) {
                 $msg .=  'Try to type: chmod 400 ' . $report['pem'] . "\n";
             }
         }
 
         // Local
-        $msg .= "\nLocal Folder:\n"
-             . "<y>" . $report['local'] . "</y>" . "\n";
-        $msg .= ($report['local_exists']) ? "Local Folder:     <g>EXISTS</g>\n": "Local Folder:     <r>NOT EXISTS</r>\n";
+        $msg .= "\n"
+              . "Local Folder:\n"
+              . "<y>" . $report['local'] . "</y>" . "\n"
+              . "Local Folder:     ". $local_exists . "\n";
 
         return $msg;
+    }
+
+    /**
+     * Method to get the Json Error description.
+     *
+     * @return string
+     */
+    public static function getJsonError()
+    {
+        switch (json_last_error()) {
+            case JSON_ERROR_NONE:
+                $error = ' - No errors';
+            break;
+            case JSON_ERROR_DEPTH:
+                $error = ' - Maximum stack depth exceeded';
+            break;
+            case JSON_ERROR_STATE_MISMATCH:
+                $error = ' - Underflow or the modes mismatch';
+            break;
+            case JSON_ERROR_CTRL_CHAR:
+                $error = ' - Unexpected control character found';
+            break;
+            case JSON_ERROR_SYNTAX:
+                $error = ' - Syntax error, malformed JSON';
+            break;
+            case JSON_ERROR_UTF8:
+                $error = ' - Malformed UTF-8 characters, possibly incorrectly encoded';
+            break;
+            default:
+                $error = ' - Unknown error';
+            break;
+        }
+
+        return $error;
+    }
+
+
+    /**
+     * Method to facilitate the report building.
+     *
+     * @param bool  $conditions The state to evaluate
+     * @param array $labels     The possible values to display
+     * @return string
+     */
+    public static function plot($condition, $labels)
+    {
+        return ($condition) ? "<g>" . $labels[0] . "</g>" : "<r>" . $labels[0] . "</r>";
     }
 
     /**
