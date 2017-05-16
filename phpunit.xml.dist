@@ -14,11 +14,12 @@
     bootstrap="vendor/autoload.php">
 
   <testsuites>
-    <testsuite name="aws-upload Test Suite">
+    <testsuite name="aws-upload-suite">
       <file>./test/AwsUpload/Command/ListProjectsTest.php</file>
       <file>./test/AwsUpload/Command/ListEnvironmentsTest.php</file>
       <file>./test/AwsUpload/Command/ListKeysTest.php</file>
       <file>./test/AwsUpload/Command/NewSettingsFileTest.php</file>
+      <file>./test/AwsUpload/Command/CopySettingsFileTest.php</file>
       <file>./test/AwsUpload/Command/EditSettingsFileTest.php</file>
       <file>./test/AwsUpload/Command/CheckSettingsFileTest.php</file>
       <file>./test/AwsUpload/Setting/SettingFilesTest.php</file>
