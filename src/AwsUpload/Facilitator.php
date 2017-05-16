@@ -140,11 +140,8 @@ EOT;
         // Json
         $msg = "File analysing:\n"
              . "<y>" . $report['path'] . "</y>" . "\n"
-             . "Json:             ". $is_valid_json . "\n";
-
-        if (!$report['is_valid_json']) {
-            $msg .= static::getJsonError() . "\n";
-        }
+             . "Json:             ". $is_valid_json . "\n"
+             . static::getJsonError();
 
         // Pem
         $msg .= "\n" 
@@ -176,39 +173,31 @@ EOT;
      */
     public static function getJsonError()
     {
-        switch (json_last_error()) {
-            case JSON_ERROR_NONE:
-                $error = ' - No errors';
-            break;
-            case JSON_ERROR_DEPTH:
-                $error = ' - Maximum stack depth exceeded';
-            break;
-            case JSON_ERROR_STATE_MISMATCH:
-                $error = ' - Underflow or the modes mismatch';
-            break;
-            case JSON_ERROR_CTRL_CHAR:
-                $error = ' - Unexpected control character found';
-            break;
-            case JSON_ERROR_SYNTAX:
-                $error = ' - Syntax error, malformed JSON';
-            break;
-            case JSON_ERROR_UTF8:
-                $error = ' - Malformed UTF-8 characters, possibly incorrectly encoded';
-            break;
-            default:
-                $error = ' - Unknown error';
-            break;
+        $errors = array(
+            JSON_ERROR_NONE => '',
+            JSON_ERROR_DEPTH => " - Maximum stack depth exceeded\n",
+            JSON_ERROR_STATE_MISMATCH => " - Underflow or the modes mismatch\n",
+            JSON_ERROR_CTRL_CHAR => " - Unexpected control character found\n",
+            JSON_ERROR_SYNTAX => " - Syntax error, malformed JSON\n",
+            JSON_ERROR_UTF8 => " - Malformed UTF-8 characters, possibly incorrectly encoded\n",
+        );
+        $last_error = json_last_error();
+        
+        $msg = ' - Unknown error';
+        if (array_key_exists($last_error, $errors)) {
+            $msg = $errors[$last_error];
         }
 
-        return $error;
+        return $msg;
     }
 
 
     /**
      * Method to facilitate the report building.
      *
-     * @param bool  $conditions The state to evaluate
-     * @param array $labels     The possible values to display
+     * @param bool  $condition The state to evaluate
+     * @param array $labels    The possible values to display
+     *
      * @return string
      */
     public static function plot($condition, $labels)
