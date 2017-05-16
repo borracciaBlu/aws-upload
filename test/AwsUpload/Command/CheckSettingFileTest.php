@@ -18,12 +18,15 @@ class CheckSettingsFileTest extends BaseTestCase
         $filesystem->mkdir($this->directory . '/local');
         $filesystem->dumpFile($this->directory . '/project-2.dev.json', '{ "pem" : "' . $this->directory . '/file.pem", "local" : "' . $this->directory . '/local"}');
 
+
+        $pem_perms =  decoct(fileperms($this->directory . '/file.pem')  & 0777);
+
         $report = array(
             "path" => $this->directory . '/project-2.dev.json',
             "is_valid_json" => true,
             "pem" => $this->directory . '/file.pem',
             "pem_exists" => true,
-            "pem_perms" => '664',
+            "pem_perms" => $pem_perms,
             "local" => $this->directory . '/local',
             "local_exists" => true,
         );
