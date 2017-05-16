@@ -9,7 +9,7 @@ use Symfony\Component\Filesystem\Filesystem;
 require_once __DIR__ . '/../BaseTestCase.php';
 
 
-class CopySettingsFileTest extends BaseTestCase
+class CopySettingFileTest extends BaseTestCase
 {
 
     public function test_noKey_expectedNoProjectMsg()

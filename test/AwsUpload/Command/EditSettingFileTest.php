@@ -8,7 +8,7 @@ use Symfony\Component\Filesystem\Filesystem;
 require_once __DIR__ . '/../BaseTestCase.php';
 
 
-class EditSettingsFileTest extends BaseTestCase
+class EditSettingFileTest extends BaseTestCase
 {
 
     public function test_noKey_expectedNoProjectMsg()

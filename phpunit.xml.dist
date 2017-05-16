@@ -18,10 +18,10 @@
       <file>./test/AwsUpload/Command/ListProjectsTest.php</file>
       <file>./test/AwsUpload/Command/ListEnvironmentsTest.php</file>
       <file>./test/AwsUpload/Command/ListKeysTest.php</file>
-      <file>./test/AwsUpload/Command/NewSettingsFileTest.php</file>
-      <file>./test/AwsUpload/Command/CopySettingsFileTest.php</file>
-      <file>./test/AwsUpload/Command/EditSettingsFileTest.php</file>
-      <file>./test/AwsUpload/Command/CheckSettingsFileTest.php</file>
+      <file>./test/AwsUpload/Command/NewSettingFileTest.php</file>
+      <file>./test/AwsUpload/Command/CopySettingFileTest.php</file>
+      <file>./test/AwsUpload/Command/EditSettingFileTest.php</file>
+      <file>./test/AwsUpload/Command/CheckSettingFileTest.php</file>
       <file>./test/AwsUpload/Setting/SettingFilesTest.php</file>
       <file>./test/AwsUpload/Setting/SettingFolderTest.php</file>
       <file>./test/AwsUpload/Io/OutputTest.php</file>
