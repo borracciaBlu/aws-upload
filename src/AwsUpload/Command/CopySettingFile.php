@@ -59,8 +59,6 @@ class CopySettingFile extends BasicCommand
      */
     public function isValid($keys)
     {
-        $valid = true;
-
         if (!$this->isValidArgs($keys)) {
             $this->msg = Facilitator::onNoCopyArgs();
             $valid = false;
@@ -100,7 +98,6 @@ class CopySettingFile extends BasicCommand
     {
         return (empty($keys) || count($keys) < 2) ? false : true;
     }
-
 
     /**
      * Method to check to set the error msg.

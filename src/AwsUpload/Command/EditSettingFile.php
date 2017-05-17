@@ -27,24 +27,9 @@ class EditSettingFile extends BasicCommand
     public function run()
     {
         $key = $this->app->args['edit'];
-        if (empty($key)) {
-            $msg = Facilitator::onNoProjects();
 
-            $this->app->display($msg, 0);
-            return;
-        }
-
-        if (!Check::isValidKey($key)) {
-            $msg = Facilitator::onNoValidKey($key);
-
-            $this->app->display($msg, 0);
-            return;
-        }
-
-        if (!Check::fileExists($key)) {
-            $msg = Facilitator::onNoFileFound($key);
-
-            $this->app->display($msg, 0);
+        if (!$this->isValid($key)) {
+            $this->app->display($this->msg, 0);
             return;
         }
 
@@ -55,5 +40,54 @@ class EditSettingFile extends BasicCommand
         $msg = Facilitator::onEditSettingFileSuccess($key);
 
         $this->app->display($msg, 0);
+    }
+
+
+    /**
+     * Method to check if key isValid and good to proceed.
+     *
+     * @param  string  $key The setting file key.
+     *
+     * @return boolean
+     */
+    public function isValid($key)
+    {
+        $tests = array(
+            "file_not_exists" => !Check::fileExists($key),
+            "is_valid_key"    => !Check::isValidKey($key),
+            "is_no_project"   => empty($key),
+        );
+
+        $msgs = array(
+            "file_not_exists" => Facilitator::onNoFileFound($key),
+            "is_valid_key"    => Facilitator::onNoValidKey($key),
+            "is_no_project"   => Facilitator::onNoProjects(),
+        );
+
+        $valid = $this->validate($tests, $msgs);
+
+        return $valid;
+    }
+
+    /**
+     * Method to check to set the error msg.
+     *
+     * @param  array  $tests The conditions checked.
+     * @param  array  $msgs  The msgs for each test condition.
+     *
+     * @return boolean
+     */
+    public function validate($tests, $msgs)
+    {
+        $valid = true;
+
+        foreach ($tests as $test_key => $evaluation) {
+            if ($evaluation) {
+                $this->msg = $msgs[$test_key];
+                $valid = false;
+            }
+        }
+
+        return $valid;
     }
 }
