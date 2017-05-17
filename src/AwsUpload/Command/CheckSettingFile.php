@@ -20,6 +20,13 @@ use AwsUpload\Setting\SettingFiles;
 class CheckSettingFile extends BasicCommand
 {
     /**
+     * The error messsage.
+     *
+     * @var string
+     */
+    public $msg;
+
+    /**
      * Method used to chek a setting file for debug purpose.
      *
      * @return void
@@ -27,28 +34,12 @@ class CheckSettingFile extends BasicCommand
     public function run()
     {
         $key = $this->app->args['check'];
-        if (empty($key)) {
-            $msg = Facilitator::onNoProjects();
 
-            $this->app->display($msg, 0);
+        if (!$this->isValid($key)) {
+            $this->app->display($this->msg, 0);
             return;
         }
 
-        if (!Check::isValidKey($key)) {
-            $msg = Facilitator::onNoValidKey($key);
-
-            $this->app->display($msg, 0);
-            return;
-        }
-
-        if (!Check::fileExists($key)) {
-            $msg = Facilitator::onNoFileFound($key);
-
-            $this->app->display($msg, 0);
-            return;
-        }
-
-        
         $path = SettingFiles::getPath($key);
         $settings = SettingFiles::getObject($key);
 
@@ -70,5 +61,34 @@ class CheckSettingFile extends BasicCommand
 
         $msg = Facilitator::reportBanner($report);
         $this->app->display($msg, 0);
+    }
+
+    /**
+     * Method to check if key isValid and good to proceed.
+     *
+     * @param  string  $key The setting file key.
+     *
+     * @return boolean
+     */
+    public function isValid($key)
+    {
+        $valid = true;
+
+        if (empty($key)) {
+            $this->msg = Facilitator::onNoProjects();
+            $valid = false;
+        }
+
+        if ($valid && !Check::isValidKey($key)) {
+            $this->msg = Facilitator::onNoValidKey($key);
+            $valid = false;
+        }
+
+        if ($valid && !Check::fileExists($key)) {
+            $this->msg = Facilitator::onNoFileFound($key);
+            $valid = false;
+        }
+
+        return $valid;
     }
 }

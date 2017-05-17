@@ -140,20 +140,20 @@ EOT;
         // Json
         $msg = "File analysing:\n"
              . "<y>" . $report['path'] . "</y>" . "\n"
-             . "Json:             ". $is_valid_json . "\n"
+             . "Json:             " . $is_valid_json . "\n"
              . static::getJsonError();
 
         // Pem
         $msg .= "\n" 
               . "Pem File:\n"
               . "<y>" . $report['pem'] . "</y>" . "\n"
-              . "Pem:              ". $pem_exists . "\n";
+              . "Pem:              " . $pem_exists . "\n";
 
         if ($report['pem_exists']) {
             $msg .= "Pem Perm:         " . $is_400_perms . "\n";
 
             if (!$is_400_perms) {
-                $msg .=  'Try to type: chmod 400 ' . $report['pem'] . "\n";
+                $msg .= 'Try to type: chmod 400 ' . $report['pem'] . "\n";
             }
         }
 
@@ -161,7 +161,7 @@ EOT;
         $msg .= "\n"
               . "Local Folder:\n"
               . "<y>" . $report['local'] . "</y>" . "\n"
-              . "Local Folder:     ". $local_exists . "\n";
+              . "Local Folder:     " . $local_exists . "\n";
 
         return $msg;
     }
