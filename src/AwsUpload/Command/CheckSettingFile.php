@@ -74,18 +74,18 @@ class CheckSettingFile extends BasicCommand
     {
         $valid = true;
 
-        if (empty($key)) {
-            $this->msg = Facilitator::onNoProjects();
+        if (!Check::fileExists($key)) {
+            $this->msg = Facilitator::onNoFileFound($key);
             $valid = false;
         }
 
-        if ($valid && !Check::isValidKey($key)) {
+        if (!Check::isValidKey($key)) {
             $this->msg = Facilitator::onNoValidKey($key);
             $valid = false;
         }
 
-        if ($valid && !Check::fileExists($key)) {
-            $this->msg = Facilitator::onNoFileFound($key);
+        if (empty($key)) {
+            $this->msg = Facilitator::onNoProjects();
             $valid = false;
         }
 
