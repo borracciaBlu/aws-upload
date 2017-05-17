@@ -20,6 +20,13 @@ use AwsUpload\Setting\SettingFiles;
 class CopySettingFile extends BasicCommand
 {
     /**
+     * The error messsage.
+     *
+     * @var string
+     */
+    public $msg;
+
+    /**
      * Method used to chek a setting file for debug purpose.
      *
      * @return void
@@ -73,11 +80,14 @@ class CopySettingFile extends BasicCommand
             $valid = false;
         }
 
-        foreach ($keys as $key) {
-            if (!Check::isValidKey($key)) {
-                $this->msg = Facilitator::onNoValidKey($key);
-                $valid = false;
-            }
+        if (!Check::isValidKey($dest)) {
+            $this->msg = Facilitator::onNoValidKey($dest);
+            $valid = false;
+        }
+
+        if (!Check::isValidKey($source)) {
+            $this->msg = Facilitator::onNoValidKey($source);
+            $valid = false;
         }
 
         return $valid;
