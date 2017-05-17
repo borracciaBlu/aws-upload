@@ -29,41 +29,57 @@ class CopySettingFile extends BasicCommand
         $args = $this->app->args['copy'];
         $keys = explode(" ", $args);
 
-        if (empty($keys) || count($keys) < 2) {
-            $msg = Facilitator::onNoCopyArgs();
-
-            $this->app->display($msg, 0);
+        if (!$this->isValid($keys)) {
+            $this->app->display($this->msg, 0);
             return;
         }
 
         list($source, $dest) = $keys;
 
-        foreach ($keys as $key) {
-            if (!Check::isValidKey($key)) {
-                $msg = Facilitator::onNoValidKey($key);
-
-                $this->app->display($msg, 0);
-                return;
-            }
-        }
-
-        if (!Check::fileExists($source)) {
-            $msg = Facilitator::onNoFileFound($source);
-
-            $this->app->display($msg, 0);
-            return;
-        }
-
-        if (Check::fileExists($dest)) {
-            $msg = Facilitator::onKeyAlreadyExists($dest);
-
-            $this->app->display($msg, 0);
-            return;
-        }
-
         SettingFiles::copy($source, $dest);
         $msg = Facilitator::onNewSettingFileSuccess($dest);
 
         $this->app->display($msg, 0);
+    }
+
+
+    /**
+     * Method to check if keys isValid and good to proceed.
+     *
+     * @param  array $keys The setting file key.
+     *
+     * @return boolean
+     */
+    public function isValid($keys)
+    {
+        $valid = true;
+
+        if (empty($keys) || count($keys) < 2) {
+            $this->msg = Facilitator::onNoCopyArgs();
+            $valid = false;
+
+            return $valid;
+        }
+
+        list($source, $dest) = $keys;
+
+        if (Check::fileExists($dest)) {
+            $this->msg = Facilitator::onKeyAlreadyExists($dest);
+            $valid = false;
+        }
+
+        if (!Check::fileExists($source)) {
+            $this->msg = Facilitator::onNoFileFound($source);
+            $valid = false;
+        }
+
+        foreach ($keys as $key) {
+            if (!Check::isValidKey($key)) {
+                $this->msg = Facilitator::onNoValidKey($key);
+                $valid = false;
+            }
+        }
+
+        return $valid;
     }
 }

@@ -45,7 +45,7 @@ class CheckSettingFile extends BasicCommand
 
         $is_valid_json = Check::isValidJSON($path);
         $pem_exists    = file_exists($settings->pem);
-        $pem_perms     = ($pem_exists) ? decoct(fileperms($settings->pem)  & 0777) : '-';
+        $pem_perms     = ($pem_exists) ? decoct(fileperms($settings->pem) & 0777) : '-';
         $clean_local   = str_replace('*', '', $settings->local);
         $local_exists  = file_exists($clean_local);
 
