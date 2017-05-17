@@ -61,7 +61,7 @@ class CopySettingFile extends BasicCommand
     {
         $valid = true;
 
-        if (empty($keys) || count($keys) < 2) {
+        if (!$this->isValidArgs($keys)) {
             $this->msg = Facilitator::onNoCopyArgs();
             $valid = false;
 
@@ -80,16 +80,25 @@ class CopySettingFile extends BasicCommand
             $valid = false;
         }
 
-        if (!Check::isValidKey($dest)) {
-            $this->msg = Facilitator::onNoValidKey($dest);
-            $valid = false;
-        }
-
-        if (!Check::isValidKey($source)) {
-            $this->msg = Facilitator::onNoValidKey($source);
-            $valid = false;
+        foreach ($keys as $key) {
+            if (!Check::isValidKey($key)) {
+                $this->msg = Facilitator::onNoValidKey($key);
+                $valid = false;
+            }
         }
 
         return $valid;
+    }
+
+    /**
+     * Method to check the validity of the copy arguments
+     *
+     * @param  array  $keys The copy arguments.
+     *
+     * @return boolean
+     */
+    public function isValidArgs($keys)
+    {
+        return (empty($keys) || count($keys) < 2) ? false : true;
     }
 }
