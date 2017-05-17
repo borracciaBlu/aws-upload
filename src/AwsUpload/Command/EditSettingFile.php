@@ -17,7 +17,7 @@ use AwsUpload\Facilitator;
 use AwsUpload\Command\Command;
 use AwsUpload\Setting\SettingFiles;
 
-class EditSettingFile extends BasicCommand
+class EditSettingFile extends AdvancedCommand
 {
     /**
      * Method used to edit a setting file.
@@ -42,7 +42,6 @@ class EditSettingFile extends BasicCommand
         $this->app->display($msg, 0);
     }
 
-
     /**
      * Method to check if key isValid and good to proceed.
      *
@@ -65,28 +64,6 @@ class EditSettingFile extends BasicCommand
         );
 
         $valid = $this->validate($tests, $msgs);
-
-        return $valid;
-    }
-
-    /**
-     * Method to check to set the error msg.
-     *
-     * @param  array  $tests The conditions checked.
-     * @param  array  $msgs  The msgs for each test condition.
-     *
-     * @return boolean
-     */
-    public function validate($tests, $msgs)
-    {
-        $valid = true;
-
-        foreach ($tests as $test_key => $evaluation) {
-            if ($evaluation) {
-                $this->msg = $msgs[$test_key];
-                $valid = false;
-            }
-        }
 
         return $valid;
     }

@@ -17,15 +17,8 @@ use AwsUpload\Facilitator;
 use AwsUpload\Command\Command;
 use AwsUpload\Setting\SettingFiles;
 
-class CopySettingFile extends BasicCommand
+class CopySettingFile extends AdvancedCommand
 {
-    /**
-     * The error messsage.
-     *
-     * @var string
-     */
-    public $msg;
-
     /**
      * Method used to chek a setting file for debug purpose.
      *
@@ -48,7 +41,6 @@ class CopySettingFile extends BasicCommand
 
         $this->app->display($msg, 0);
     }
-
 
     /**
      * Method to check if keys isValid and good to proceed.
@@ -97,27 +89,5 @@ class CopySettingFile extends BasicCommand
     public function isValidArgs($keys)
     {
         return (empty($keys) || count($keys) < 2) ? false : true;
-    }
-
-    /**
-     * Method to check to set the error msg.
-     *
-     * @param  array  $tests The conditions checked.
-     * @param  array  $msgs  The msgs for each test condition.
-     *
-     * @return boolean
-     */
-    public function validate($tests, $msgs)
-    {
-        $valid = true;
-
-        foreach ($tests as $test_key => $evaluation) {
-            if ($evaluation) {
-                $this->msg = $msgs[$test_key];
-                $valid = false;
-            }
-        }
-
-        return $valid;
     }
 }

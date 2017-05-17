@@ -14,10 +14,10 @@ namespace AwsUpload\Command;
 
 use AwsUpload\Check;
 use AwsUpload\Facilitator;
-use AwsUpload\SettingFiles;
 use AwsUpload\Command\Command;
+use AwsUpload\Setting\SettingFiles;
 
-class NewSettingFile extends BasicCommand
+class NewSettingFile extends AdvancedCommand
 {
     /**
      * Method used tocreate a new setting file.
@@ -27,24 +27,9 @@ class NewSettingFile extends BasicCommand
     public function run()
     {
         $key = $this->app->args['new'];
-        if (empty($key)) {
-            $msg = Facilitator::onNoProjects();
 
-            $this->app->display($msg, 0);
-            return;
-        }
-
-        if (!Check::isValidKey($key)) {
-            $msg = Facilitator::onNoValidKey($key);
-
-            $this->app->display($msg, 0);
-            return;
-        }
-
-        if (Check::fileExists($key)) {
-            $msg = Facilitator::onKeyAlreadyExists($key);
-
-            $this->app->display($msg, 0);
+        if (!$this->isValid($key)) {
+            $this->app->display($this->msg, 0);
             return;
         }
 
@@ -52,5 +37,31 @@ class NewSettingFile extends BasicCommand
         $msg = Facilitator::onNewSettingFileSuccess($key);
 
         $this->app->display($msg, 0);
+    }
+
+    /**
+     * Method to check if key isValid and good to proceed.
+     *
+     * @param  string  $key The setting file key.
+     *
+     * @return boolean
+     */
+    public function isValid($key)
+    {
+        $tests = array(
+            "file_exists"   => Check::fileExists($key),
+            "is_valid_key"  => !Check::isValidKey($key),
+            "is_no_project" => empty($key),
+        );
+
+        $msgs = array(
+            "file_exists"   => Facilitator::onKeyAlreadyExists($key),
+            "is_valid_key"  => Facilitator::onNoValidKey($key),
+            "is_no_project" => Facilitator::onNoProjects(),
+        );
+
+        $valid = $this->validate($tests, $msgs);
+
+        return $valid;
     }
 }

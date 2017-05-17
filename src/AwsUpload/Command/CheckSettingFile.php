@@ -17,15 +17,8 @@ use AwsUpload\Facilitator;
 use AwsUpload\Command\Command;
 use AwsUpload\Setting\SettingFiles;
 
-class CheckSettingFile extends BasicCommand
+class CheckSettingFile extends AdvancedCommand
 {
-    /**
-     * The error messsage.
-     *
-     * @var string
-     */
-    public $msg;
-
     /**
      * Method used to chek a setting file for debug purpose.
      *
@@ -85,28 +78,6 @@ class CheckSettingFile extends BasicCommand
         );
 
         $valid = $this->validate($tests, $msgs);
-
-        return $valid;
-    }
-
-    /**
-     * Method to check to set the error msg.
-     *
-     * @param  array  $tests The conditions checked.
-     * @param  array  $msgs  The msgs for each test condition.
-     *
-     * @return boolean
-     */
-    public function validate($tests, $msgs)
-    {
-        $valid = true;
-
-        foreach ($tests as $test_key => $evaluation) {
-            if ($evaluation) {
-                $this->msg = $msgs[$test_key];
-                $valid = false;
-            }
-        }
 
         return $valid;
     }
