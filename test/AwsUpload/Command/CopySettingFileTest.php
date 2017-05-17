@@ -12,7 +12,8 @@ require_once __DIR__ . '/../BaseTestCase.php';
 class CopySettingFileTest extends BaseTestCase
 {
 
-    public function test_noKey_expectedNoProjectMsg()
+    // test isValidArgs
+    public function test_noKey_expected_NoArgsMsg()
     {
         $msg = Facilitator::onNoCopyArgs();
         $msg = Output::color($msg);
@@ -28,7 +29,8 @@ class CopySettingFileTest extends BaseTestCase
         $cmd->run();
     }
 
-    public function test_noValidKey_expectedNoValidKey()
+    // test isValidArgs
+    public function test_noValidKey_expected_NoArgsMsg_oneParam()
     {
         $msg = Facilitator::onNoCopyArgs();
         $msg = Output::color($msg);
@@ -44,8 +46,43 @@ class CopySettingFileTest extends BaseTestCase
         $cmd->run();
     }
 
+    // test isValidKey
+    public function test_noValidKey_expectedNoValidKey_first()
+    {
+        $msg = Facilitator::onNoValidKey('bbbb');
+        $msg = Output::color($msg);
+        $this->expectOutputString($msg);
+
+        self::clearArgv();
+        self::pushToArgv(array('asd.php', 'copy', 'aaa', 'bbbb'));
+
+        $aws = new AwsUpload();
+        $aws->is_phpunit = true;
+
+        $cmd = new \AwsUpload\Command\CopySettingFile($aws);
+        $cmd->run();
+    }
+
+    // test isValidKey
+    public function test_noValidKey_expectedNoValidKey_second()
+    {
+        $msg = Facilitator::onNoValidKey('aaa');
+        $msg = Output::color($msg);
+        $this->expectOutputString($msg);
+
+        self::clearArgv();
+        self::pushToArgv(array('asd.php', 'copy', 'aaa', 'bbb.bbb'));
+
+        $aws = new AwsUpload();
+        $aws->is_phpunit = true;
+
+        $cmd = new \AwsUpload\Command\CopySettingFile($aws);
+        $cmd->run();
+    }
+
+    // "file_not_exists"  => !Check::fileExists($source),
     public function test_validKeyNoExists_expectedNoFileFound()
-    {   
+    {
         $filesystem = new Filesystem();
         $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{}');
 
@@ -55,6 +92,27 @@ class CopySettingFileTest extends BaseTestCase
 
         self::clearArgv();
         self::pushToArgv(array('asd.php', 'copy', 'project-2.dev', 'project-3.dev'));
+
+        $aws = new AwsUpload();
+        $aws->is_phpunit = true;
+
+        $cmd = new \AwsUpload\Command\CopySettingFile($aws);
+        $cmd->run();
+    }
+
+    // "file_exists" => Check::fileExists($dest),
+    public function test_validKeyNoExists_expected_DestAlreadyExists()
+    {
+        $filesystem = new Filesystem();
+        $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{}');
+        $filesystem->dumpFile($this->directory . '/project-2.dev.json', '{}');
+
+        $msg = Facilitator::onKeyAlreadyExists('project-2.dev');
+        $msg = Output::color($msg);
+        $this->expectOutputString($msg);
+
+        self::clearArgv();
+        self::pushToArgv(array('asd.php', 'copy', 'project-1.dev', 'project-2.dev'));
 
         $aws = new AwsUpload();
         $aws->is_phpunit = true;

@@ -70,22 +70,21 @@ class CopySettingFile extends BasicCommand
 
         list($source, $dest) = $keys;
 
-        if (Check::fileExists($dest)) {
-            $this->msg = Facilitator::onKeyAlreadyExists($dest);
-            $valid = false;
-        }
+        $tests = array(
+            "file_exists"      => Check::fileExists($dest),
+            "file_not_exists"  => !Check::fileExists($source),
+            "is_valid_key_src" => !Check::isValidKey($source),
+            "is_valid_key_dst" => !Check::isValidKey($dest),
+        );
 
-        if (!Check::fileExists($source)) {
-            $this->msg = Facilitator::onNoFileFound($source);
-            $valid = false;
-        }
+        $msgs = array(
+            "file_exists"      => Facilitator::onKeyAlreadyExists($dest),
+            "file_not_exists"  => Facilitator::onNoFileFound($source),
+            "is_valid_key_src" => Facilitator::onNoValidKey($source),
+            "is_valid_key_dst" => Facilitator::onNoValidKey($dest),
+        );
 
-        foreach ($keys as $key) {
-            if (!Check::isValidKey($key)) {
-                $this->msg = Facilitator::onNoValidKey($key);
-                $valid = false;
-            }
-        }
+        $valid = $this->validate($tests, $msgs);
 
         return $valid;
     }
@@ -100,5 +99,28 @@ class CopySettingFile extends BasicCommand
     public function isValidArgs($keys)
     {
         return (empty($keys) || count($keys) < 2) ? false : true;
+    }
+
+
+    /**
+     * Method to check to set the error msg.
+     *
+     * @param  array  $tests The conditions checked.
+     * @param  array  $msgs  The msgs for each test condition.
+     *
+     * @return boolean
+     */
+    public function validate($tests, $msgs)
+    {
+        $valid = true;
+
+        foreach ($tests as $test_key => $evaluation) {
+            if ($evaluation) {
+                $this->msg = $msgs[$test_key];
+                $valid = false;
+            }
+        }
+
+        return $valid;
     }
 }
