@@ -56,7 +56,7 @@ class AwsUpload
     /**
      * It containst to arguments passed to the shell script.
      *
-     * @var array
+     * @var \cli\Arguments
      */
     public $args;
 
