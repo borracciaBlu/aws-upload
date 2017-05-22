@@ -21,7 +21,7 @@ class ListEnvironmentsTest extends BaseTestCase
         $aws = new AwsUpload();
         $aws->is_phpunit = true;
 
-        $cmd = new \AwsUpload\Command\ListEnvironments($aws);
+        $cmd = new \AwsUpload\Command\ListEnvs($aws);
         $cmd->run();
     }
 
@@ -51,7 +51,7 @@ To get the envs from one of them, run (for example):
         $aws = new AwsUpload();
         $aws->is_phpunit = true;
 
-        $cmd = new \AwsUpload\Command\ListEnvironments($aws);
+        $cmd = new \AwsUpload\Command\ListEnvs($aws);
         $cmd->run();
     }
 }

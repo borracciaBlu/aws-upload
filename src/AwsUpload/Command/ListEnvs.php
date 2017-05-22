@@ -16,7 +16,7 @@ use AwsUpload\Facilitator;
 use AwsUpload\Command\Command;
 use AwsUpload\Setting\SettingFiles;
 
-class ListEnvironments extends BasicCommand
+class ListEnvs extends AdvancedCommand
 {
     /**
      * Method used to print the environments available for a project.
@@ -34,25 +34,43 @@ class ListEnvironments extends BasicCommand
         $quiet      = $this->app->is_quiet;
         $projFilter = $this->app->args['envs'];
 
-        $projs = SettingFiles::getProjs();
-        if (count($projs) === 0 && !$quiet) {
-            $msg = Facilitator::onNoProjects();
-
-            $this->app->display($msg, 0);
+        if (!$this->isValid($projFilter) && !$quiet) {
+            $this->app->display($this->msg, 0);
             return;
         }
 
-        $envs = SettingFiles::getEnvs($projFilter);
-        if (count($envs) === 0 && !$quiet) {
-            $msg = Facilitator::onGetEnvsForProj($projFilter);
-
-            $this->app->display($msg, 0);
-            return;
-        }
+        $envs  = SettingFiles::getEnvs($projFilter);
 
         $envs = implode(' ', $envs);
-        $msg = $envs . "\n";
+        $msg  = $envs . "\n";
 
         $this->app->display($msg, 0);
+    }
+
+    /**
+     * Method to check if key isValid and good to proceed.
+     *
+     * @param  string  $projFilter The filter to get the envs.
+     *
+     * @return boolean
+     */
+    public function isValid($projFilter)
+    {
+        $projs = SettingFiles::getProjs();
+        $envs  = SettingFiles::getEnvs($projFilter);
+
+        $tests = array(
+            "is_no_env"     => count($envs) === 0,
+            "is_no_project" => count($projs) === 0,
+        );
+
+        $msgs = array(
+            "is_no_env"     => Facilitator::onGetEnvsForProj($projFilter),
+            "is_no_project" => Facilitator::onNoProjects(),
+        );
+
+        $valid = $this->validate($tests, $msgs);
+
+        return $valid;
     }
 }

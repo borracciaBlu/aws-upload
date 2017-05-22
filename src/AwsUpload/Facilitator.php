@@ -251,8 +251,10 @@ EOT;
             $next .= "  +  <g>" . $proj . "</g>\n";
         }
 
-        $next .= "\nTo get the envs from one of them, run (for example):\n\n" .
-                 "   aws-upload -e " . $projs[0] . "\n";
+        if (count($projs) > 0) {
+            $next .= "\nTo get the envs from one of them, run (for example):\n\n" .
+                     "   aws-upload -e " . $projs[0] . "\n";
+        }
 
         return $msg . $next . "\n";
     }

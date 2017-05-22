@@ -173,7 +173,7 @@ class AwsUpload
             "version" => "AwsUpload\Command\Version",
             "keys" => "AwsUpload\Command\ListKeys",
             "projs" => "AwsUpload\Command\ListProjects",
-            "envs" => "AwsUpload\Command\ListEnvironments",
+            "envs" => "AwsUpload\Command\ListEnvs",
             "new" => "AwsUpload\Command\NewSettingFile",
             "edit" => "AwsUpload\Command\EditSettingFile",
             "check" => "AwsUpload\Command\CheckSettingFile",

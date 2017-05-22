@@ -117,4 +117,16 @@ class SettingFilesTest extends BaseTestCase
         $this->assertEquals(['project-1', 'project-2'], $projs);
         $this->assertEquals(['dev'], $envs);
     }
+
+    public function test_noArgs()
+    {
+        $filesystem = new Filesystem();
+        $filesystem->dumpFile($this->directory . '/project-2.dev.json', '{}');
+        $filesystem->dumpFile($this->directory . '/project-1.prod.json', '{}');
+        $filesystem->dumpFile($this->directory . '/project-1.staging.json', '{}');
+
+        $envs = SettingFiles::getEnvs('');
+
+        $this->assertEquals([], $envs);
+    }
 }
