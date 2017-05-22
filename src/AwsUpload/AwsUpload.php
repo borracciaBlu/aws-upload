@@ -167,6 +167,26 @@ class AwsUpload
      */
     public function getCmdName()
     {
+        $cmd = $this->fetchArgsCmd();
+
+        if (empty($cmd)) {
+            $cmd = 'AwsUpload\Command\FullInfo';
+
+            if ($this->hasWildArgs()) {
+                $cmd = 'AwsUpload\Command\Upload';
+            }
+        }
+
+        return $cmd;
+    }
+
+    /**
+     * Method to check cmd to run against list of cmds with arguments.
+     *
+     * @return string
+     */
+    public function fetchArgsCmd()
+    {
         $cmd = '';
         $cmdList = array(
             "help" => "AwsUpload\Command\Help",
@@ -185,14 +205,6 @@ class AwsUpload
         foreach ($cmdList as $arg => $cmdName) {
             if ($this->args[$arg] && empty($cmd)) {
                 $cmd = $cmdName;
-            }
-        }
-
-        if (empty($cmd)) {
-            $cmd = 'AwsUpload\Command\FullInfo';
-
-            if ($this->hasWildArgs()) {
-                $cmd = 'AwsUpload\Command\Upload';
             }
         }
 
