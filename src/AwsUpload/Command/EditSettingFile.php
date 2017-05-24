@@ -26,7 +26,7 @@ class EditSettingFile extends AdvancedCommand
      */
     public function run()
     {
-        $key = $this->app->args['edit'];
+        $key = $this->app->args->getFirst('edit');
 
         if (!$this->isValid($key)) {
             $this->app->display($this->msg, 0);

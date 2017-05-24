@@ -32,7 +32,7 @@ class ListEnvs extends AdvancedCommand
     public function run()
     {
         $quiet      = $this->app->is_quiet;
-        $projFilter = $this->app->args['envs'];
+        $projFilter = $this->app->args->getFirst('envs');
 
         if (!$this->isValid($projFilter) && !$quiet) {
             $this->app->display($this->msg, 0);

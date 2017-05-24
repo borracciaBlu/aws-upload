@@ -24,6 +24,7 @@
       <file>./test/AwsUpload/Command/CheckSettingFileTest.php</file>
       <file>./test/AwsUpload/Setting/SettingFilesTest.php</file>
       <file>./test/AwsUpload/Setting/SettingFolderTest.php</file>
+      <file>./test/AwsUpload/Io/ArgsTest.php</file>
       <file>./test/AwsUpload/Io/OutputTest.php</file>
       <file>./test/AwsUpload/AwsUploadTest.php </file>
       <file>./test/AwsUpload/CheckTest.php</file>

@@ -26,7 +26,7 @@ class NewSettingFile extends AdvancedCommand
      */
     public function run()
     {
-        $key = $this->app->args['new'];
+        $key = $this->app->args->getFirst('new');
 
         if (!$this->isValid($key)) {
             $this->app->display($this->msg, 0);

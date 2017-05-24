@@ -26,7 +26,7 @@ class CheckSettingFile extends AdvancedCommand
      */
     public function run()
     {
-        $key = $this->app->args['check'];
+        $key = $this->app->args->getFirst('check');
 
         if (!$this->isValid($key)) {
             $this->app->display($this->msg, 0);

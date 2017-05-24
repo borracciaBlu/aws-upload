@@ -26,8 +26,7 @@ class CopySettingFile extends AdvancedCommand
      */
     public function run()
     {
-        $args = $this->app->args['copy'];
-        $keys = explode(" ", $args);
+        $keys = $this->app->args->getParams('copy');
 
         if (!$this->isValid($keys)) {
             $this->app->display($this->msg, 0);

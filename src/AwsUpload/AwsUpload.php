@@ -12,7 +12,7 @@
 
 namespace AwsUpload;
 
-use cli\Arguments;
+use AwsUpload\Io\Args;
 use AwsUpload\Io\Output;
 
 class AwsUpload
@@ -56,7 +56,7 @@ class AwsUpload
     /**
      * It containst to arguments passed to the shell script.
      *
-     * @var \cli\Arguments
+     * @var \AwsUpload\Io\Args
      */
     public $args;
 
@@ -78,65 +78,27 @@ class AwsUpload
 
         $this->version = $verison;
 
-        $arguments = new Arguments();
-        $arguments->addFlag(array('quiet', 'q'), 'Turn off verboseness, without being quiet');
-        $arguments->addFlag(array('verbose', 'v'), 'Increase the verbosity of messages');
-        $arguments->addFlag(array('version', 'V'), 'Display this application version');
-        $arguments->addFlag(array('help', 'h'), 'Display this help message');
-        $arguments->addFlag(array('keys', 'k'), 'Print all the projects\' keys');
-        $arguments->addFlag(array('projs', 'p'), 'Print all the projects');
-        $arguments->addFlag(array('self-update', 'selfupdate'), 'Updates aws-upload to the latest version');
-        $arguments->addFlag('simulate', 'Simulate the command without to upload anything');
+        $args = new Args();
+        $args->addFlags(array(
+            'quiet'      => array('quiet', 'q'),
+            'verbose'    => array('verbose', 'v'),
+            'version'    => array('version', 'V'),
+            'help'       => array('help', 'h'),
+            'keys'       => array('keys', 'k'),
+            'projs'      => array('projs', 'p'),
+            'selfupdate' => array('self-update', 'selfupdate'),
+            'simulate'   => array('simulate')
+        ));
+        $args->addCmds(array(
+            'envs'  => array('envs', 'e'),
+            'new'   => array('new', 'n'),
+            'edit'  => array('edit', 'E'),
+            'copy'  => array('copy', 'cp'),
+            'check' => array('check', 'c'),
+        ));
+        $args->parse();
 
-        $arguments->addOption(
-            array('envs', 'e'),
-            array(
-                'default'     => '',
-                'description' => 'Print all the environments'
-            )
-        );
-        $arguments->addOption(
-            array('new', 'n'),
-            array(
-                'default'     => '',
-                'description' => 'Create a new setting file'
-            )
-        );
-        $arguments->addOption(
-            array('edit', 'E'),
-            array(
-                'default'     => '',
-                'description' => 'Edit a setting file'
-            )
-        );
-        $arguments->addOption(
-            array('copy', 'cp'),
-            array(
-                'default'     => '',
-                'description' => 'Copy a setting file'
-            )
-        );
-        $arguments->addOption(
-            array('check', 'c'),
-            array(
-                'default'     => '',
-                'description' => 'Check a setting file'
-            )
-        );
-
-        // collect all the errors rised by cli\Arguments
-        // [cli\Arguments] no value given for -e
-        // /vendor/wp-cli/php-cli-tools/lib/cli/Arguments.php:433
-        // /vendor/wp-cli/php-cli-tools/lib/cli/Arguments.php:465
-        // /vendor/wp-cli/php-cli-tools/lib/cli/Arguments.php:402
-        // /src/AwsUpload/AwsUpload.php:86
-        $errorHandler = function () {
-        };
-        set_error_handler($errorHandler);
-        $arguments->parse();
-        restore_error_handler();
-
-        $this->args = $arguments;
+        $this->args = $args;
         $this->out = new Output();
     }
 
@@ -147,11 +109,11 @@ class AwsUpload
      */
     public function run()
     {
-        if ($this->args['verbose']) {
+        if ($this->args->verbose) {
             $this->is_verbose = true;
         }
         
-        if ($this->args['quiet']) {
+        if ($this->args->quiet) {
             $this->is_quiet = true;
         }
 
@@ -172,7 +134,7 @@ class AwsUpload
         if (empty($cmd)) {
             $cmd = 'AwsUpload\Command\FullInfo';
 
-            if ($this->hasWildArgs()) {
+            if ($this->args->wild) {
                 $cmd = 'AwsUpload\Command\Upload';
             }
         }
@@ -199,11 +161,10 @@ class AwsUpload
             "check" => "AwsUpload\Command\CheckSettingFile",
             "copy" => "AwsUpload\Command\CopySettingFile",
             "selfupdate" => "AwsUpload\Command\SelfUpdate",
-            "self-update" => "AwsUpload\Command\SelfUpdate",
         );
 
         foreach ($cmdList as $arg => $cmdName) {
-            if ($this->args[$arg] && empty($cmd)) {
+            if ($this->args->{$arg} && empty($cmd)) {
                 $cmd = $cmdName;
             }
         }
@@ -257,44 +218,5 @@ class AwsUpload
         if ($this->is_verbose) {
             $this->inline($msg . "\n\n");
         }
-    }
-
-    /**
-     * Method to check if there are spare wild arguments to use as
-     * input to select the project and the environment.
-     *
-     * @return boolean
-     */
-    public function hasWildArgs()
-    {
-        $args = $this->getWildArgs();
-        $hasWildArgs = count($args) > 0;
-
-        return $hasWildArgs;
-    }
-
-    /**
-     * Get the wild argument.
-     *
-     * The case is when someone is typing:
-     *     aws-upload proj env
-     *
-     * @return array
-     */
-    public function getWildArgs()
-    {
-        $args = $_SERVER['argv'];
-
-        // remove script name
-        unset($args[0]);
-
-        $toDelete = array('-v', '--verbose', '--simulate', '-q', '--quiet');
-        foreach ($args as $key => $arg) {
-            if (in_array($arg, $toDelete)) {
-                unset($args[$key]);
-            }
-        }
-
-        return array_values($args);
     }
 }

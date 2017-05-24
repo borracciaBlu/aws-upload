@@ -32,7 +32,7 @@ class Upload extends BasicCommand
      */
     public function run()
     {
-        $items = $this->app->getWildArgs();
+        $items = $this->app->args->getParams('wild');
         list($proj, $env) = SettingFiles::extractProjEnv($items);
 
         $key = $proj . "." . $env;
@@ -49,7 +49,7 @@ class Upload extends BasicCommand
         $msg = Facilitator::rsyncBanner($proj, $env, $rsync->cmd);
         $this->app->inline($msg);
 
-        if ($this->app->args['simulate']) {
+        if ($this->app->args->simulate) {
             $msg = 'Simulation mode' . "\n";
 
             $this->app->display($msg, 0);

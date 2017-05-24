@@ -8,62 +8,24 @@ require_once __DIR__ . '/BaseTestCase.php';
 
 class AwsUploadTest extends BaseTestCase
 {
-    public function test_hasWildArgs_noArgs_false()
+    public function test_getCmdName()
     {
         self::clearArgv();
-        self::pushToArgv(array('asd.php'));
+        self::pushToArgv(array('asd.php', '-e' , 'asd'));
 
         $aws = new AwsUpload();
-        $hasWildArgs = $aws->hasWildArgs();
-        $this->assertEquals(false, $hasWildArgs);
+        $cmd = $aws->getCmdName();
+        $this->assertEquals('AwsUpload\Command\ListEnvs', $cmd);
     }
 
-    public function test_hasWildArgs_noise_false()
-    {
-    
-        self::clearArgv();
-        self::pushToArgv(array('asd.php', '-v', '--verbose', '--simulate'));
-
-        $aws = new AwsUpload();
-        $hasWildArgs = $aws->hasWildArgs();
-        $this->assertEquals(false, $hasWildArgs);
-    }
-
-    public function test_hasWildArgs_yesWithNoise_true()
+    public function test_getCmdName_withQuiet()
     {
         self::clearArgv();
-        self::pushToArgv(array('asd.php', 'proj', 'env', '-v', '--verbose', '--simulate'));
+        self::pushToArgv(array('asd.php', '-p' , '-q', 'asd'));
 
         $aws = new AwsUpload();
-        $wildArgs = $aws->getWildArgs();
-        $hasWildArgs = $aws->hasWildArgs();
-        
-        $this->assertEquals(true, $hasWildArgs);
-        $this->assertEquals(array('proj', 'env'), array_values($wildArgs));
-    }
-
-    /**
-     * This test is strictly related to cli\Arguments
-     *
-     * test case:
-     *     aws-upload -es
-     *
-     * [cli\Arguments] no value given for -e
-     * /vendor/wp-cli/php-cli-tools/lib/cli/Arguments.php:433
-     * /vendor/wp-cli/php-cli-tools/lib/cli/Arguments.php:465
-     * /vendor/wp-cli/php-cli-tools/lib/cli/Arguments.php:402
-     * /src/AwsUpload/AwsUpload.php:86
-     */
-    public function testSuppressErrorsPhpCliTools()
-    {
-        self::clearArgv();
-        self::pushToArgv(array('asd.php', '-es'));
-
-        $aws = new AwsUpload();
-        $wildArgs = $aws->getWildArgs();
-        $hasWildArgs = $aws->hasWildArgs();
-
-        $this->assertEquals(true, $hasWildArgs);
-        $this->assertEquals(array('-es'), array_values($wildArgs));
+        $cmd = $aws->getCmdName();
+        $this->assertEquals('AwsUpload\Command\ListProjects', $cmd);
+        $this->assertEquals(true, $aws->args->quiet);
     }
 }
