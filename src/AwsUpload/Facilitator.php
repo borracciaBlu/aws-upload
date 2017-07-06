@@ -62,7 +62,18 @@ EOT;
         $msg = <<<EOT
         
 <y>Usage:</y>
-  aws-upload [options] [project] [environment]
+  aws-upload <proj> <env> [--simulate] [-q | --quiet] [-v | --verbose]
+  
+  aws-upload -h | --help
+  aws-upload -V | --version
+
+  aws-upload keys
+  aws-upload new <key>               # The <key> format is proj.env eg: landing.test
+  aws-upload edit <key>              # The <key> format is proj.env eg: landing.test
+  aws-upload copy <src> <dest>       # <src> and <dest> are in the <key> format proj.env
+  aws-upload check <key>             # The <key> format is proj.env eg: landing.test
+
+  aws-upload self-update | selfupdate
 
 <y>Output Options:</y>
 
