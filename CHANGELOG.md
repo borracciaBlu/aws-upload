@@ -1,6 +1,14 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 1.7.2 - 2017-07-12
+### Changed
+- Improve help section
+- Improve abstraction
+
+### Bugfix
+- Fixed issue on new
+
 ## 1.7.1 - 2017-05-11  
 ### Added  
 - Add new feature `aws-upload copy proj.env newproj.dev` to copy a setting file. 
