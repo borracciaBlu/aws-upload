@@ -71,12 +71,12 @@ class AwsUpload
      * Initializes the command.
      *
      * The main purpose is to define the args for the script
-     * and populate `$thhis->args`.
+     * and populate `$this->args`.
      */
-    public function __construct($verison = 'test')
+    public function __construct($version = 'test')
     {
 
-        $this->version = $verison;
+        $this->version = $version;
 
         $args = new Args();
         $args->addFlags(array(
