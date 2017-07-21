@@ -57,7 +57,7 @@ class SettingFiles
     {
         $path = SettingFolder::getPath();
         $path = $path . '/' . $key . '.json';
-        
+
         return $path;
     }
 
@@ -96,7 +96,7 @@ class SettingFiles
             }
         }
 
-        return $keys;        
+        return $keys;
     }
 
     /**

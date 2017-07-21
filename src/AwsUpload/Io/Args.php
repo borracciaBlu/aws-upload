@@ -44,7 +44,7 @@ class Args
     protected $cmds = array();
 
     /**
-     * Multi dimensional array of boolean values to define if 
+     * Multi dimensional array of boolean values to define if
      * a flag/option has been used.
      *
      * @var array
@@ -52,7 +52,7 @@ class Args
     protected $props = array("wild" => false);
 
     /**
-     * Multi dimensional array to contain the values for 
+     * Multi dimensional array to contain the values for
      * a flag/option used.
      *
      * @var array
@@ -68,7 +68,7 @@ class Args
     protected $state = "wild";
 
     /**
-     * The constructor for the Args. 
+     * The constructor for the Args.
      * You can define an alternative input source.
      *
      * @param array $input Alternative input.
@@ -80,7 +80,7 @@ class Args
     }
 
     /**
-     * Magic method to access the $props array. 
+     * Magic method to access the $props array.
      *
      * E.g.: $args->quiet
      *
@@ -124,7 +124,7 @@ class Args
      * Add the flags to parse.
      *
      * E.g.: $flags = [
-     *                  "copy" => ["copy", "cp"], 
+     *                  "copy" => ["copy", "cp"],
      *                  "verbose" => ["verbose", "v"],
      *              ];
      *
@@ -139,7 +139,7 @@ class Args
      * Add the flags and options to parse as commands.
      *
      * E.g.: $cmd = [
-     *                  "copy" => ["copy", "cp"], 
+     *                  "copy" => ["copy", "cp"],
      *                  "verbose" => ["verbose", "v"],
      *              ];
      *
@@ -208,13 +208,13 @@ class Args
      */
     public function getCleanInput()
     {
-        $input = $this->input; 
+        $input = $this->input;
 
         if ($this->is_argv) {
             unset($input[0]);
         }
 
-        return $input;        
+        return $input;
     }
 
     /**
@@ -246,7 +246,7 @@ class Args
     /**
      * Check if it's a isFlag
      *
-     * @param  string  $arg One of the input values. 
+     * @param  string  $arg One of the input values.
      *
      * @return boolean
      */
@@ -270,7 +270,7 @@ class Args
     /**
      * Check if it's a isCmd
      *
-     * @param  string  $arg One of the input values. 
+     * @param  string  $arg One of the input values.
      *
      * @return boolean
      */
@@ -289,6 +289,6 @@ class Args
             }
         }
 
-        return $is_cmd; 
+        return $is_cmd;
     }
 }

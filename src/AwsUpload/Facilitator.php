@@ -155,7 +155,7 @@ EOT;
              . static::getJsonError();
 
         // Pem
-        $msg .= "\n" 
+        $msg .= "\n"
               . "Pem File:\n"
               . "<y>" . $report['pem'] . "</y>" . "\n"
               . "Pem:              " . $pem_exists . "\n";
@@ -213,7 +213,7 @@ EOT;
      */
     public static function plot($condition, $labels)
     {
-        return ($condition) ? "<g>" . $labels[0] . "</g>" : "<r>" . $labels[0] . "</r>";
+        return ($condition) ? "<g>" . $labels[0] . "</g>" : "<r>" . $labels[1] . "</r>";
     }
 
     /**
