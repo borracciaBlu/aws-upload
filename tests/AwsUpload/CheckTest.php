@@ -1,9 +1,10 @@
 <?php
 
-use AwsUpload\Check;
-use Symfony\Component\Filesystem\Filesystem;
+namespace AwsUpload\Tests;
 
-require_once __DIR__ . '/BaseTestCase.php';
+use AwsUpload\Check;
+use AwsUpload\Tests\BaseTestCase;
+use Symfony\Component\Filesystem\Filesystem;
 
 class CheckTest extends BaseTestCase
 {

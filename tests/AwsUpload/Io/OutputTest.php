@@ -1,9 +1,9 @@
 <?php
 
+namespace AwsUpload\Tests\Settings;
+
 use AwsUpload\Io\Output;
-
-require_once __DIR__ . '/../BaseTestCase.php';
-
+use AwsUpload\Tests\BaseTestCase;
 
 class OutputTest extends BaseTestCase
 {

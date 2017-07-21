@@ -1,9 +1,10 @@
 <?php
 
+namespace AwsUpload\Tests\Settings;
+
+use AwsUpload\Tests\BaseTestCase;
 use AwsUpload\Setting\SettingFiles;
 use Symfony\Component\Filesystem\Filesystem;
-
-require_once __DIR__ . '/../BaseTestCase.php';
 
 class SettingFilesTest extends BaseTestCase
 {

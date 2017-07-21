@@ -1,10 +1,10 @@
 <?php
 
+namespace AwsUpload\Tests\Settings;
+
 use AwsUpload\AwsUpload;
+use AwsUpload\Tests\BaseTestCase;
 use Symfony\Component\Filesystem\Filesystem;
-
-require_once __DIR__ . '/../BaseTestCase.php';
-
 
 class ListKeysTest extends BaseTestCase
 {

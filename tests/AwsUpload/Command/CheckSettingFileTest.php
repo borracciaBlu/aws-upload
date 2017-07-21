@@ -1,12 +1,12 @@
 <?php
 
+namespace AwsUpload\Tests\Settings;
+
 use AwsUpload\Io\Output;
 use AwsUpload\AwsUpload;
 use AwsUpload\Facilitator;
+use AwsUpload\Tests\BaseTestCase;
 use Symfony\Component\Filesystem\Filesystem;
-
-require_once __DIR__ . '/../BaseTestCase.php';
-
 
 class CheckSettingsFileTest extends BaseTestCase
 {

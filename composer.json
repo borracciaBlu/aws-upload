@@ -18,7 +18,8 @@
     },
     "require-dev": {
         "symfony/filesystem": "^3.2",
-        "phpunit/phpunit": "^5.6"
+        "phpunit/phpunit": "^5.6",
+        "squizlabs/php_codesniffer": "3.*"
     },
     "autoload": {
         "psr-4": {
@@ -27,13 +28,13 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "AwsUpload\\Tests\\": "tests"
+            "AwsUpload\\Tests\\": "tests/AwsUpload"
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit --colors=always test/AwsUpload",
-        "cs": "phpcs --standard=PSR2 src/AwsUpload",
-        "cbf": "phpcbf --standard=PSR2 src/AwsUpload"
+        "test": "vendor/bin/phpunit -c phpunit.xml.dist",
+        "cs": "vendor/bin/phpcs --standard=PSR2 src/AwsUpload",
+        "cbf": "vendor/bin/phpcbf --standard=PSR2 src/AwsUpload"
     },
     "bin": ["aws-upload"]
 }

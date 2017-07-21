@@ -1,5 +1,6 @@
 <?php
-require __DIR__.'/../../vendor/autoload.php';
+
+namespace AwsUpload\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
@@ -18,7 +19,9 @@ abstract class BaseTestCase extends TestCase
     public function setUp()
     {
         $this->directoryBuild = __DIR__.'/../../build/';
-        $this->directory = __DIR__.'/../../build/' . strtolower(get_class($this));
+        $uid = strtolower(get_class($this));
+        $uid = str_replace('\\', '-', $uid);
+        $this->directory = __DIR__.'/../../build/' . $uid;
         putenv("AWSUPLOAD_HOME=" . $this->directory);
 
         $filesystem = new Filesystem();

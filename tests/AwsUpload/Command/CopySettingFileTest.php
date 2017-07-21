@@ -1,13 +1,13 @@
 <?php
 
+namespace AwsUpload\Tests\Settings;
+
 use AwsUpload\Io\Output;
 use AwsUpload\AwsUpload;
-use AwsUpload\Setting\SettingFiles;
 use AwsUpload\Facilitator;
+use AwsUpload\Tests\BaseTestCase;
+use AwsUpload\Setting\SettingFiles;
 use Symfony\Component\Filesystem\Filesystem;
-
-require_once __DIR__ . '/../BaseTestCase.php';
-
 
 class CopySettingFileTest extends BaseTestCase
 {

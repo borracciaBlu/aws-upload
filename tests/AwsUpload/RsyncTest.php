@@ -1,22 +1,22 @@
 <?php
 
+namespace AwsUpload\Tests;
+
 use AwsUpload\Rsync;
-
-require_once __DIR__ . '/BaseTestCase.php';
-
+use AwsUpload\Tests\BaseTestCase;
 
 class RsyncTest extends BaseTestCase
 {
 
     public function test_new_string_exception()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(\Exception::class);
         $rsync = new Rsync('');
     }
 
     public function test_new_array_exception()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(\Exception::class);
         $rsync = new Rsync(array());
     }
 
