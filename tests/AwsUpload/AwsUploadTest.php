@@ -3,14 +3,13 @@ namespace AwsUpload\Tests;
 
 use AwsUpload\AwsUpload;
 use AwsUpload\Tests\BaseTestCase;
-use Symfony\Component\Filesystem\Filesystem;
 
 class AwsUploadTest extends BaseTestCase
 {
     public function test_getCmdName()
     {
         self::clearArgv();
-        self::pushToArgv(array('asd.php', '-e' , 'asd'));
+        self::pushToArgv(array('asd.php', '-e', 'asd'));
 
         $aws = new AwsUpload();
         $cmd = $aws->getCmdName();
@@ -20,7 +19,7 @@ class AwsUploadTest extends BaseTestCase
     public function test_getCmdName_withQuiet()
     {
         self::clearArgv();
-        self::pushToArgv(array('asd.php', '-p' , '-q', 'asd'));
+        self::pushToArgv(array('asd.php', '-p', '-q', 'asd'));
 
         $aws = new AwsUpload();
         $cmd = $aws->getCmdName();

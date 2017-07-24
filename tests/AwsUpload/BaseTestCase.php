@@ -58,7 +58,7 @@ abstract class BaseTestCase extends TestCase
     /**
      * Add one or more element(s) at the end of the $_SERVER['argv'] array
      *
-     * @param array $args Value to add to the argv array.
+     * @param string[] $args Value to add to the argv array.
      */
     public static function pushToArgv($args)
     {

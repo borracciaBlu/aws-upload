@@ -84,6 +84,11 @@ class Args
      *
      * E.g.: $args->quiet
      *
+     * @property bool quiet   If args quiet is present.
+     * @property bool envs    If args envs is present.
+     * @property bool projs   If args projs is present.
+     * @property bool vestion If args version is present.
+     *
      * @param  string $key The property we are trying to access.
      *
      * @return bool

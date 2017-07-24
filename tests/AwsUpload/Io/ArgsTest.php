@@ -10,12 +10,12 @@ class ArgsTest extends BaseTestCase
 
     public function test_flags()
     {
-    	$args = new Args(array('e', '-q', 'v-', 'P'));
+        $args = new Args(array('e', '-q', 'v-', 'P'));
         $args->addFlags(array(
-        	'projs' => array('p', 'projs'),
-        	'envs' => array('e', 'envs'),
-        	'quiet' => array('quiet', 'q'),
-        	'version' => array('version', 'v'),
+            'projs' => array('p', 'projs'),
+            'envs' => array('e', 'envs'),
+            'quiet' => array('quiet', 'q'),
+            'version' => array('version', 'v'),
         ));
         $args->parse();
         
@@ -27,11 +27,11 @@ class ArgsTest extends BaseTestCase
 
     public function test_cmds()
     {
-		$args = new Args(array('e', 'P'));
+        $args = new Args(array('e', 'P'));
         $args->addCmds(array(
-        	'projs' => array('p', 'projs'),
-        	'envs' => array('e', 'envs'),
-        	'version' => array('version', 'v'),
+            'projs' => array('p', 'projs'),
+            'envs' => array('e', 'envs'),
+            'version' => array('version', 'v'),
         ));
         $args->parse();
         
@@ -42,11 +42,11 @@ class ArgsTest extends BaseTestCase
 
     public function test_cmd_with_flags()
     {
-		$args = new Args(array('e', '-q', 'P'));
+        $args = new Args(array('e', '-q', 'P'));
         $args->addCmds(array(
-        	'projs' => array('p', 'projs'),
-        	'envs' => array('e', 'envs'),
-        	'version' => array('version', 'v'),
+            'projs' => array('p', 'projs'),
+            'envs' => array('e', 'envs'),
+            'version' => array('version', 'v'),
         ));
         $args->parse();
 
