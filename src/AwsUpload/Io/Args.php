@@ -15,8 +15,8 @@ namespace AwsUpload\Io;
 /**
  * @property bool quiet   If args quiet is present.
  * @property bool envs    If args envs is present.
- * @property bool projs   If args projs is present.
- * @property bool vestion If args version is present.
+ * @property bool proj    If args proj is present.
+ * @property bool version If args version is present.
  * @property bool verbose If args verbose is present.
  * @property bool wild    If args wild is present.
  */
@@ -104,7 +104,7 @@ class Args
     /**
      * Method to get the params collected for a specific command.
      *
-     * @param sting $key The command key.
+     * @param string $key The command key.
      *
      * @return array
      */
@@ -117,7 +117,7 @@ class Args
     /**
      * Method to get the first element from params[key].
      *
-     * @param sting $key The command key.
+     * @param string $key The command key.
      *
      * @return string
      */
