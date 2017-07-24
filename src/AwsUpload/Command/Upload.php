@@ -14,6 +14,7 @@ namespace AwsUpload\Command;
 
 use AwsUpload\Check;
 use AwsUpload\Rsync;
+use AwsUpload\Status;
 use AwsUpload\Facilitator;
 use AwsUpload\Setting\SettingFiles;
 use AwsUpload\Command\BasicCommand;
@@ -28,7 +29,7 @@ class Upload extends BasicCommand
      *     2 - convert the file to an obj
      *     3 - run rsync with the details in the obj
      *
-     * @return void
+     * @return int The status code.
      */
     public function run()
     {
@@ -38,9 +39,9 @@ class Upload extends BasicCommand
         $key = $proj . "." . $env;
         if (!Check::fileExists($key)) {
             $msg = Facilitator::onNoFileFound($proj, $env);
-            
-            $this->app->display($msg, 0);
-            return;
+            $this->app->inline($msg);
+
+            return Status::ERROR_INVALID;
         }
 
         $settings = SettingFiles::getObject($key);
@@ -51,11 +52,11 @@ class Upload extends BasicCommand
 
         if ($this->app->args->simulate) {
             $msg = 'Simulation mode' . "\n";
+            $this->app->inline($msg);
 
-            $this->app->display($msg, 0);
-            return;
+            return Status::SUCCESS;
         }
 
-        $rsync->run();
+        return $rsync->run();
     }
 }

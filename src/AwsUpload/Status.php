@@ -10,25 +10,17 @@
  * @license   http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
-namespace AwsUpload\Command;
+namespace AwsUpload;
 
-use AwsUpload\Status;
-use AwsUpload\Facilitator;
-use AwsUpload\Command\Command;
-
-class Help extends BasicCommand
+class Status
 {
     /**
-     * Method used to print the help.
-     *
-     * @return int The status code.
+     * @var int
      */
-    public function run()
-    {
-        $msg = Facilitator::help();
+    const SUCCESS = 0;
 
-        $this->app->inline($msg);
-
-        return Status::SUCCESS;
-    }
+    /**
+     * @var int
+     */
+    const ERROR_INVALID = 1;
 }

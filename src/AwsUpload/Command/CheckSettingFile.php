@@ -13,6 +13,7 @@
 namespace AwsUpload\Command;
 
 use AwsUpload\Check;
+use AwsUpload\Status;
 use AwsUpload\Facilitator;
 use AwsUpload\Command\Command;
 use AwsUpload\Setting\SettingFiles;
@@ -22,15 +23,16 @@ class CheckSettingFile extends AdvancedCommand
     /**
      * Method used to chek a setting file for debug purpose.
      *
-     * @return void
+     * @return int The status code.
      */
     public function run()
     {
         $key = $this->app->args->getFirst('check');
 
         if (!$this->isValid($key)) {
-            $this->app->display($this->msg, 0);
-            return;
+            $this->app->inline($this->msg);
+
+            return Status::ERROR_INVALID;
         }
 
         $path = SettingFiles::getPath($key);
@@ -53,7 +55,9 @@ class CheckSettingFile extends AdvancedCommand
         );
 
         $msg = Facilitator::reportBanner($report);
-        $this->app->display($msg, 0);
+        $this->app->inline($msg);
+
+        return Status::SUCCESS;
     }
 
     /**

@@ -17,13 +17,13 @@ class CopySettingFileTest extends BaseTestCase
     {
         $msg = Facilitator::onNoCopyArgs();
         $msg = Output::color($msg);
-        $this->expectOutputString($msg);
+        $this->expectOutputString($msg . "\n");
 
         self::clearArgv();
         self::pushToArgv(array('asd.php', 'copy'));
 
         $aws = new AwsUpload();
-        $aws->is_phpunit = true;
+        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
         $cmd = new \AwsUpload\Command\CopySettingFile($aws);
         $cmd->run();
@@ -34,13 +34,13 @@ class CopySettingFileTest extends BaseTestCase
     {
         $msg = Facilitator::onNoCopyArgs();
         $msg = Output::color($msg);
-        $this->expectOutputString($msg);
+        $this->expectOutputString($msg . "\n");
 
         self::clearArgv();
         self::pushToArgv(array('asd.php', 'copy', 'aaa'));
 
         $aws = new AwsUpload();
-        $aws->is_phpunit = true;
+        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
         $cmd = new \AwsUpload\Command\CopySettingFile($aws);
         $cmd->run();
@@ -51,13 +51,13 @@ class CopySettingFileTest extends BaseTestCase
     {
         $msg = Facilitator::onNoValidKey('bbbb');
         $msg = Output::color($msg);
-        $this->expectOutputString($msg);
+        $this->expectOutputString($msg . "\n");
 
         self::clearArgv();
         self::pushToArgv(array('asd.php', 'copy', 'aaa', 'bbbb'));
 
         $aws = new AwsUpload();
-        $aws->is_phpunit = true;
+        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
         $cmd = new \AwsUpload\Command\CopySettingFile($aws);
         $cmd->run();
@@ -68,13 +68,13 @@ class CopySettingFileTest extends BaseTestCase
     {
         $msg = Facilitator::onNoValidKey('aaa');
         $msg = Output::color($msg);
-        $this->expectOutputString($msg);
+        $this->expectOutputString($msg . "\n");
 
         self::clearArgv();
         self::pushToArgv(array('asd.php', 'copy', 'aaa', 'bbb.bbb'));
 
         $aws = new AwsUpload();
-        $aws->is_phpunit = true;
+        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
         $cmd = new \AwsUpload\Command\CopySettingFile($aws);
         $cmd->run();
@@ -88,13 +88,13 @@ class CopySettingFileTest extends BaseTestCase
 
         $msg = Facilitator::onNoFileFound('project-2.dev');
         $msg = Output::color($msg);
-        $this->expectOutputString($msg);
+        $this->expectOutputString($msg . "\n");
 
         self::clearArgv();
         self::pushToArgv(array('asd.php', 'copy', 'project-2.dev', 'project-3.dev'));
 
         $aws = new AwsUpload();
-        $aws->is_phpunit = true;
+        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
         $cmd = new \AwsUpload\Command\CopySettingFile($aws);
         $cmd->run();
@@ -109,13 +109,13 @@ class CopySettingFileTest extends BaseTestCase
 
         $msg = Facilitator::onKeyAlreadyExists('project-2.dev');
         $msg = Output::color($msg);
-        $this->expectOutputString($msg);
+        $this->expectOutputString($msg . "\n");
 
         self::clearArgv();
         self::pushToArgv(array('asd.php', 'copy', 'project-1.dev', 'project-2.dev'));
 
         $aws = new AwsUpload();
-        $aws->is_phpunit = true;
+        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
         $cmd = new \AwsUpload\Command\CopySettingFile($aws);
         $cmd->run();
@@ -129,14 +129,14 @@ class CopySettingFileTest extends BaseTestCase
 
         $msg = Facilitator::onNewSettingFileSuccess('project-2.dev');
         $msg = Output::color($msg);
-        $this->expectOutputString($msg);
+        $this->expectOutputString($msg . "\n");
 
         self::clearArgv();
         self::pushToArgv(array('asd.php', 'copy', 'project-1.dev', 'project-2.dev'));
 
 
         $aws = new AwsUpload();
-        $aws->is_phpunit = true;
+        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
         $cmd = new \AwsUpload\Command\CopySettingFile($aws);
         $cmd->run();

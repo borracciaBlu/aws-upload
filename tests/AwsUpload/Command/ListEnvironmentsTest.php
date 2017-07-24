@@ -13,13 +13,13 @@ class ListEnvironmentsTest extends BaseTestCase
     {
         $this->expectOutputString("It seems that you don't have any project setup.\nTry to type:\n\n"
              . "    \e[32maws-upload new project.test\e[0m\n"
-             . "\n");
+             . "\n\n");
 
         self::clearArgv();
         self::pushToArgv(array('asd.php', '-e', 'proj-3'));
 
         $aws = new AwsUpload();
-        $aws->is_phpunit = true;
+        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
         $cmd = new \AwsUpload\Command\ListEnvs($aws);
         $cmd->run();
@@ -38,6 +38,7 @@ To get the envs from one of them, run (for example):
 
    aws-upload -e project-1
 
+
 ");
         
         $filesystem = new Filesystem();
@@ -49,7 +50,7 @@ To get the envs from one of them, run (for example):
         self::pushToArgv(array('asd.php', '-e', 'proj-3'));
 
         $aws = new AwsUpload();
-        $aws->is_phpunit = true;
+        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
         $cmd = new \AwsUpload\Command\ListEnvs($aws);
         $cmd->run();

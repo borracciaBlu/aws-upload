@@ -13,6 +13,7 @@
 namespace AwsUpload\Command;
 
 use AwsUpload\Check;
+use AwsUpload\Status;
 use AwsUpload\Facilitator;
 use AwsUpload\Command\Command;
 use AwsUpload\Setting\SettingFiles;
@@ -22,21 +23,23 @@ class NewSettingFile extends AdvancedCommand
     /**
      * Method used tocreate a new setting file.
      *
-     * @return void
+     * @return int The status code.
      */
     public function run()
     {
         $key = $this->app->args->getFirst('new');
 
         if (!$this->isValid($key)) {
-            $this->app->display($this->msg, 0);
-            return;
+            $this->app->inline($this->msg);
+
+            return Status::ERROR_INVALID;
         }
 
         SettingFiles::create($key);
         $msg = Facilitator::onNewSettingFileSuccess($key);
+        $this->app->inline($msg);
 
-        $this->app->display($msg, 0);
+        return Status::SUCCESS;
     }
 
     /**

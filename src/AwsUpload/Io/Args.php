@@ -88,6 +88,8 @@ class Args
      * @property bool envs    If args envs is present.
      * @property bool projs   If args projs is present.
      * @property bool vestion If args version is present.
+     * @property bool verbose If args verbose is present.
+     * @property bool wild    If args wild is present.
      *
      * @param  string $key The property we are trying to access.
      *

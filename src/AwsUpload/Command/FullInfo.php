@@ -12,6 +12,7 @@
 
 namespace AwsUpload\Command;
 
+use AwsUpload\Status;
 use AwsUpload\Facilitator;
 use AwsUpload\Command\Command;
 
@@ -24,7 +25,7 @@ class FullInfo extends BasicCommand
      * -  version
      * -  help
      *
-     * @return void
+     * @return int The status code.
      */
     public function run()
     {
@@ -32,6 +33,8 @@ class FullInfo extends BasicCommand
         $msg .= Facilitator::version($this->app->version);
         $msg .= Facilitator::help();
 
-        $this->app->display($msg, 0);
+        $this->app->inline($msg);
+
+        return Status::SUCCESS;
     }
 }

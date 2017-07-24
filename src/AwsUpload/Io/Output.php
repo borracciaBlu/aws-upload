@@ -16,15 +16,6 @@ use function cli\out;
 
 class Output
 {
-    /**
-     * It defines if the class is running under phpunit.
-     *
-     * The issue is all the time we have exit(0) becuase it kills the
-     * execution of phpunit.
-     *
-     * @var bool
-     */
-    public $is_phpunit = false;
 
     /**
      * Method to color the bash output.
@@ -54,24 +45,6 @@ class Output
     }
 
     /**
-     * Method used to avoid the issue in testing caused by exit(0)
-     *
-     * It does need is_phpunit as true for working properly with phpunit.
-     *
-     * @param int $status The code we want the script to exit.
-     *
-     * @return int|void
-     */
-    public function graceExit($status)
-    {
-        if ($this->is_phpunit) {
-            return $status;
-        }
-
-        exit($status);
-    }
-
-    /**
      * Method to render the text in the bash output.
      *
      * The method is going to write on the STDOUT.
@@ -84,10 +57,6 @@ class Output
     {
         $text = $this->color($text);
 
-        if ($this->is_phpunit) {
-            echo $text;
-        } else {
-            out($text);
-        }
+        out($text);
     }
 }

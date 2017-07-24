@@ -12,6 +12,7 @@
 
 namespace AwsUpload\Command;
 
+use AwsUpload\Status;
 use AwsUpload\Facilitator;
 use AwsUpload\Command\Command;
 use AwsUpload\Setting\SettingFiles;
@@ -28,7 +29,7 @@ class ListProjects extends BasicCommand
      *     - proj-1.stagin.json -> proj: proj-1
      *     - proj-2.prod.json   -> proj: proj-2
      *
-     * @return void
+     * @return int The status code.
      */
     public function run()
     {
@@ -37,14 +38,15 @@ class ListProjects extends BasicCommand
 
         if (count($projs) === 0 && !$quiet) {
             $msg = Facilitator::onNoProjects();
+            $this->app->inline($msg);
 
-            $this->app->display($msg, 0);
-            return;
+            return Status::ERROR_INVALID;
         }
 
         $projs = implode(' ', $projs);
         $msg = $projs . "\n";
+        $this->app->inline($msg);
 
-        $this->app->display($msg, 0);
+        return Status::SUCCESS;
     }
 }

@@ -15,10 +15,10 @@ class ListProjectsTest extends BaseTestCase
     {
         $this->expectOutputString("It seems that you don't have any project setup.\nTry to type:\n\n"
              . "    \e[32maws-upload new project.test\e[0m\n"
-             . "\n");
+             . "\n\n");
 
         $aws = new AwsUpload();
-        $aws->is_phpunit = true;
+        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
         $cmd = new \AwsUpload\Command\ListProjects($aws);
         $cmd->run();
@@ -26,13 +26,13 @@ class ListProjectsTest extends BaseTestCase
 
     public function test_oneFile_expectedProjName()
     {
-        $this->expectOutputString("project-1\n");
+        $this->expectOutputString("project-1\n\n");
         
         $filesystem = new Filesystem();
         $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{}');
 
         $aws = new AwsUpload();
-        $aws->is_phpunit = true;
+        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
         $cmd = new \AwsUpload\Command\ListProjects($aws);
         $cmd->run();
@@ -40,7 +40,7 @@ class ListProjectsTest extends BaseTestCase
 
     public function test_moreFilesSameProj_expectedProjName()
     {
-        $this->expectOutputString("project-1\n");
+        $this->expectOutputString("project-1\n\n");
 
         $filesystem = new Filesystem();
         $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{}');
@@ -48,7 +48,7 @@ class ListProjectsTest extends BaseTestCase
         $filesystem->dumpFile($this->directory . '/project-1.staging.json', '{}');
 
         $aws = new AwsUpload();
-        $aws->is_phpunit = true;
+        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
         $cmd = new \AwsUpload\Command\ListProjects($aws);
         $cmd->run();
@@ -56,7 +56,7 @@ class ListProjectsTest extends BaseTestCase
     
     public function test_moreFilesDiffProj_expectedProjsName()
     {
-        $this->expectOutputString("project-1 project-2\n");
+        $this->expectOutputString("project-1 project-2\n\n");
 
         $filesystem = new Filesystem();
         $filesystem->dumpFile($this->directory . '/project-2.dev.json', '{}');
@@ -64,7 +64,7 @@ class ListProjectsTest extends BaseTestCase
         $filesystem->dumpFile($this->directory . '/project-1.staging.json', '{}');
 
         $aws = new AwsUpload();
-        $aws->is_phpunit = true;
+        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
         $cmd = new \AwsUpload\Command\ListProjects($aws);
         $cmd->run();

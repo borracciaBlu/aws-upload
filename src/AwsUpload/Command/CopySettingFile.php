@@ -13,6 +13,7 @@
 namespace AwsUpload\Command;
 
 use AwsUpload\Check;
+use AwsUpload\Status;
 use AwsUpload\Facilitator;
 use AwsUpload\Command\Command;
 use AwsUpload\Setting\SettingFiles;
@@ -22,23 +23,25 @@ class CopySettingFile extends AdvancedCommand
     /**
      * Method used to chek a setting file for debug purpose.
      *
-     * @return void
+     * @return int The status code.
      */
     public function run()
     {
         $keys = $this->app->args->getParams('copy');
 
         if (!$this->isValid($keys)) {
-            $this->app->display($this->msg, 0);
-            return;
+            $this->app->inline($this->msg);
+
+            return Status::ERROR_INVALID;
         }
 
         list($source, $dest) = $keys;
 
         SettingFiles::copy($source, $dest);
         $msg = Facilitator::onNewSettingFileSuccess($dest);
+        $this->app->inline($msg);
 
-        $this->app->display($msg, 0);
+        return Status::SUCCESS;
     }
 
     /**

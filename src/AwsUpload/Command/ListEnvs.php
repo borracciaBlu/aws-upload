@@ -12,6 +12,7 @@
 
 namespace AwsUpload\Command;
 
+use AwsUpload\Status;
 use AwsUpload\Facilitator;
 use AwsUpload\Command\Command;
 use AwsUpload\Setting\SettingFiles;
@@ -27,7 +28,7 @@ class ListEnvs extends AdvancedCommand
      *     - proj.stagin.json -> env: staging
      *     - proj.prod.json   -> env: prod
      *
-     * @return void
+     * @return int The status code.
      */
     public function run()
     {
@@ -35,16 +36,18 @@ class ListEnvs extends AdvancedCommand
         $projFilter = $this->app->args->getFirst('envs');
 
         if (!$this->isValid($projFilter) && !$quiet) {
-            $this->app->display($this->msg, 0);
-            return;
+            $this->app->inline($this->msg);
+
+            return Status::ERROR_INVALID;
         }
 
         $envs  = SettingFiles::getEnvs($projFilter);
 
         $envs = implode(' ', $envs);
         $msg  = $envs . "\n";
+        $this->app->inline($msg);
 
-        $this->app->display($msg, 0);
+        return Status::SUCCESS;
     }
 
     /**

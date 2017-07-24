@@ -30,16 +30,6 @@ class AwsUpload
     public $version;
 
     /**
-     * It defines if the class is running under phpunit.
-     *
-     * The issue is all the time we have exit(0) becuase it kills the
-     * execution of phpunit.
-     *
-     * @var bool
-     */
-    public $is_phpunit = false;
-
-    /**
      * It define if aws-upload has to print additional info.
      *
      * @var bool
@@ -105,7 +95,7 @@ class AwsUpload
     /**
      * Method to run the aws-upload cmd.
      *
-     * @return void
+     * @return int The status code.
      */
     public function run()
     {
@@ -119,7 +109,18 @@ class AwsUpload
 
         $cmdName = $this->getCmdName();
         $cmd = new $cmdName($this);
-        $cmd->run();
+
+        return $cmd->run();
+    }
+
+    /**
+     * Method to set different output.
+     *
+     * @return void
+     */
+    public function setOutput(\AwsUpload\Io\Output $output)
+    {
+        $this->out = $output;
     }
 
     /**
@@ -175,24 +176,6 @@ class AwsUpload
     /**
      * Method to wrap render and graceExit.
      *
-     * The main idea is to setup the system to print with exit
-     * and be ready for phpunit.
-     *
-     * @param string|null $msg
-     * @param integer $status
-     *
-     * @return  void
-     */
-    public function display($msg, $status)
-    {
-        $this->out->is_phpunit = $this->is_phpunit;
-        $this->out->render($msg);
-        $this->out->graceExit($status);
-    }
-
-    /**
-     * Method to wrap render and graceExit.
-     *
      * The main idea is to setup the system to print and be ready
      * for phpunit.
      *
@@ -202,7 +185,6 @@ class AwsUpload
      */
     public function inline($msg)
     {
-        $this->out->is_phpunit = $this->is_phpunit;
         $this->out->render($msg . "\n");
     }
 

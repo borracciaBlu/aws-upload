@@ -12,6 +12,7 @@
 
 namespace AwsUpload\Command;
 
+use AwsUpload\Status;
 use AwsUpload\Facilitator;
 use AwsUpload\Command\Command;
 
@@ -20,12 +21,14 @@ class SelfUpdate extends BasicCommand
     /**
      * Method used to update aws-upload via composer.
      *
-     * @return void
+     * @return int The status code.
      */
     public function run()
     {
         $this->app->inline('Self-update running..');
         system('composer -vvv global require aws-upload/aws-upload');
-        $this->app->display("Self-update completed", 0);
+        $this->app->inline("Self-update completed");
+
+        return Status::SUCCESS;
     }
 }

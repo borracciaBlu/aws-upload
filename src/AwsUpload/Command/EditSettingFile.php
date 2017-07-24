@@ -13,6 +13,7 @@
 namespace AwsUpload\Command;
 
 use AwsUpload\Check;
+use AwsUpload\Status;
 use AwsUpload\Facilitator;
 use AwsUpload\Command\Command;
 use AwsUpload\Setting\SettingFiles;
@@ -22,24 +23,24 @@ class EditSettingFile extends AdvancedCommand
     /**
      * Method used to edit a setting file.
      *
-     * @return void
+     * @return int The status code.
      */
     public function run()
     {
         $key = $this->app->args->getFirst('edit');
 
         if (!$this->isValid($key)) {
-            $this->app->display($this->msg, 0);
-            return;
+            $this->app->inline($this->msg);
+
+            return Status::ERROR_INVALID;
         }
 
-        if (!$this->app->is_phpunit) {
-            SettingFiles::edit($key);
-        }
+        SettingFiles::edit($key);
 
         $msg = Facilitator::onEditSettingFileSuccess($key);
+        $this->app->inline($msg);
 
-        $this->app->display($msg, 0);
+        return Status::SUCCESS;
     }
 
     /**

@@ -10,24 +10,24 @@
  * @license   http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
-namespace AwsUpload\Command;
+namespace AwsUpload\Io;
 
-use AwsUpload\Status;
-use AwsUpload\Facilitator;
-use AwsUpload\Command\Command;
+use function cli\out;
+use AwsUpload\Io\Output;
 
-class Version extends BasicCommand
+class OutputEcho extends Output
 {
     /**
-     * Method used to print the version.
+     * Method to render the text with echo.
      *
-     * @return int The status code.
+     * @param string $text The text to echo.
+     *
+     * @return void
      */
-    public function run()
+    public function render($text)
     {
-        $msg = Facilitator::version($this->app->version);
-        $this->app->inline($msg);
+        $text = $this->color($text);
 
-        return Status::SUCCESS;
+        echo $text;
     }
 }

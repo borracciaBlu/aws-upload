@@ -19,7 +19,7 @@ class CheckSettingsFileTest extends BaseTestCase
         $filesystem->dumpFile($this->directory . '/project-2.dev.json', '{ "pem" : "' . $this->directory . '/file.pem", "local" : "' . $this->directory . '/local"}');
 
 
-        $pem_perms = decoct(fileperms($this->directory . '/file.pem')  & 0777);
+        $pem_perms = decoct(fileperms($this->directory . '/file.pem') & 0777);
 
         $report = array(
             "path" => $this->directory . '/project-2.dev.json',
@@ -33,13 +33,13 @@ class CheckSettingsFileTest extends BaseTestCase
 
         $msg = Facilitator::reportBanner($report);
         $msg = Output::color($msg);
-        $this->expectOutputString($msg);
+        $this->expectOutputString($msg . "\n");
 
         self::clearArgv();
         self::pushToArgv(array('asd.php', 'check', 'project-2.dev'));
 
         $aws = new AwsUpload();
-        $aws->is_phpunit = true;
+        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
         $cmd = new \AwsUpload\Command\CheckSettingFile($aws);
         $cmd->run();

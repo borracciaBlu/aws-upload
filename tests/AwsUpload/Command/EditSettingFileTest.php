@@ -15,13 +15,13 @@ class EditSettingFileTest extends BaseTestCase
     {
         $this->expectOutputString("It seems that you don't have any project setup.\nTry to type:\n\n"
              . "    \e[32maws-upload new project.test\e[0m\n"
-             . "\n");
+             . "\n\n");
 
         self::clearArgv();
         self::pushToArgv(array('asd.php', 'edit'));
 
         $aws = new AwsUpload();
-        $aws->is_phpunit = true;
+        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
         $cmd = new \AwsUpload\Command\EditSettingFile($aws);
         $cmd->run();
@@ -39,13 +39,13 @@ class EditSettingFileTest extends BaseTestCase
              . "Tips on choosing the key name:\n"
              . "    - for [project] and [environmet] try to be: short, sweet, to the point\n"
              . "    - use only one 'dot' . in the name\n"
-             . "\n");
+             . "\n\n");
 
         self::clearArgv();
         self::pushToArgv(array('asd.php', 'edit', 'aaa'));
 
         $aws = new AwsUpload();
-        $aws->is_phpunit = true;
+        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
         $cmd = new \AwsUpload\Command\EditSettingFile($aws);
         $cmd->run();
@@ -58,13 +58,13 @@ class EditSettingFileTest extends BaseTestCase
 
         $msg = Facilitator::onNoFileFound('project-2.dev');
         $msg = Output::color($msg);
-        $this->expectOutputString($msg);
+        $this->expectOutputString($msg . "\n");
 
         self::clearArgv();
         self::pushToArgv(array('asd.php', 'edit', 'project-2.dev'));
 
         $aws = new AwsUpload();
-        $aws->is_phpunit = true;
+        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
         $cmd = new \AwsUpload\Command\EditSettingFile($aws);
         $cmd->run();
