@@ -14,11 +14,17 @@ abstract class BaseTestCase extends TestCase
     protected $directory;
 
     /**
+     * @var string
+     */
+    protected $directoryBuild;
+
+    /**
      * {@inheritdoc}
      */
     public function setUp()
     {
         $this->directoryBuild = __DIR__.'/../../build/';
+
         $uid = strtolower(get_class($this));
         $uid = str_replace('\\', '-', $uid);
         $this->directory = __DIR__.'/../../build/' . $uid;
