@@ -70,21 +70,21 @@ class AwsUpload
 
         $args = new Args();
         $args->addFlags(array(
-            'quiet'      => array('quiet', 'q'),
-            'verbose'    => array('verbose', 'v'),
-            'version'    => array('version', 'V'),
+            'quiet'    => array('quiet', 'q'),
+            'verbose'  => array('verbose', 'v'),
+            'simulate' => array('simulate')
+        ));
+        $args->addCmds(array(
+            'new'        => array('new', 'n'),
+            'envs'       => array('envs', 'e'),
+            'edit'       => array('edit', 'E'),
+            'copy'       => array('copy', 'cp'),
             'help'       => array('help', 'h'),
             'keys'       => array('keys', 'k'),
             'projs'      => array('projs', 'p'),
+            'check'      => array('check', 'c'),
+            'version'    => array('version', 'V'),
             'selfupdate' => array('self-update', 'selfupdate'),
-            'simulate'   => array('simulate')
-        ));
-        $args->addCmds(array(
-            'envs'  => array('envs', 'e'),
-            'new'   => array('new', 'n'),
-            'edit'  => array('edit', 'E'),
-            'copy'  => array('copy', 'cp'),
-            'check' => array('check', 'c'),
         ));
         $args->parse();
 
@@ -152,15 +152,15 @@ class AwsUpload
     {
         $cmd = '';
         $cmdList = array(
-            "help" => "AwsUpload\Command\Help",
+            "help"    => "AwsUpload\Command\Help",
             "version" => "AwsUpload\Command\Version",
-            "keys" => "AwsUpload\Command\ListKeys",
-            "projs" => "AwsUpload\Command\ListProjects",
-            "envs" => "AwsUpload\Command\ListEnvs",
-            "new" => "AwsUpload\Command\NewSettingFile",
-            "edit" => "AwsUpload\Command\EditSettingFile",
-            "check" => "AwsUpload\Command\CheckSettingFile",
-            "copy" => "AwsUpload\Command\CopySettingFile",
+            "keys"    => "AwsUpload\Command\ListKeys",
+            "projs"   => "AwsUpload\Command\ListProjects",
+            "envs"    => "AwsUpload\Command\ListEnvs",
+            "new"     => "AwsUpload\Command\NewSettingFile",
+            "edit"    => "AwsUpload\Command\EditSettingFile",
+            "check"   => "AwsUpload\Command\CheckSettingFile",
+            "copy"    => "AwsUpload\Command\CopySettingFile",
             "selfupdate" => "AwsUpload\Command\SelfUpdate",
         );
 
