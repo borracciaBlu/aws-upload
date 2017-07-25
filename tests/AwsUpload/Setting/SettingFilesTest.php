@@ -130,4 +130,27 @@ class SettingFilesTest extends BaseTestCase
 
         $this->assertEquals([], $envs);
     }
+
+    public function test_extractProjEnv()
+    {
+        list($proj, $env) = SettingFiles::extractProjEnv(array());
+        $this->assertEquals('no-project-given', $proj);
+        $this->assertEquals('no-environment-given', $env);
+
+        list($proj, $env) = SettingFiles::extractProjEnv(array('a'));
+        $this->assertEquals('no-project-given', $proj);
+        $this->assertEquals('no-environment-given', $env);
+
+        list($proj, $env) = SettingFiles::extractProjEnv(array('a', 'b'));
+        $this->assertEquals('a', $proj);
+        $this->assertEquals('b', $env);
+
+        list($proj, $env) = SettingFiles::extractProjEnv(array('a.b'));
+        $this->assertEquals('a', $proj);
+        $this->assertEquals('b', $env);
+
+        list($proj, $env) = SettingFiles::extractProjEnv(array(2 => 'a', 4 => 'b'));
+        $this->assertEquals('a', $proj);
+        $this->assertEquals('b', $env);
+    }
 }

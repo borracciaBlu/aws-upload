@@ -218,12 +218,13 @@ class SettingFiles
      *
      * @return array       The array will contain 2 elements in any case.
      */
-    public static function extractProjEnv($items)
+    public static function extractProjEnv(array $items)
     {
         $proj = 'no-project-given';
         $env  = 'no-environment-given';
 
         // reorder items in array
+        // [ 4 => 'a', 6 => 'b' ] ~> [ 0 => 'a', 1 => 'b' ]
         if (is_array($items)) {
             $items = array_values($items);
         }
