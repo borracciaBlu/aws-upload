@@ -352,8 +352,8 @@ EOT;
     public static function onNewSettingFileSuccess($key)
     {
         $msg = "The setting file <y>" . $key . ".json</y> has been created succesfully.\n\n"
-             . "To edit the file type:\n"
-             . "    aws-upload edit " . $key . "\n"
+             . "To edit again the file type:\n"
+             . "    <g>aws-upload edit " . $key . "</g>\n"
              . "\n";
         return $msg;
     }

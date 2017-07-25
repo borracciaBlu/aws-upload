@@ -36,6 +36,8 @@ class NewSettingFile extends AdvancedCommand
         }
 
         SettingFiles::create($key);
+        SettingFiles::edit($key);
+
         $msg = Facilitator::onNewSettingFileSuccess($key);
         $this->app->inline($msg);
 
