@@ -161,6 +161,9 @@ class Args
     /**
      * Method to init the $props array.
      *
+     * It contains if a command or an option exists.
+     * e.g.: $this->props['wild'] = true;
+     *
      * @return void
      */
     public function initProps()
@@ -176,6 +179,9 @@ class Args
 
     /**
      * Method to init the $params array.
+     *
+     * It contains the arguments passed to a command.
+     * e.g.: $this->params['wild'] = ['blog', 'dev'];
      *
      * @return void
      */
