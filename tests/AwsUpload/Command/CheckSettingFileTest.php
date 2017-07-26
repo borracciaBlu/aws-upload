@@ -26,9 +26,11 @@ class CheckSettingsFileTest extends BaseTestCase
             "is_valid_json" => true,
             "pem" => $this->directory . '/file.pem',
             "pem_exists" => true,
+            "is_400" => false,
             "pem_perms" => $pem_perms,
             "local" => $this->directory . '/local',
             "local_exists" => true,
+            "error_json" => ''
         );
 
         $msg = Facilitator::reportBanner($report);

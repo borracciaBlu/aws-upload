@@ -47,18 +47,4 @@ class Check
 
         return $isValid;
     }
-
-    /**
-     * Method to chek if a file is a isValidJSON
-     *
-     * @param  string  $path The file path.
-     *
-     * @return bool
-     */
-    public static function isValidJSON($path)
-    {
-        $json = file_get_contents($path);
-        json_decode($json, true);
-        return (json_last_error() === JSON_ERROR_NONE);
-    }
 }

@@ -12,60 +12,26 @@
 
 namespace AwsUpload\Command;
 
-use AwsUpload\Check;
-use AwsUpload\Status;
 use AwsUpload\Facilitator;
-use AwsUpload\Command\Command;
 use AwsUpload\Setting\SettingFiles;
 
-class EditSettingFile extends AdvancedCommand
+class EditSettingFile extends FileCommand
 {
-    /**
-     * Method used to edit a setting file.
-     *
-     * @return int The status code.
-     */
-    public function run()
+    public function init()
     {
-        $key = $this->app->args->getFirst('edit');
-
-        if (!$this->isValid($key)) {
-            $this->app->inline($this->msg);
-
-            return Status::ERROR_INVALID;
-        }
-
-        SettingFiles::edit($key);
-
-        $msg = Facilitator::onEditSettingFileSuccess($key);
-        $this->app->inline($msg);
-
-        return Status::SUCCESS;
+        $this->key = $this->app->args->getFirst('edit');
     }
 
     /**
-     * Method to check if key isValid and good to proceed.
+     * Method used to edit a setting file.
      *
-     * @param  string  $key The setting file key.
-     *
-     * @return boolean
+     * @see FileCommand::run
+     * @return void
      */
-    public function isValid($key)
+    public function exec()
     {
-        $tests = array(
-            "file_not_exists" => !Check::fileExists($key),
-            "is_valid_key"    => !Check::isValidKey($key),
-            "is_no_project"   => empty($key),
-        );
+        SettingFiles::edit($this->key);
 
-        $msgs = array(
-            "file_not_exists" => Facilitator::onNoFileFound($key),
-            "is_valid_key"    => Facilitator::onNoValidKey($key),
-            "is_no_project"   => Facilitator::onNoProjects(),
-        );
-
-        $valid = $this->validate($tests, $msgs);
-
-        return $valid;
+        $this->msg = Facilitator::onEditSettingFileSuccess($this->key);
     }
 }

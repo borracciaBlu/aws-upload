@@ -12,6 +12,7 @@
 
 namespace AwsUpload\Setting;
 
+use AwsUpload\Model\Settings;
 use AwsUpload\Setting\SettingFolder;
 
 class SettingFiles
@@ -66,14 +67,12 @@ class SettingFiles
      *
      * @param string $key The setting file identifier.
      *
-     * @return array
+     * @return object
      */
     public static function getObject($key)
     {
         $path = static::getPath($key);
-
-        $content = file_get_contents($path);
-        $settings = (object) json_decode($content, true);
+        $settings = new Settings($path);
 
         return $settings;
     }

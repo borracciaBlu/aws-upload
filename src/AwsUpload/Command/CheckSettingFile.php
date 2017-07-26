@@ -12,77 +12,54 @@
 
 namespace AwsUpload\Command;
 
-use AwsUpload\Check;
-use AwsUpload\Status;
 use AwsUpload\Facilitator;
-use AwsUpload\Command\Command;
 use AwsUpload\Setting\SettingFiles;
 
-class CheckSettingFile extends AdvancedCommand
+class CheckSettingFile extends FileCommand
 {
     /**
-     * Method used to chek a setting file for debug purpose.
-     *
-     * @return int The status code.
+     * Initializes the command.
      */
-    public function run()
+    public function init()
     {
-        $key = $this->app->args->getFirst('check');
+        $this->key = $this->app->args->getFirst('check');
+    }
 
-        if (!$this->isValid($key)) {
-            $this->app->inline($this->msg);
+    /**
+     * Exec the check on the setting file.
+     *
+     * @see FileCommand::run
+     * @return void
+     */
+    public function exec()
+    {
+        $report = $this->getReport();
+        $this->msg = Facilitator::reportBanner($report);
+    }
 
-            return Status::ERROR_INVALID;
-        }
+    public function getReport()
+    {
+        $path = SettingFiles::getPath($this->key);
+        $settings = SettingFiles::getObject($this->key);
 
-        $path = SettingFiles::getPath($key);
-        $settings = SettingFiles::getObject($key);
-
-        $is_valid_json = Check::isValidJSON($path);
         $pem_exists    = file_exists($settings->pem);
         $pem_perms     = ($pem_exists) ? decoct(fileperms($settings->pem) & 0777) : '-';
+        $is_400        = ($pem_perms === '400');
         $clean_local   = str_replace('*', '', $settings->local);
         $local_exists  = file_exists($clean_local);
 
         $report = array(
             "path" => $path,
-            "is_valid_json" => $is_valid_json,
+            "is_valid_json" => $settings->is_valid_json,
+            "error_json" => $settings->error_json,
             "pem" => $settings->pem,
             "pem_exists" => $pem_exists,
             "pem_perms" => $pem_perms,
+            "is_400" => $is_400,
             "local" => $settings->local,
             "local_exists" => $local_exists,
         );
 
-        $msg = Facilitator::reportBanner($report);
-        $this->app->inline($msg);
-
-        return Status::SUCCESS;
-    }
-
-    /**
-     * Method to check if key isValid and good to proceed.
-     *
-     * @param  string  $key The setting file key.
-     *
-     * @return boolean
-     */
-    public function isValid($key)
-    {
-        $tests = array(
-            "file_not_exists" => !Check::fileExists($key),
-            "is_valid_key"    => !Check::isValidKey($key),
-            "is_no_project"   => empty($key),
-        );
-
-        $msgs = array(
-            "file_not_exists" => Facilitator::onNoFileFound($key),
-            "is_valid_key"    => Facilitator::onNoValidKey($key),
-            "is_no_project"   => Facilitator::onNoProjects(),
-        );
-
-        $valid = $this->validate($tests, $msgs);
-
-        return $valid;
+        return $report;
     }
 }

@@ -143,7 +143,9 @@ class CopySettingFileTest extends BaseTestCase
        
         $settings = SettingFiles::getObject('project-2.dev');
 
-        $sample = (object) ["pem" => "", "local" => "", "remote" => "", "exclude" => [""]];
-        $this->assertEquals($sample, $settings);
+        $this->assertEquals('', $settings->pem);
+        $this->assertEquals('', $settings->local);
+        $this->assertEquals('', $settings->remote);
+        $this->assertEquals(array(''), $settings->exclude);
     }
 }

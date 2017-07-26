@@ -13,56 +13,48 @@
 namespace AwsUpload\Command;
 
 use AwsUpload\Check;
-use AwsUpload\Status;
 use AwsUpload\Facilitator;
+use AwsUpload\Model\Status;
 use AwsUpload\Command\Command;
 use AwsUpload\Setting\SettingFiles;
 
-class NewSettingFile extends AdvancedCommand
+class NewSettingFile extends FileCommand
 {
+    public function init()
+    {
+        $this->key = $this->app->args->getFirst('new');
+    }
+
     /**
      * Method used tocreate a new setting file.
      *
      * @return int The status code.
      */
-    public function run()
+    public function exec()
     {
-        $key = $this->app->args->getFirst('new');
+        SettingFiles::create($this->key);
+        SettingFiles::edit($this->key);
 
-        if (!$this->isValid($key)) {
-            $this->app->inline($this->msg);
-
-            return Status::ERROR_INVALID;
-        }
-
-        SettingFiles::create($key);
-        SettingFiles::edit($key);
-
-        $msg = Facilitator::onNewSettingFileSuccess($key);
-        $this->app->inline($msg);
-
-        return Status::SUCCESS;
+        $this->msg = Facilitator::onNewSettingFileSuccess($this->key);
     }
 
     /**
      * Method to check if key isValid and good to proceed.
      *
-     * @param  string  $key The setting file key.
-     *
      * @return boolean
      */
-    public function isValid($key)
+    public function isValid()
     {
         $tests = array(
-            "file_exists"   => Check::fileExists($key),
-            "is_valid_key"  => !Check::isValidKey($key),
-            "is_no_project" => empty($key),
+            "file_not_exists" => !Check::fileExists($this->key),
+            "is_valid_key"    => Check::isValidKey($this->key),
+            "is_project"      => !empty($this->key),
         );
 
         $msgs = array(
-            "file_exists"   => Facilitator::onKeyAlreadyExists($key),
-            "is_valid_key"  => Facilitator::onNoValidKey($key),
-            "is_no_project" => Facilitator::onNoProjects(),
+            "file_not_exists" => Facilitator::onKeyAlreadyExists($this->key),
+            "is_valid_key"    => Facilitator::onNoValidKey($this->key),
+            "is_project"      => Facilitator::onNoProjects(),
         );
 
         $valid = $this->validate($tests, $msgs);

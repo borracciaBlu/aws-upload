@@ -13,14 +13,25 @@
 namespace AwsUpload\Command;
 
 use AwsUpload\Check;
-use AwsUpload\Rsync;
-use AwsUpload\Status;
 use AwsUpload\Facilitator;
+use AwsUpload\Model\Status;
+use AwsUpload\System\Rsync;
 use AwsUpload\Setting\SettingFiles;
 use AwsUpload\Command\BasicCommand;
 
-class Upload extends BasicCommand
+class Upload extends FileCommand
 {
+    public function init()
+    {
+        $items = $this->app->args->getParams('wild');
+        $this->is_simulate = $this->app->args->simulate;
+
+        list($proj, $env) = SettingFiles::extractProjEnv($items);
+        $this->key  = $proj . "." . $env;
+        $this->proj = $proj;
+        $this->env  = $env;
+    }
+
     /**
      * Method to run the rsync cmd.
      *
@@ -29,34 +40,27 @@ class Upload extends BasicCommand
      *     2 - convert the file to an obj
      *     3 - run rsync with the details in the obj
      *
-     * @return int The status code.
+     * @return mixed The status code.
      */
-    public function run()
+    public function exec()
     {
-        $items = $this->app->args->getParams('wild');
-        list($proj, $env) = SettingFiles::extractProjEnv($items);
-
-        $key = $proj . "." . $env;
-        if (!Check::fileExists($key)) {
-            $msg = Facilitator::onNoFileFound($proj, $env);
-            $this->app->inline($msg);
-
-            return Status::ERROR_INVALID;
-        }
-
-        $settings = SettingFiles::getObject($key);
+        $settings = SettingFiles::getObject($this->key);
         $rsync = new Rsync($settings);
 
-        $msg = Facilitator::rsyncBanner($proj, $env, $rsync->cmd);
+        $msg = Facilitator::rsyncBanner($this->proj, $this->env, $rsync->cmd);
         $this->app->inline($msg);
 
-        if ($this->app->args->simulate) {
-            $msg = 'Simulation mode' . "\n";
-            $this->app->inline($msg);
-
-            return Status::SUCCESS;
+        if ($this->is_simulate) {
+            return $this->simulate();
         }
 
-        return $rsync->run();
+        $rsync->run();
+    }
+
+    public function simulate()
+    {
+        $this->msg = 'Simulation mode' . "\n";
+
+        return $this->handleSuccess();
     }
 }

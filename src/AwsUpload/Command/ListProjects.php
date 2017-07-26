@@ -12,12 +12,12 @@
 
 namespace AwsUpload\Command;
 
-use AwsUpload\Status;
 use AwsUpload\Facilitator;
+use AwsUpload\Model\Status;
 use AwsUpload\Command\Command;
 use AwsUpload\Setting\SettingFiles;
 
-class ListProjects extends BasicCommand
+class ListProjects extends BasicCommand implements ValidCommand
 {
     /**
      * Method used to print the projects available.
@@ -34,19 +34,36 @@ class ListProjects extends BasicCommand
     public function run()
     {
         $quiet = $this->app->is_quiet;
-        $projs = SettingFiles::getProjs();
+        $this->projs = SettingFiles::getProjs();
 
-        if (count($projs) === 0 && !$quiet) {
-            $msg = Facilitator::onNoProjects();
-            $this->app->inline($msg);
-
-            return Status::ERROR_INVALID;
+        if (!$this->isValid() && !$quiet) {
+            return $this->handleError();
         }
 
-        $projs = implode(' ', $projs);
-        $msg = $projs . "\n";
-        $this->app->inline($msg);
+        $projs = implode(' ', $this->projs);
+        $this->msg = $projs . "\n";
 
-        return Status::SUCCESS;
+        return $this->handleSuccess();
+    }
+
+    /**
+     * Method to check if key isValid and good to proceed.
+     *
+     * @param  array $projs The projs.
+     *
+     * @return boolean
+     */
+    public function isValid()
+    {
+        $tests = array(
+            "is_project" => (count($this->projs) > 0),
+        );
+        $msgs = array(
+            "is_project" => Facilitator::onNoProjects(),
+        );
+
+        $valid = $this->validate($tests, $msgs);
+
+        return $valid;
     }
 }

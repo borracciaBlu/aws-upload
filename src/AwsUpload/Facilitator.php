@@ -139,69 +139,50 @@ EOT;
     public static function reportBanner($report)
     {
         // Labels
+        $check_labels = array('✔', '✖');
         $valid_labels = array("VALID", "INVALID");
         $exist_labels = array("EXISTS", "NOT EXISTS");
         $perms_labels = array($report['pem_perms'], $report['pem_perms']);
 
+        $check_json = static::plot($report['is_valid_json'], $check_labels);
+        $check_pem  = static::plot($report['pem_exists'], $check_labels);
+        $check_400  = static::plot($report['is_400'], $check_labels);
+        $check_loc  = static::plot($report['local_exists'], $check_labels);
+
         $is_valid_json = static::plot($report['is_valid_json'], $valid_labels);
         $pem_exists    = static::plot($report['pem_exists'], $exist_labels);
+        $is_400_perms  = static::plot($report['is_400'], $perms_labels);
         $local_exists  = static::plot($report['local_exists'], $exist_labels);
-        $is_400_perms  = static::plot(($report['pem_perms'] === '400'), $perms_labels);
 
         // Json
-        $msg = "File analysing:\n"
-             . "<y>" . $report['path'] . "</y>" . "\n"
-             . "Json:             " . $is_valid_json . "\n"
-             . static::getJsonError();
+        $msg = "Checking...\n\n"
+             . "   <b>File analysing:</b>\n"
+             . "   <y>" . $report['path'] . "</y>" . "\n"
+             . "   " . $check_json . " Json      " . $is_valid_json . "\n"
+             . "   " . $report['error_json'];
 
         // Pem
         $msg .= "\n"
-              . "Pem File:\n"
-              . "<y>" . $report['pem'] . "</y>" . "\n"
-              . "Pem:              " . $pem_exists . "\n";
+              . "   <b>Pem File:</b>\n"
+              . "   <y>" . $report['pem'] . "</y>\n"
+              . "   " . $check_pem . " Pem       " . $pem_exists . "\n";
 
         if ($report['pem_exists']) {
-            $msg .= "Pem Perm:         " . $is_400_perms . "\n";
+            $msg .= "   " . $check_400 . " Pem Perm  " . $is_400_perms . "\n";
 
-            if (!$is_400_perms) {
-                $msg .= 'Try to type: chmod 400 ' . $report['pem'] . "\n";
+            if (!$report['is_400']) {
+                $msg .= '    Try to type: chmod 400 ' . $report['pem'] . "\n";
             }
         }
 
         // Local
         $msg .= "\n"
-              . "Local Folder:\n"
-              . "<y>" . $report['local'] . "</y>" . "\n"
-              . "Local Folder:     " . $local_exists . "\n";
+              . "   <b>Local Folder:</b>\n"
+              . "   <y>" . $report['local'] . "</y>" . "\n"
+              . "   " . $check_loc . " Folder    " . $local_exists . "\n";
 
         return $msg;
     }
-
-    /**
-     * Method to get the Json Error description.
-     *
-     * @return string
-     */
-    public static function getJsonError()
-    {
-        $errors = array(
-            JSON_ERROR_NONE => '',
-            JSON_ERROR_DEPTH => " - Maximum stack depth exceeded\n",
-            JSON_ERROR_STATE_MISMATCH => " - Underflow or the modes mismatch\n",
-            JSON_ERROR_CTRL_CHAR => " - Unexpected control character found\n",
-            JSON_ERROR_SYNTAX => " - Syntax error, malformed JSON\n",
-            JSON_ERROR_UTF8 => " - Malformed UTF-8 characters, possibly incorrectly encoded\n",
-        );
-        $last_error = json_last_error();
-        
-        $msg = ' - Unknown error';
-        if (array_key_exists($last_error, $errors)) {
-            $msg = $errors[$last_error];
-        }
-
-        return $msg;
-    }
-
 
     /**
      * Method to facilitate the report building.
@@ -387,7 +368,7 @@ EOT;
             list($proj, $env, $ext) = explode(".", $file);
             $proj = Output::color("<g>" . $proj . "</g>");
             $env = Output::color("<g>" . $env . "</g>");
-            
+
             $data[] = array($proj, $env);
         }
 

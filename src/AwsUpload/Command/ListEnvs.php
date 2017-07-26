@@ -12,12 +12,12 @@
 
 namespace AwsUpload\Command;
 
-use AwsUpload\Status;
 use AwsUpload\Facilitator;
+use AwsUpload\Model\Status;
 use AwsUpload\Command\Command;
 use AwsUpload\Setting\SettingFiles;
 
-class ListEnvs extends AdvancedCommand
+class ListEnvs extends BasicCommand implements ValidCommand
 {
     /**
      * Method used to print the environments available for a project.
@@ -33,43 +33,37 @@ class ListEnvs extends AdvancedCommand
     public function run()
     {
         $quiet      = $this->app->is_quiet;
-        $projFilter = $this->app->args->getFirst('envs');
+        $this->proj = $this->app->args->getFirst('envs');
 
-        if (!$this->isValid($projFilter) && !$quiet) {
-            $this->app->inline($this->msg);
-
-            return Status::ERROR_INVALID;
+        if (!$this->isValid() && !$quiet) {
+            return $this->handleError();
         }
 
-        $envs  = SettingFiles::getEnvs($projFilter);
-
+        $envs = SettingFiles::getEnvs($projFilter);
         $envs = implode(' ', $envs);
-        $msg  = $envs . "\n";
-        $this->app->inline($msg);
+        $this->msg = $envs . "\n";
 
-        return Status::SUCCESS;
+        return $this->handleSuccess();
     }
 
     /**
      * Method to check if key isValid and good to proceed.
      *
-     * @param  string  $projFilter The filter to get the envs.
-     *
      * @return boolean
      */
-    public function isValid($projFilter)
+    public function isValid()
     {
         $projs = SettingFiles::getProjs();
-        $envs  = SettingFiles::getEnvs($projFilter);
+        $envs  = SettingFiles::getEnvs($this->proj);
 
         $tests = array(
-            "is_no_env"     => count($envs) === 0,
-            "is_no_project" => count($projs) === 0,
+            "is_env"     => count($envs) > 0,
+            "is_project" => count($projs) > 0,
         );
 
         $msgs = array(
-            "is_no_env"     => Facilitator::onGetEnvsForProj($projFilter),
-            "is_no_project" => Facilitator::onNoProjects(),
+            "is_env"     => Facilitator::onGetEnvsForProj($this->proj),
+            "is_project" => Facilitator::onNoProjects(),
         );
 
         $valid = $this->validate($tests, $msgs);

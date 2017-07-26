@@ -13,35 +13,28 @@
 namespace AwsUpload\Command;
 
 use AwsUpload\Check;
-use AwsUpload\Status;
 use AwsUpload\Facilitator;
-use AwsUpload\Command\Command;
 use AwsUpload\Setting\SettingFiles;
 
-class CopySettingFile extends AdvancedCommand
+class CopySettingFile extends FileCommand
 {
-    /**
-     * Method used to chek a setting file for debug purpose.
-     *
-     * @return int The status code.
-     */
-    public function run()
+    public function init()
     {
-        $keys = $this->app->args->getParams('copy');
+        $this->keys = $this->app->args->getParams('copy');
+    }
 
-        if (!$this->isValid($keys)) {
-            $this->app->inline($this->msg);
-
-            return Status::ERROR_INVALID;
-        }
-
-        list($source, $dest) = $keys;
+    /**
+     * Exec the copy files.
+     *
+     * @see FileCommand::run
+     * @return void
+     */
+    public function exec()
+    {
+        list($source, $dest) = $this->keys;
 
         SettingFiles::copy($source, $dest);
-        $msg = Facilitator::onNewSettingFileSuccess($dest);
-        $this->app->inline($msg);
-
-        return Status::SUCCESS;
+        $this->msg = Facilitator::onNewSettingFileSuccess($dest);
     }
 
     /**
@@ -51,27 +44,27 @@ class CopySettingFile extends AdvancedCommand
      *
      * @return boolean
      */
-    public function isValid($keys)
+    public function isValid()
     {
-        if (!$this->isValidArgs($keys)) {
-            $this->msg = Facilitator::onNoCopyArgs();
+        if (!$this->isValidArgs($this->keys)) {
+            $this->error_msg = Facilitator::onNoCopyArgs();
             $valid = false;
 
             return $valid;
         }
 
-        list($source, $dest) = $keys;
+        list($source, $dest) = $this->keys;
 
         $tests = array(
-            "file_exists"      => Check::fileExists($dest),
-            "file_not_exists"  => !Check::fileExists($source),
-            "is_valid_key_src" => !Check::isValidKey($source),
-            "is_valid_key_dst" => !Check::isValidKey($dest),
+            "dest_not_exists"  => !Check::fileExists($dest),
+            "src_exists"       => Check::fileExists($source),
+            "is_valid_key_src" => Check::isValidKey($source),
+            "is_valid_key_dst" => Check::isValidKey($dest),
         );
 
         $msgs = array(
-            "file_exists"      => Facilitator::onKeyAlreadyExists($dest),
-            "file_not_exists"  => Facilitator::onNoFileFound($source),
+            "dest_not_exists"  => Facilitator::onKeyAlreadyExists($dest),
+            "src_exists"       => Facilitator::onNoFileFound($source),
             "is_valid_key_src" => Facilitator::onNoValidKey($source),
             "is_valid_key_dst" => Facilitator::onNoValidKey($dest),
         );
