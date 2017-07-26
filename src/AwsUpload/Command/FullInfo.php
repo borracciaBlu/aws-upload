@@ -12,9 +12,7 @@
 
 namespace AwsUpload\Command;
 
-use AwsUpload\Status;
 use AwsUpload\Facilitator;
-use AwsUpload\Command\Command;
 
 class FullInfo extends BasicCommand
 {
@@ -32,9 +30,8 @@ class FullInfo extends BasicCommand
         $msg = Facilitator::banner();
         $msg .= Facilitator::version($this->app->version);
         $msg .= Facilitator::help();
+        $this->msg = $msg;
 
-        $this->app->inline($msg);
-
-        return Status::SUCCESS;
+        return $this->handleSuccess();
     }
 }

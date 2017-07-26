@@ -12,9 +12,7 @@
 
 namespace AwsUpload\Command;
 
-use AwsUpload\Status;
 use AwsUpload\Facilitator;
-use AwsUpload\Command\Command;
 
 class Help extends BasicCommand
 {
@@ -25,10 +23,8 @@ class Help extends BasicCommand
      */
     public function run()
     {
-        $msg = Facilitator::help();
+        $this->msg = Facilitator::help();
 
-        $this->app->inline($msg);
-
-        return Status::SUCCESS;
+        return $this->handleSuccess();
     }
 }

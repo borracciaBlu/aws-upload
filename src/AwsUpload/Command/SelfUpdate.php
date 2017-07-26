@@ -12,9 +12,7 @@
 
 namespace AwsUpload\Command;
 
-use AwsUpload\Status;
-use AwsUpload\Facilitator;
-use AwsUpload\Command\Command;
+use AwsUpload\Model\Status;
 
 class SelfUpdate extends BasicCommand
 {

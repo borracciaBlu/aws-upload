@@ -12,9 +12,7 @@
 
 namespace AwsUpload\Command;
 
-use AwsUpload\Status;
 use AwsUpload\Facilitator;
-use AwsUpload\Command\Command;
 
 class Version extends BasicCommand
 {
@@ -25,9 +23,8 @@ class Version extends BasicCommand
      */
     public function run()
     {
-        $msg = Facilitator::version($this->app->version);
-        $this->app->inline($msg);
+        $this->msg = Facilitator::version($this->app->version);
 
-        return Status::SUCCESS;
+        return $this->handleSuccess();
     }
 }
