@@ -40,6 +40,8 @@ class Output
         $text = str_replace("</g>", "\e[0m", $text);
         $text = str_replace('<y>', "\e[33m", $text);
         $text = str_replace('</y>', "\e[0m", $text);
+        $text = str_replace('<b>', "\e[34m", $text);
+        $text = str_replace('</b>', "\e[0m", $text);
 
         return  $text;
     }
