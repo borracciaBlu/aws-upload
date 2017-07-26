@@ -10,7 +10,7 @@
  * @license   http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
-namespace AwsUpload;
+namespace AwsUpload\System;
 
 class Rsync
 {
@@ -39,15 +39,11 @@ class Rsync
      *
      * @see SettingFiles::getObjcet($key)
      *
-     * @param object $settings The object version of one of the
-     *                         files in the aws-upload dir.
+     * @param \AwsUpload\Model\Settings $settings The object version of one of the
+     *                                           files in the aws-upload dir.
      */
-    public function __construct($settings)
+    public function __construct(\AwsUpload\Model\Settings $settings)
     {
-        if (!is_object($settings)) {
-            throw new \Exception("Settings has to be an objec", 1);
-        }
-
         $this->settings = $settings;
         $this->cmd = $this->buildCmd();
     }
@@ -83,5 +79,11 @@ class Rsync
     {
         $escaped_command = $this->cmd;
         system($escaped_command);
+    }
+
+    public function isInstalled()
+    {
+        $has = exec('hash rsync 2>&1');
+        return (strlen($has) === 0);
     }
 }

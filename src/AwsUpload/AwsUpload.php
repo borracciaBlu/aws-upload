@@ -85,6 +85,7 @@ class AwsUpload
             'check'      => array('check', 'c'),
             'version'    => array('version', 'V'),
             'selfupdate' => array('self-update', 'selfupdate'),
+            'autocomplete' => array('autocomplete'),
         ));
         $args->parse();
 
@@ -161,7 +162,8 @@ class AwsUpload
             "edit"    => "AwsUpload\Command\EditSettingFile",
             "check"   => "AwsUpload\Command\CheckSettingFile",
             "copy"    => "AwsUpload\Command\CopySettingFile",
-            "selfupdate" => "AwsUpload\Command\SelfUpdate",
+            "selfupdate"   => "AwsUpload\Command\SelfUpdate",
+            "autocomplete" => "AwsUpload\Command\AutoComplete",
         );
 
         foreach ($cmdList as $arg => $cmdName) {
