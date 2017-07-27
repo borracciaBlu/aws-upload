@@ -14,12 +14,22 @@ namespace AwsUpload\System;
 
 class Zsh
 {
+    /**
+     * Define if zsh is installed.
+     *
+     * @return bool
+     */
     public static function isInstalled()
     {
         $count = (int) exec('grep /zsh$ /etc/shells | wc -l');
         return ($count >= 1);
     }
 
+    /**
+     * In case if not in the system.
+     *
+     * @return string
+     */
     public static function errorMsg()
     {
         $msg = "\n   It seems that zsh is not installed.\n" .

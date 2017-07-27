@@ -92,7 +92,7 @@ class Args
      *
      * E.g.: $args->quiet
      *
-     * @param  string $key The property we are trying to access.
+     * @param string $key The property we are trying to access.
      *
      * @return bool
      */

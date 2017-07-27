@@ -81,6 +81,11 @@ class Rsync
         system($escaped_command);
     }
 
+    /**
+     * Define if rsync is installed.
+     *
+     * @return bool
+     */
     public function isInstalled()
     {
         $has = exec('hash rsync 2>&1');

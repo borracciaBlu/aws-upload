@@ -14,6 +14,11 @@ namespace AwsUpload\System;
 
 class OhMyZsh
 {
+    /**
+     * Define if oh-my-zsh is installed.
+     *
+     * @return bool
+     */
     public static function isInstalled()
     {
         $dir  = self::getPath();
@@ -21,15 +26,25 @@ class OhMyZsh
         return is_dir($dir) && is_file($file);
     }
 
+    /**
+     * In case if not in the system.
+     *
+     * @return string
+     */
     public static function errorMsg()
     {
         $msg = "\n   It seems that oh-my-zsh is not installed.\n" .
-               "   Please run (or equivalent for your system):\n\n" .
-               "       <y>sh -c \"$(wget https://raw.githubusercontent.com/" .
-               "robbyrussell/oh-my-zsh/master/tools/install.sh -O -)\"</y>\n";
+                "   Please run (or equivalent for your system):\n\n" .
+                "       <y>sh -c \"$(wget https://raw.githubusercontent.com/" .
+                "robbyrussell/oh-my-zsh/master/tools/install.sh -O -)\"</y>\n";
         return $msg;
     }
 
+    /**
+     * Get oh-my-zsh path.
+     *
+     * @return string
+     */
     public static function getPath()
     {
         $omzDir = exec('echo $ZSH');
@@ -38,18 +53,33 @@ class OhMyZsh
         return $omzDir;
     }
 
+    /**
+     * Check if plugin is downloaded.
+     *
+     * @return bool
+     */
     public static function hasPluginFiles()
     {
         $dir = self::getPath() . '/plugins/aws-upload/';
         return is_dir($dir);
     }
 
+    /**
+     * Check if plugin is active.
+     *
+     * @return bool
+     */
     public static function isPluginActive()
     {
         $isActive = exec("grep aws-upload ~/.zshrc");
         return (strlen($isActive) > 0);
     }
 
+    /**
+     * Activate the plugin.
+     *
+     * @return bool
+     */
     public static function activate()
     {
         $cmd = "sed -i '/^plugins=(/ s/)$/ aws-upload)/' ~/.zshrc";

@@ -97,6 +97,7 @@ EOT;
    <g>-c|--check <proj>.<env></g>    Check a setting file for debug.
    <g>self-update</g>                Updates aws-upload to the latest version.
    <g>selfupdate</g>                 Updates aws-upload to the latest version.
+   <g>autocomplete</g>               Enable the autocomplete for oh-my-zsh.
 
 
 EOT;
