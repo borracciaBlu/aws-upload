@@ -18,6 +18,11 @@ use AwsUpload\Setting\SettingFiles;
 
 class CopySettingFile extends FileCommand
 {
+    /**
+     * @var array
+     */
+    public $keys;
+
     public function init()
     {
         $this->keys = $this->app->args->getParams('copy');
@@ -39,8 +44,6 @@ class CopySettingFile extends FileCommand
 
     /**
      * Method to check if keys isValid and good to proceed.
-     *
-     * @param  array $keys The setting file key.
      *
      * @return boolean
      */

@@ -20,6 +20,13 @@ use AwsUpload\Setting\SettingFiles;
 class ListProjects extends BasicCommand implements ValidCommand
 {
     /**
+     * It contains the projects label, if any.
+     *
+     * @var array
+     */
+    public $projs;
+
+    /**
      * Method used to print the projects available.
      *
      * The main idea is that you can get the projects from the files in
@@ -48,8 +55,6 @@ class ListProjects extends BasicCommand implements ValidCommand
 
     /**
      * Method to check if key isValid and good to proceed.
-     *
-     * @param  array $projs The projs.
      *
      * @return boolean
      */

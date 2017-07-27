@@ -60,9 +60,7 @@ class AutoComplete extends BasicCommand
 
 
     /**
-     * Method to check if key isValid and good to proceed.
-     *
-     * @param  string  $key The setting file key.
+     * Method to check if the system is good to proceed.
      *
      * @return boolean
      */
@@ -85,6 +83,11 @@ class AutoComplete extends BasicCommand
         return $valid;
     }
 
+    /**
+     * Print the system status report.
+     *
+     * @return void
+     */
     public function printSystemStatus()
     {
         $check = array('✔', '✖');
@@ -94,17 +97,35 @@ class AutoComplete extends BasicCommand
         $zsh = Zsh::isInstalled();
         $omz = OhMyZsh::isInstalled();
 
+        $git_msg = "   " .
+                   Facilitator::plot($git, $check) .
+                   " Git      \t" .
+                   Facilitator::plot($git, $labels);
+        $zsh_msg = "   " .
+                   Facilitator::plot($zsh, $check) .
+                   " Zsh      \t" .
+                   Facilitator::plot($zsh, $labels);
+        $omz_msg = "   " .
+                   Facilitator::plot($omz, $check) .
+                   " Oh-my-zsh \t" .
+                   Facilitator::plot($omz, $labels);
+
         $this->app->inline("");
-        $this->app->inline("   " . Facilitator::plot($git, $check) . " Git      \t" . Facilitator::plot($git, $labels));
-        $this->app->inline("   " . Facilitator::plot($zsh, $check) . " Zsh      \t" . Facilitator::plot($zsh, $labels));
-        $this->app->inline("   " . Facilitator::plot($omz, $check) . " Oh-my-zsh \t" . Facilitator::plot($omz, $labels));
+        $this->app->inline($git_msg);
+        $this->app->inline($zsh_msg);
+        $this->app->inline($omz_msg);
         $this->app->inline("");
     }
 
+    /**
+     * Clone the aws-upload-plugin repository.
+     *
+     * @return void
+     */
     public function clone()
     {
         $dest = OhMyZsh::getPath() . '/plugins/aws-upload/';
         $repo = 'https://github.com/borracciaBlu/aws-upload-zsh.git';
-        return Git::clone($repo, $dest);
+        Git::clone($repo, $dest);
     }
 }

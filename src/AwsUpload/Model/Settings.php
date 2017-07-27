@@ -19,48 +19,48 @@ class Settings
      *
      * @var string
      */
-    var $path;
+    public $path;
 
     /**
      * The setting file exists.
      *
      * @var bool
      */
-    var $file_exists;
+    public $file_exists;
 
     /**
      * Status of the setting file as json.
      *
      * @var bool
      */
-    var $is_valid_json;
+    public $is_valid_json;
 
     /**
      * Error related to json.
      *
      * @var string
      */
-    var $error_json = '';
+    public $error_json = '';
 
     /**
      * @var string
      */
-    var $pem;
+    public $pem;
 
     /**
      * @var string
      */
-    var $local;
+    public $local;
 
     /**
      * @var string
      */
-    var $remote;
+    public $remote;
 
     /**
      * @var array
      */
-    var $exclude;
+    public $exclude;
 
     public function __construct($path)
     {

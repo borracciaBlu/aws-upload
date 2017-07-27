@@ -20,7 +20,7 @@ abstract class FileCommand extends BasicCommand implements Command, ValidCommand
     /**
      * @var string
      */
-    var $key;
+    public $key;
 
     public function __construct($app)
     {

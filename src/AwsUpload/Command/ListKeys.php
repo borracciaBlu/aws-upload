@@ -18,6 +18,18 @@ use AwsUpload\Setting\SettingFiles;
 class ListKeys extends BasicCommand implements ValidCommand
 {
     /**
+     * @var array
+     */
+    public $keys;
+
+    /**
+     * Property true if app is quiet.
+     *
+     * @var bool
+     */
+    public $is_quiet;
+
+    /**
      * Method used to print the projects' keys available.
      *
      * The main idea is that you can get the projects' keys from the files in

@@ -14,13 +14,13 @@ namespace AwsUpload\System;
 
 class Zsh
 {
-    static public function isInstalled()
+    public static function isInstalled()
     {
         $count = (int) exec('grep /zsh$ /etc/shells | wc -l');
         return ($count >= 1);
     }
 
-    static public function errorMsg()
+    public static function errorMsg()
     {
         $msg = "\n   It seems that zsh is not installed.\n" .
                "   Please run (or equivalent for your system):\n\n" .

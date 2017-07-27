@@ -21,6 +21,28 @@ use AwsUpload\Command\BasicCommand;
 
 class Upload extends FileCommand
 {
+    /**
+     * Property true if app is simulate.
+     *
+     * @var bool
+     */
+    public $is_simulate;
+
+    /**
+     * @var string
+     */
+    public $key;
+
+    /**
+     * @var string
+     */
+    public $proj;
+
+    /**
+     * @var string
+     */
+    public $env;
+
     public function init()
     {
         $items = $this->app->args->getParams('wild');

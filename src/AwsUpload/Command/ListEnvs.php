@@ -20,6 +20,13 @@ use AwsUpload\Setting\SettingFiles;
 class ListEnvs extends BasicCommand implements ValidCommand
 {
     /**
+     * The project to use as filter.
+     *
+     * @var string
+     */
+    public $proj;
+
+    /**
      * Method used to print the environments available for a project.
      *
      * The main idea is that for each project you have different envs.
@@ -39,7 +46,7 @@ class ListEnvs extends BasicCommand implements ValidCommand
             return $this->handleError();
         }
 
-        $envs = SettingFiles::getEnvs($projFilter);
+        $envs = SettingFiles::getEnvs($this->proj);
         $envs = implode(' ', $envs);
         $this->msg = $envs . "\n";
 

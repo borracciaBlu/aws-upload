@@ -14,13 +14,13 @@ namespace AwsUpload\System;
 
 class Git
 {
-    static public function isInstalled()
+    public static function isInstalled()
     {
         $hasGit = exec('hash git 2>&1');
         return (strlen($hasGit) === 0);
     }
 
-    static public function errorMsg()
+    public static function errorMsg()
     {
         $msg = "\n   It seems that git is not installed.\n" .
                "   Please run (or equivalent for your system):\n\n" .
@@ -28,7 +28,7 @@ class Git
         return $msg;
     }
 
-    static public function clone($repo, $dest)
+    public static function clone($repo, $dest)
     {
         $cmd = 'env git clone ' . $repo. ' ' . $dest;
         return exec($cmd);
