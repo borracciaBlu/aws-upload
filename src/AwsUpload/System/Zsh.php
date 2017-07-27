@@ -23,9 +23,9 @@ class Zsh
     public static function errorMsg()
     {
         $msg = "\n   It seems that zsh is not installed.\n" .
-               "   Please run (or equivalent for your system):\n\n" .
-               "       <y>sudo apt-get install zsh</y>\n" .
-               "       <y>sudo chsh zsh</y>\n";
+                "   Please run (or equivalent for your system):\n\n" .
+                "       <y>sudo apt-get install zsh</y>\n" .
+                "       <y>sudo chsh zsh</y>\n";
         return $msg;
     }
 }

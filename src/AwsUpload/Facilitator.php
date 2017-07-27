@@ -187,8 +187,8 @@ EOT;
     /**
      * Method to facilitate the report building.
      *
-     * @param bool  $condition The state to evaluate
-     * @param array $labels    The possible values to display
+     * @param bool     $condition The state to evaluate
+     * @param string[] $labels    The possible values to display
      *
      * @return string
      */

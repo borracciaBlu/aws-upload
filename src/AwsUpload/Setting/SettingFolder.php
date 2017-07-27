@@ -27,7 +27,7 @@ class SettingFolder
 
         if (!$userDir) {
             $msg = 'The ' . $userEnv . ' or AWSUPLOAD_HOME environment variable ' .
-                   'must be set for aws-upload to run correctly';
+                    'must be set for aws-upload to run correctly';
             throw new RuntimeException($msg);
         }
 

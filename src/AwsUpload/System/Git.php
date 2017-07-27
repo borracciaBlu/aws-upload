@@ -23,14 +23,14 @@ class Git
     public static function errorMsg()
     {
         $msg = "\n   It seems that git is not installed.\n" .
-               "   Please run (or equivalent for your system):\n\n" .
-               "       <y>sudo apt-get install git</y>\n";
+                "   Please run (or equivalent for your system):\n\n" .
+                "       <y>sudo apt-get install git</y>\n";
         return $msg;
     }
 
     public static function clone($repo, $dest)
     {
-        $cmd = 'env git clone ' . $repo. ' ' . $dest;
+        $cmd = 'env git clone ' . $repo . ' ' . $dest;
         return exec($cmd);
     }
 }

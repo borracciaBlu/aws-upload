@@ -23,11 +23,11 @@ abstract class BaseTestCase extends TestCase
      */
     public function setUp()
     {
-        $this->directoryBuild = __DIR__.'/../../build/';
+        $this->directoryBuild = __DIR__ . '/../../build/';
 
         $uid = strtolower(get_class($this));
         $uid = str_replace('\\', '-', $uid);
-        $this->directory = __DIR__.'/../../build/' . $uid;
+        $this->directory = __DIR__ . '/../../build/' . $uid;
         putenv("AWSUPLOAD_HOME=" . $this->directory);
 
         $filesystem = new Filesystem();

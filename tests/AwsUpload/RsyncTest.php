@@ -11,9 +11,9 @@ class RsyncTest extends BaseTestCase
 {
     public function test_buildCmd_object_true()
     {
-        $cmd = 'rsync -ravze "ssh -i /Users/jhon.doe/Documents/certificates/site.pem"  --exclude \'.env\'  '
-             . '--exclude \'.git/\'  --exclude .DS_Store /Users/jhon.doe/Documents/w/html/ '
-             . '\'ec2-user@ec2-xx-xx-xx-xx.ap-southeast-2.compute.amazonaws.com:/var/www/html/site\'';
+        $cmd = 'rsync -ravze "ssh -i /Users/jhon.doe/Documents/certificates/site.pem"  --exclude \'.env\'  ' .
+            '--exclude \'.git/\'  --exclude .DS_Store /Users/jhon.doe/Documents/w/html/ ' .
+            '\'ec2-user@ec2-xx-xx-xx-xx.ap-southeast-2.compute.amazonaws.com:/var/www/html/site\'';
 
         $json = '{
             "pem": "/Users/jhon.doe/Documents/certificates/site.pem",
