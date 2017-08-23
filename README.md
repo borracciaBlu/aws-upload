@@ -29,9 +29,14 @@ If you are playing with a huge project, you should have a proper deployment auto
 ## Enabling tab-completion
 
 In order to achieve the tab-completion like in the screen shot you have to install `aws-upload-zsh`.  
-`aws-upload-zsh` is the oh-my-zsh plugin to boost your productivity with `aws-upload`.  
+[`aws-upload-zsh`](https://github.com/borracciaBlu/aws-upload-zsh) is the oh-my-zsh plugin to boost your productivity with `aws-upload`.  
 
-To install `aws-upload-zsh` follow the instructions [here](https://github.com/borracciaBlu/aws-upload-zsh).
+> The tab completion is done by the shell you are using.  
+> Right now the only shell supported is [zsh](http://www.zsh.org/) in combination with [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh).
+
+To enable the autocomplete you can type:
+
+    aws-upload autocomplete
 
 ## Create your first setting file
 
