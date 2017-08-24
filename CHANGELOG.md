@@ -136,7 +136,7 @@ All notable changes to this project will be documented in this file.
 
 ## 0.0.1 - 2017-03-06
 ### Added
-- Added `composer.json`.  
+- Added `composer.json`.
 - Added Facilitator to print `help`, `banner`, `version`.
 - Added Rsync to user `rsync`.
 - Added SettingFolder to get `getHomeDir`, `getPath`.
