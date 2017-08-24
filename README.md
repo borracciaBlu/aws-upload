@@ -1,120 +1,33 @@
+<p align="center"><a href="https://aws-upload.com" target="_blank"><img src="https://aws-upload.com/images/aws-upload-logo.png"></a></p>
 
-# aws-upload
-A delicious CLI Tool for uploading files to ec2.
-
-[![Build Status](https://travis-ci.org/borracciaBlu/aws-upload.svg?branch=master)](https://travis-ci.org/borracciaBlu/aws-upload)
-[![Latest Stable Version](https://poser.pugx.org/aws-upload/aws-upload/version)](https://packagist.org/packages/aws-upload/aws-upload)
-[![Turbo Commit](https://img.shields.io/badge/Turbo_Commit-on-3DD1F2.svg)](https://github.com/labs-js/turbo-git/blob/master/README.md)  
+<p align="center">
+  <a href="https://travis-ci.org/borracciaBlu/aws-upload"><img src="https://travis-ci.org/borracciaBlu/aws-upload.svg" alt="Build Status"></a>
+  <a href="https://packagist.org/packages/aws-upload/aws-upload"><img src="https://poser.pugx.org/aws-upload/aws-upload/version" alt="Latest Stable Version"></a>
+  <a href="https://github.com/labs-js/turbo-git/blob/master/README.md"><img src="https://img.shields.io/badge/Turbo_Commit-on-3DD1F2.svg" alt="Turbo Commit"></a>
+</p>
 
 <p align="center">
   <img src="https://cloud.githubusercontent.com/assets/2061731/24436410/0e6f00c6-1487-11e7-9e79-dc6ecd5ab152.gif" alt="aws-upload Demo"/>
 </p>
 
-## What?
-aws-upload allow you to rapid upload files from cli in an efficient way (tnx rsync).
-You define a setting file for your project, and then you have just to tab.
-aws-upload will let compress and upload only the files you change it. You can even setup different environments for the same project.
+## What is aws-upload?
+aws-upload is cli tool that allows you to rapid upload files in an elegant and efficient way. The main idea is that deploy files should be brain zero. Quick and fast. No thoughts.  
+aws-upload try to remove the pain from deployment process following tree core values:
 
-## Why?
-If you have a lot of small projects with different environments, without a proper deployment system, and you don't want to remember all the time the rsync cmd (or worst manually upload using FileZilla), aws-upload is definitely for you.
+- Explore: No need to remember all your projects. Guess and tab.
+- Support: It helps you in the configuration process and during the debug.
+- Efficient: Save time. Be fast and reliable when it matters the most.
 
-## Why not?
-If you are playing with a huge project, you should have a proper deployment automation in place, maybe with some CI system. 
-
-## How to install
+## Installation
 
     composer global require aws-upload/aws-upload
 
+## Documentation
+To check out examples and docs, visit [aws-upload.com](https://aws-upload.com).
 
-## Enabling tab-completion
+## Stay In Touch
+For the latest releases and announcements, follow on Twitter: [@borracciaBlu_u](https://twitter.com/borracciaBlu_u)
 
-In order to achieve the tab-completion like in the screen shot you have to install `aws-upload-zsh`.  
-[`aws-upload-zsh`](https://github.com/borracciaBlu/aws-upload-zsh) is the oh-my-zsh plugin to boost your productivity with `aws-upload`.  
+## License
+aws-upload is open-sourced software licensed under the [MIT Licence](http://opensource.org/licenses/MIT).
 
-> The tab completion is done by the shell you are using.  
-> Right now the only shell supported is [zsh](http://www.zsh.org/) in combination with [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh).
-
-To enable the autocomplete you can type:
-
-    aws-upload autocomplete
-
-## Create your first setting file
-
-To create a setting file you can use `aws-upload new [project.env]`.
-
-    // Examples
-
-    // Project:     blog
-    // Environment: dev
-    // Key:         blog.dev
-    aws-upload new blog.dev
-
-    // Project:     client-A
-    // Environment: prod
-    // Key:         client-A.prod
-    aws-upload new client-A.prod
-
-## How it works?
-
-All the times you'll type `aws-upload [project] [env]`, `aws-upload` will:
-
-1 - check if in `~/.aws-upload/` you have a setting file called `project.env.json`  
-2 - read the settings from it  
-3 - upload the files for you through rsync/ssh  
-
-## The Setting File
-
-The setting file name use the convetion `[project].[env].json` where:
-
- - *project* is the name of the project 
- - *env* is the environment
-
-The folder that contains all the setting files is `~/.aws-upload/`.
-
-### Setting file name examples
-
-Some cases of files and command. 
-
-    // - project: myProject
-    // - env: dev
-    ~/.aws-upload/myProject.dev.json
-    aws-upload myProject dev
-    
-    // - project: myProject
-    // - env: stag
-    ~/.aws-upload/myProject.stag.json 
-    aws-upload myProject stag
-
-    // - project: aws-upload-io
-    // - env: prod
-    ~/.aws-upload/aws-upload-io.prod.json
-    aws-upload aws-upload-io prod
-  
-
-### The setting file content
-This is the structure of a setting file. As you can see there are 4 main parts: `pem`, `local`, `remote`, `exclude`.
-
-```json
-    {
-        "pem" : "/home/keys/your-key.pem",
-        "local" : "/var/www/project/*",
-        "remote" : "ubuntu@ec2-xxx-xxx-xxx-xxx.compute-1.amazonaws.com:/var/www/html",
-        "exclude" : [
-            ".env",
-            ".git/",
-            "storage/",
-            "tests/",
-            "node_modules/"
-        ]
-    }
-```
- 
-**pem** | *string*:  it contains the path to your pem key.  
-**local** | *string*: it contains the path to the directory you want to upload to your ec2 server.  
-**exclude** | *array*: it contains the list of files or folders you DO NOT want to upload.   
-**remote** | *string*: it contains the information of your server.  
-In particular [*user*]@[*host*]:[*remotePath*] where:
-
-- *user* is you user on your server. Possibles values [ec2-user, ubuntu]
-- *host* is your ec2 host name. Similar value [ec2-xxx-xxx-xxx-xxx.compute-1.amazonaws.com]  
-- *remotePath* is the folder you want to upload your project to. It's the folder on your server.
