@@ -48,7 +48,7 @@ class Git
      */
     public static function clone($repo, $dest)
     {
-        $cmd = 'env git clone ' . $repo . ' ' . $dest;
+        $cmd = 'env git clone ' . $repo . ' ' . $dest . ' > /dev/null 2>&1';
         return exec($cmd);
     }
 }
