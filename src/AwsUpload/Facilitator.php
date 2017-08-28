@@ -26,14 +26,14 @@ class Facilitator
     public static function banner()
     {
         $banner = <<<EOT
-                                       _                 _ 
+                                       _                 _
                                       | |               | |
   __ ___      _____ ______ _   _ _ __ | | ___   __ _  __| |
  / _` \ \ /\ / / __|______| | | | '_ \| |/ _ \ / _` |/ _` |
 | (_| |\ V  V /\__ \      | |_| | |_) | | (_) | (_| | (_| |
  \__,_| \_/\_/ |___/       \__,_| .__/|_|\___/ \__,_|\__,_|
-                                | |                        
-                                |_|                        
+                                | |
+                                |_|
 
 EOT;
         return "<g>" . $banner . "</g>";
@@ -60,44 +60,46 @@ EOT;
     public static function help()
     {
         $msg = <<<EOT
-        
-<y>Usage:</y>
-  aws-upload <proj> <env> [--simulate] [-q | --quiet] [-v | --verbose]
-  
-  aws-upload -h | --help
-  aws-upload -V | --version
 
-  aws-upload keys
+<y>Usage:</y>
+
+  aws-upload <proj> <env> [--simulate] [-v|--verbose]
+
+  aws-upload keys [-q|--quiet]
+  aws-upload projs [-q|--quiet]
+  aws-upload envs <proj> [-q|--quiet]
+
   aws-upload new <key>               # The <key> format is proj.env eg: landing.test
   aws-upload edit <key>              # The <key> format is proj.env eg: landing.test
   aws-upload copy <src> <dest>       # <src> and <dest> are in the <key> format proj.env
   aws-upload check <key>             # The <key> format is proj.env eg: landing.test
 
-  aws-upload self-update | selfupdate
+  aws-upload (self-update | selfupdate)
+  aws-upload autocomplete
 
 <y>Output Options:</y>
 
   <g>-v|--verbose</g>                Output more verbose information.
-  <g>-q|--quiet</g>                  Checks that version is greater than min and exits.
-  <g>--simulate</g>                  It simulates the rsync command without upload anything.
+  <g>-q|--quiet</g>                  Reduce or suppress additional information.
 
 <y>Miscellaneous Options:</y>
 
-   <g>-h|--help</g>                  Prints this usage information.
-   <g>-V|--version</g>               Prints the version and exits.
+  <g>-h|--help</g>                   Prints this usage information.
+  <g>-V|--version</g>                Prints the application version.
+  <g>--simulate</g>                  It simulates the rsync command without upload anything.
 
 <y>Available commands:</y>
 
-   <g>-k|--keys</g>                  Print all the projects' keys.
-   <g>-p|--projs</g>                 Print all the projects.
-   <g>-e|--envs <proj></g>           Print all the environments for a specific project.
-   <g>-n|--new <proj>.<env></g>      Create a new setting file.
-   <g>-E|--edit <proj>.<env></g>     Edit a setting file.
-   <g>-cp|--copy <src> <dest></g>    Copy a setting file.
-   <g>-c|--check <proj>.<env></g>    Check a setting file for debug.
-   <g>self-update</g>                Updates aws-upload to the latest version.
-   <g>selfupdate</g>                 Updates aws-upload to the latest version.
-   <g>autocomplete</g>               Enable the autocomplete for oh-my-zsh.
+  <g>-k|keys</g>                     Print all the projects' keys.
+  <g>-p|projs</g>                    Print all the projects.
+  <g>-e|envs <proj></g>              Print all the environments for a specific project.
+  <g>-n|new <key></g>                Create a new setting file.
+  <g>-E|edit <key></g>               Edit a setting file.
+  <g>-cp|copy <src> <dest></g>       Copy a setting file.
+  <g>-c|check <key></g>              Check a setting file for debug.
+  <g>self-update</g>                 Updates aws-upload to the latest version.
+  <g>selfupdate</g>                  Updates aws-upload to the latest version.
+  <g>autocomplete</g>                Enable the autocomplete for oh-my-zsh.
 
 
 EOT;
@@ -115,16 +117,29 @@ EOT;
      */
     public static function rsyncBanner($proj, $env, $cmd)
     {
-        $proj = escapeshellarg($proj);
-        $env = escapeshellarg($env);
+        $env    = escapeshellarg($env);
+        $proj   = escapeshellarg($proj);
 
         $msg = <<<EOT
-=================================
-Proj:  $proj
-Env: $env
-Cmd:
-$cmd
-=================================
+<b>==================================================================</b>
+<g>
+                                          _                 _
+                                         | |               | |
+     __ ___      _____ ______ _   _ _ __ | | ___   __ _  __| |
+    / _` \ \ /\ / / __|______| | | | '_ \| |/ _ \ / _` |/ _` |
+   | (_| |\ V  V /\__ \      | |_| | |_) | | (_) | (_| | (_| |
+    \__,_| \_/\_/ |___/       \__,_| .__/|_|\___/ \__,_|\__,_|
+                                   | |
+                                   |_|
+
+</g>
+<b>==================================================================</b>
+
+   Start processing:
+   <g>Proj:</g> <y>$proj</y>
+   <g>Env:</g>  <y>$env</y>
+
+<b>==================================================================</b>
 
 EOT;
         return $msg;
