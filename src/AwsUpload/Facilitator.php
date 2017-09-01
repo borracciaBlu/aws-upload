@@ -63,7 +63,7 @@ EOT;
 
 <y>Usage:</y>
 
-  aws-upload <proj> <env> [--simulate] [-v|--verbose]
+  aws-upload <proj> <env> [--simulate|--dry-run] [-v|--verbose]
 
   aws-upload keys [-q|--quiet]
   aws-upload projs [-q|--quiet]
@@ -86,6 +86,7 @@ EOT;
 
   <g>-h|--help</g>                   Prints this usage information.
   <g>-V|--version</g>                Prints the application version.
+  <g>--dry-run</g>                   It simulates the rsync command without upload anything.
   <g>--simulate</g>                  It simulates the rsync command without upload anything.
 
 <y>Available commands:</y>

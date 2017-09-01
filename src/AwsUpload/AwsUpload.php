@@ -72,7 +72,7 @@ class AwsUpload
         $args->addFlags(array(
             'quiet'    => array('quiet', 'q'),
             'verbose'  => array('verbose', 'v'),
-            'simulate' => array('simulate')
+            'simulate' => array('simulate', 'dry-run')
         ));
         $args->addCmds(array(
             'new'        => array('new', 'n'),
