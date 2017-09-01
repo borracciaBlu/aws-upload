@@ -20,8 +20,6 @@ use AwsUpload\System\OhMyZsh;
 
 class AutoComplete extends BasicCommand
 {
-    public $plugin_version = 'v1.0.0';
-
     /**
      * Method used to install the autocomplete plugin.
      *
@@ -46,6 +44,7 @@ class AutoComplete extends BasicCommand
             $this->clone();
         } else {
             $this->app->inline('   <b>•</b> Plugin files already present.');
+            $this->pull();
         }
 
         if (!OhMyZsh::isPluginActive()) {
@@ -127,8 +126,19 @@ class AutoComplete extends BasicCommand
     public function clone()
     {
         $dest = OhMyZsh::getPath() . '/plugins/aws-upload/';
-        $repo = '--branch ' . $this->plugin_version .
+        $repo = '--branch v' . $this->app->plugin .
                 ' https://github.com/borracciaBlu/aws-upload-zsh.git';
         Git::clone($repo, $dest);
+    }
+
+    public function pull()
+    {
+        $repo = OhMyZsh::getPath() . '/plugins/aws-upload/';
+
+        $this->app->inline('     <y>-</y> Update repo');
+        Git::pull($repo);
+
+        $this->app->inline('     <y>-</y> Checkout version v' . $this->app->plugin);
+        Git::checkoutTag($repo, 'v' . $this->app->plugin);
     }
 }

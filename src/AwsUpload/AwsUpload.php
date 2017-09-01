@@ -18,6 +18,7 @@ use AwsUpload\Io\Output;
 class AwsUpload
 {
     /**
+     * Application version.
      * Given a version number MAJOR.MINOR.PATCH, increment the:
      *
      * MAJOR version when you make incompatible API changes,
@@ -28,6 +29,19 @@ class AwsUpload
      * @var string VERSION
      */
     public $version;
+
+    /**
+     * Zsh plugin version.
+     * Given a version number MAJOR.MINOR.PATCH, increment the:
+     *
+     * MAJOR version when you make incompatible API changes,
+     * MINOR version when you add functionality in a backwards-compatible manner, and
+     * PATCH version when you make backwards-compatible bug fixes.
+     *
+     * @see http://semver.org/
+     * @var string VERSION
+     */
+    public $plugin;
 
     /**
      * It define if aws-upload has to print additional info.
@@ -63,10 +77,11 @@ class AwsUpload
      * The main purpose is to define the args for the script
      * and populate `$this->args`.
      */
-    public function __construct($version = 'test')
+    public function __construct($version = 'test', $plugin = 'test')
     {
 
         $this->version = $version;
+        $this->plugin = $plugin;
 
         $args = new Args();
         $args->addFlags(array(
