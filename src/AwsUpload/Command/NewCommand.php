@@ -13,12 +13,13 @@
 namespace AwsUpload\Command;
 
 use AwsUpload\Check;
-use AwsUpload\Facilitator;
 use AwsUpload\Model\Status;
 use AwsUpload\Command\Command;
 use AwsUpload\Setting\SettingFiles;
+use AwsUpload\Message\ErrorMessage;
+use AwsUpload\Message\NewSettingFileMessage;
 
-class NewSettingFile extends FileCommand
+class NewCommand extends FileCommand
 {
     public function init()
     {
@@ -35,7 +36,7 @@ class NewSettingFile extends FileCommand
         SettingFiles::create($this->key);
         SettingFiles::edit($this->key);
 
-        $this->msg = Facilitator::onNewSettingFileSuccess($this->key);
+        $this->msg = NewSettingFileMessage::success($this->key);
     }
 
     /**
@@ -52,9 +53,9 @@ class NewSettingFile extends FileCommand
         );
 
         $msgs = array(
-            "file_not_exists" => Facilitator::onKeyAlreadyExists($this->key),
-            "is_valid_key"    => Facilitator::onNoValidKey($this->key),
-            "is_project"      => Facilitator::onNoProjects(),
+            "file_not_exists" => ErrorMessage::keyAlreadyExists($this->key),
+            "is_valid_key"    => ErrorMessage::noValidKey($this->key),
+            "is_project"      => ErrorMessage::noProjects(),
         );
 
         $valid = $this->validate($tests, $msgs);

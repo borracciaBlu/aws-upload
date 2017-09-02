@@ -12,26 +12,21 @@
 
 namespace AwsUpload\Command;
 
-use AwsUpload\Facilitator;
-use AwsUpload\Setting\SettingFiles;
+use AwsUpload\Model\Status;
 
-class EditSettingFile extends FileCommand
+class SelfUpdateCommand extends BasicCommand
 {
-    public function init()
-    {
-        $this->key = $this->app->args->getFirst('edit');
-    }
-
     /**
-     * Method used to edit a setting file.
+     * Method used to update aws-upload via composer.
      *
-     * @see FileCommand::run
-     * @return void
+     * @return int The status code.
      */
-    public function exec()
+    public function run()
     {
-        SettingFiles::edit($this->key);
+        $this->app->inline('Self-update running..');
+        system('composer -vvv global require aws-upload/aws-upload');
+        $this->app->inline("Self-update completed");
 
-        $this->msg = Facilitator::onEditSettingFileSuccess($this->key);
+        return Status::SUCCESS;
     }
 }

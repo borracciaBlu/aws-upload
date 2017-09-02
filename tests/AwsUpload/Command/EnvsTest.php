@@ -6,7 +6,7 @@ use AwsUpload\AwsUpload;
 use AwsUpload\Tests\BaseTestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
-class ListEnvironmentsTest extends BaseTestCase
+class EnvsTest extends BaseTestCase
 {
 
     public function test_noProjects_expectedNoProjectMsg()
@@ -21,7 +21,7 @@ class ListEnvironmentsTest extends BaseTestCase
         $aws = new AwsUpload();
         $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
-        $cmd = new \AwsUpload\Command\ListEnvs($aws);
+        $cmd = new \AwsUpload\Command\EnvsCommand($aws);
         $cmd->run();
     }
 
@@ -52,7 +52,7 @@ To get the envs from one of them, run (for example):
         $aws = new AwsUpload();
         $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
-        $cmd = new \AwsUpload\Command\ListEnvs($aws);
+        $cmd = new \AwsUpload\Command\EnvsCommand($aws);
         $cmd->run();
     }
 }

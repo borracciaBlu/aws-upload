@@ -12,10 +12,10 @@
 
 namespace AwsUpload\Command;
 
-use AwsUpload\Facilitator;
+use AwsUpload\Message\CheckMessage;
 use AwsUpload\Setting\SettingFiles;
 
-class CheckSettingFile extends FileCommand
+class CheckCommand extends FileCommand
 {
     /**
      * Initializes the command.
@@ -34,7 +34,7 @@ class CheckSettingFile extends FileCommand
     public function exec()
     {
         $report = $this->getReport();
-        $this->msg = Facilitator::reportBanner($report);
+        $this->msg = CheckMessage::report($report);
     }
 
     public function getReport()

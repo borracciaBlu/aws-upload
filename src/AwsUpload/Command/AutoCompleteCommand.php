@@ -14,11 +14,11 @@ namespace AwsUpload\Command;
 
 use AwsUpload\System\Git;
 use AwsUpload\System\Zsh;
-use AwsUpload\Facilitator;
 use AwsUpload\Model\Status;
 use AwsUpload\System\OhMyZsh;
+use AwsUpload\Message\CommonMessage;
 
-class AutoComplete extends BasicCommand
+class AutoCompleteCommand extends BasicCommand
 {
     /**
      * Method used to install the autocomplete plugin.
@@ -36,9 +36,9 @@ class AutoComplete extends BasicCommand
 
             return Status::SYSTEM_NOT_READY;
         }
-        
+
         $this->app->inline("Procede to the installation:\n");
-        
+
         if (!OhMyZsh::hasPluginFiles()) {
             $this->app->inline('   <b>•</b> Download plugin');
             $this->clone();
@@ -99,17 +99,17 @@ class AutoComplete extends BasicCommand
         $omz = OhMyZsh::isInstalled();
 
         $git_msg = "   " .
-                   Facilitator::plot($git, $check) .
+                   CommonMessage::plot($git, $check) .
                    " Git      \t" .
-                   Facilitator::plot($git, $labels);
+                   CommonMessage::plot($git, $labels);
         $zsh_msg = "   " .
-                   Facilitator::plot($zsh, $check) .
+                   CommonMessage::plot($zsh, $check) .
                    " Zsh      \t" .
-                   Facilitator::plot($zsh, $labels);
+                   CommonMessage::plot($zsh, $labels);
         $omz_msg = "   " .
-                   Facilitator::plot($omz, $check) .
+                   CommonMessage::plot($omz, $check) .
                    " Oh-my-zsh \t" .
-                   Facilitator::plot($omz, $labels);
+                   CommonMessage::plot($omz, $labels);
 
         $this->app->inline("");
         $this->app->inline($git_msg);

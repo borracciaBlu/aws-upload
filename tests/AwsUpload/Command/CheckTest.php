@@ -4,11 +4,11 @@ namespace AwsUpload\Tests\Settings;
 
 use AwsUpload\Io\Output;
 use AwsUpload\AwsUpload;
-use AwsUpload\Facilitator;
 use AwsUpload\Tests\BaseTestCase;
+use AwsUpload\Message\CheckMessage;
 use Symfony\Component\Filesystem\Filesystem;
 
-class CheckSettingsFileTest extends BaseTestCase
+class CheckTest extends BaseTestCase
 {
     public function test_validKeyNoExists_expectedNoFileFound()
     {   
@@ -33,7 +33,7 @@ class CheckSettingsFileTest extends BaseTestCase
             "error_json" => ''
         );
 
-        $msg = Facilitator::reportBanner($report);
+        $msg = CheckMessage::report($report);
         $msg = Output::color($msg);
         $this->expectOutputString($msg . "\n");
 
@@ -43,7 +43,7 @@ class CheckSettingsFileTest extends BaseTestCase
         $aws = new AwsUpload();
         $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
-        $cmd = new \AwsUpload\Command\CheckSettingFile($aws);
+        $cmd = new \AwsUpload\Command\CheckCommand($aws);
         $cmd->run();
     }
 }

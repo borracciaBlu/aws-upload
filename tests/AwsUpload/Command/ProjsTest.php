@@ -6,7 +6,7 @@ use AwsUpload\AwsUpload;
 use AwsUpload\Tests\BaseTestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
-class ListProjectsTest extends BaseTestCase
+class ProjsTest extends BaseTestCase
 {
     /**
      * Check cmdProj with no projects
@@ -20,7 +20,7 @@ class ListProjectsTest extends BaseTestCase
         $aws = new AwsUpload();
         $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
-        $cmd = new \AwsUpload\Command\ListProjects($aws);
+        $cmd = new \AwsUpload\Command\ProjsCommand($aws);
         $cmd->run();
     }
 
@@ -34,7 +34,7 @@ class ListProjectsTest extends BaseTestCase
         $aws = new AwsUpload();
         $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
-        $cmd = new \AwsUpload\Command\ListProjects($aws);
+        $cmd = new \AwsUpload\Command\ProjsCommand($aws);
         $cmd->run();
     }
 
@@ -50,10 +50,10 @@ class ListProjectsTest extends BaseTestCase
         $aws = new AwsUpload();
         $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
-        $cmd = new \AwsUpload\Command\ListProjects($aws);
+        $cmd = new \AwsUpload\Command\ProjsCommand($aws);
         $cmd->run();
     }
-    
+
     public function test_moreFilesDiffProj_expectedProjsName()
     {
         $this->expectOutputString("project-1 project-2\n\n");
@@ -66,7 +66,7 @@ class ListProjectsTest extends BaseTestCase
         $aws = new AwsUpload();
         $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
-        $cmd = new \AwsUpload\Command\ListProjects($aws);
+        $cmd = new \AwsUpload\Command\ProjsCommand($aws);
         $cmd->run();
     }
 }

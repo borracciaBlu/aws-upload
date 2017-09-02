@@ -12,25 +12,18 @@
 
 namespace AwsUpload\Command;
 
-use AwsUpload\Facilitator;
+use AwsUpload\Message\VersionMessage;
 
-class FullInfo extends BasicCommand
+class VersionCommand extends BasicCommand
 {
     /**
-     * Method used to print the full aws-upload info.
-     *
-     * -  banner
-     * -  version
-     * -  help
+     * Method used to print the version.
      *
      * @return int The status code.
      */
     public function run()
     {
-        $msg = Facilitator::banner();
-        $msg .= Facilitator::version($this->app->version);
-        $msg .= Facilitator::help();
-        $this->msg = $msg;
+        $this->msg = VersionMessage::success($this->app->version);
 
         return $this->handleSuccess();
     }

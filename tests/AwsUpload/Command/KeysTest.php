@@ -6,7 +6,7 @@ use AwsUpload\AwsUpload;
 use AwsUpload\Tests\BaseTestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
-class ListKeysTest extends BaseTestCase
+class KeysTest extends BaseTestCase
 {
     /**
      * Check cmdProj with no projects
@@ -20,7 +20,7 @@ class ListKeysTest extends BaseTestCase
         $aws = new AwsUpload();
         $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
-        $cmd = new \AwsUpload\Command\ListKeys($aws);
+        $cmd = new \AwsUpload\Command\KeysCommand($aws);
         $cmd->run();
     }
 
@@ -34,7 +34,7 @@ class ListKeysTest extends BaseTestCase
         $aws = new AwsUpload();
         $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
-        $cmd = new \AwsUpload\Command\ListKeys($aws);
+        $cmd = new \AwsUpload\Command\KeysCommand($aws);
         $cmd->run();
     }
 
@@ -50,7 +50,7 @@ class ListKeysTest extends BaseTestCase
         $aws = new AwsUpload();
         $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
-        $cmd = new \AwsUpload\Command\ListKeys($aws);
+        $cmd = new \AwsUpload\Command\KeysCommand($aws);
         $cmd->run();
     }
     
@@ -66,7 +66,7 @@ class ListKeysTest extends BaseTestCase
         $aws = new AwsUpload();
         $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
-        $cmd = new \AwsUpload\Command\ListKeys($aws);
+        $cmd = new \AwsUpload\Command\KeysCommand($aws);
         $cmd->run();
     }
 }

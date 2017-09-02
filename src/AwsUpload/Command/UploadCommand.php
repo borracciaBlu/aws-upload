@@ -13,13 +13,12 @@
 namespace AwsUpload\Command;
 
 use AwsUpload\Check;
-use AwsUpload\Facilitator;
 use AwsUpload\Model\Status;
 use AwsUpload\System\Rsync;
 use AwsUpload\Setting\SettingFiles;
-use AwsUpload\Command\BasicCommand;
+use AwsUpload\Message\RsyncMessage;
 
-class Upload extends FileCommand
+class UploadCommand extends FileCommand
 {
     /**
      * Property true if app is simulate.
@@ -69,10 +68,11 @@ class Upload extends FileCommand
         $settings = SettingFiles::getObject($this->key);
         $rsync = new Rsync($settings);
 
-        $msg = Facilitator::rsyncBanner($this->proj, $this->env, $rsync->cmd);
+        $msg = RsyncMessage::banner($this->proj, $this->env, $rsync->cmd);
         $this->app->inline($msg);
 
         if ($this->is_simulate) {
+            $this->app->inline($rsync->cmd);
             return $this->simulate();
         }
 

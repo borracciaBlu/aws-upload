@@ -10,21 +10,20 @@
  * @license   http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
-namespace AwsUpload\Command;
+namespace AwsUpload\Message;
 
-use AwsUpload\Facilitator;
-
-class Help extends BasicCommand
+class VersionMessage
 {
     /**
-     * Method used to print the help.
+     * Method to echo the current version.
      *
-     * @return int The status code.
+     * @param string $version The version.
+     *
+     * @return string
      */
-    public function run()
+    public static function success($version)
     {
-        $this->msg = Facilitator::help();
-
-        return $this->handleSuccess();
+        $msg = "<g>aws-upload</g> version <y>" . $version . "</y> \n";
+        return $msg;
     }
 }

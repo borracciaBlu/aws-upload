@@ -13,7 +13,7 @@
 namespace AwsUpload\Command;
 
 use AwsUpload\Check;
-use AwsUpload\Facilitator;
+use AwsUpload\Message\ErrorMessage;
 
 abstract class FileCommand extends BasicCommand implements Command, ValidCommand
 {
@@ -71,9 +71,9 @@ abstract class FileCommand extends BasicCommand implements Command, ValidCommand
         );
 
         $msgs = array(
-            "file_exists"  => Facilitator::onNoFileFound($this->key),
-            "is_valid_key" => Facilitator::onNoValidKey($this->key),
-            "has_project"   => Facilitator::onNoProjects(),
+            "file_exists"  => ErrorMessage::noFileFound($this->key),
+            "is_valid_key" => ErrorMessage::noValidKey($this->key),
+            "has_project"   => ErrorMessage::noProjects(),
         );
 
         $valid = $this->validate($tests, $msgs);

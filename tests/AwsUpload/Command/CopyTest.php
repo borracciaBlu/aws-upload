@@ -4,18 +4,19 @@ namespace AwsUpload\Tests\Settings;
 
 use AwsUpload\Io\Output;
 use AwsUpload\AwsUpload;
-use AwsUpload\Facilitator;
+use AwsUpload\Message\NewMessage;
 use AwsUpload\Tests\BaseTestCase;
 use AwsUpload\Setting\SettingFiles;
+use AwsUpload\Message\ErrorMessage;
 use Symfony\Component\Filesystem\Filesystem;
 
-class CopySettingFileTest extends BaseTestCase
+class CopyTest extends BaseTestCase
 {
 
     // test isValidArgs
     public function test_noKey_expected_NoArgsMsg()
     {
-        $msg = Facilitator::onNoCopyArgs();
+        $msg = ErrorMessage::noCopyArgs();
         $msg = Output::color($msg);
         $this->expectOutputString($msg . "\n");
 
@@ -25,14 +26,14 @@ class CopySettingFileTest extends BaseTestCase
         $aws = new AwsUpload();
         $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
-        $cmd = new \AwsUpload\Command\CopySettingFile($aws);
+        $cmd = new \AwsUpload\Command\CopyCommand($aws);
         $cmd->run();
     }
 
     // test isValidArgs
     public function test_noValidKey_expected_NoArgsMsg_oneParam()
     {
-        $msg = Facilitator::onNoCopyArgs();
+        $msg = ErrorMessage::noCopyArgs();
         $msg = Output::color($msg);
         $this->expectOutputString($msg . "\n");
 
@@ -42,14 +43,14 @@ class CopySettingFileTest extends BaseTestCase
         $aws = new AwsUpload();
         $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
-        $cmd = new \AwsUpload\Command\CopySettingFile($aws);
+        $cmd = new \AwsUpload\Command\CopyCommand($aws);
         $cmd->run();
     }
 
     // test isValidKey
     public function test_noValidKey_expectedNoValidKey_first()
     {
-        $msg = Facilitator::onNoValidKey('bbbb');
+        $msg = ErrorMessage::noValidKey('bbbb');
         $msg = Output::color($msg);
         $this->expectOutputString($msg . "\n");
 
@@ -59,14 +60,14 @@ class CopySettingFileTest extends BaseTestCase
         $aws = new AwsUpload();
         $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
-        $cmd = new \AwsUpload\Command\CopySettingFile($aws);
+        $cmd = new \AwsUpload\Command\CopyCommand($aws);
         $cmd->run();
     }
 
     // test isValidKey
     public function test_noValidKey_expectedNoValidKey_second()
     {
-        $msg = Facilitator::onNoValidKey('aaa');
+        $msg = ErrorMessage::noValidKey('aaa');
         $msg = Output::color($msg);
         $this->expectOutputString($msg . "\n");
 
@@ -76,7 +77,7 @@ class CopySettingFileTest extends BaseTestCase
         $aws = new AwsUpload();
         $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
-        $cmd = new \AwsUpload\Command\CopySettingFile($aws);
+        $cmd = new \AwsUpload\Command\CopyCommand($aws);
         $cmd->run();
     }
 
@@ -86,7 +87,7 @@ class CopySettingFileTest extends BaseTestCase
         $filesystem = new Filesystem();
         $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{}');
 
-        $msg = Facilitator::onNoFileFound('project-2.dev');
+        $msg = ErrorMessage::noFileFound('project-2.dev');
         $msg = Output::color($msg);
         $this->expectOutputString($msg . "\n");
 
@@ -96,7 +97,7 @@ class CopySettingFileTest extends BaseTestCase
         $aws = new AwsUpload();
         $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
-        $cmd = new \AwsUpload\Command\CopySettingFile($aws);
+        $cmd = new \AwsUpload\Command\CopyCommand($aws);
         $cmd->run();
     }
 
@@ -107,7 +108,7 @@ class CopySettingFileTest extends BaseTestCase
         $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{}');
         $filesystem->dumpFile($this->directory . '/project-2.dev.json', '{}');
 
-        $msg = Facilitator::onKeyAlreadyExists('project-2.dev');
+        $msg = ErrorMessage::keyAlreadyExists('project-2.dev');
         $msg = Output::color($msg);
         $this->expectOutputString($msg . "\n");
 
@@ -117,7 +118,7 @@ class CopySettingFileTest extends BaseTestCase
         $aws = new AwsUpload();
         $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
-        $cmd = new \AwsUpload\Command\CopySettingFile($aws);
+        $cmd = new \AwsUpload\Command\CopyCommand($aws);
         $cmd->run();
     }
 
@@ -127,7 +128,7 @@ class CopySettingFileTest extends BaseTestCase
         $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{"pem": "", "local":"", "remote":"", "exclude":[""]}');
 
 
-        $msg = Facilitator::onNewSettingFileSuccess('project-2.dev');
+        $msg = NewMessage::success('project-2.dev');
         $msg = Output::color($msg);
         $this->expectOutputString($msg . "\n");
 
@@ -138,7 +139,7 @@ class CopySettingFileTest extends BaseTestCase
         $aws = new AwsUpload();
         $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
-        $cmd = new \AwsUpload\Command\CopySettingFile($aws);
+        $cmd = new \AwsUpload\Command\CopyCommand($aws);
         $cmd->run();
        
         $settings = SettingFiles::getObject('project-2.dev');

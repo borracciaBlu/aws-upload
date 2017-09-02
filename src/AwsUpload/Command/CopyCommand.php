@@ -13,10 +13,11 @@
 namespace AwsUpload\Command;
 
 use AwsUpload\Check;
-use AwsUpload\Facilitator;
+use AwsUpload\Message\NewMessage;
+use AwsUpload\Message\ErrorMessage;
 use AwsUpload\Setting\SettingFiles;
 
-class CopySettingFile extends FileCommand
+class CopyCommand extends FileCommand
 {
     /**
      * @var array
@@ -39,7 +40,7 @@ class CopySettingFile extends FileCommand
         list($source, $dest) = $this->keys;
 
         SettingFiles::copy($source, $dest);
-        $this->msg = Facilitator::onNewSettingFileSuccess($dest);
+        $this->msg = NewMessage::success($dest);
     }
 
     /**
@@ -50,7 +51,7 @@ class CopySettingFile extends FileCommand
     public function isValid()
     {
         if (!$this->isValidArgs($this->keys)) {
-            $this->error_msg = Facilitator::onNoCopyArgs();
+            $this->error_msg = ErrorMessage::noCopyArgs();
             $valid = false;
 
             return $valid;
@@ -66,10 +67,10 @@ class CopySettingFile extends FileCommand
         );
 
         $msgs = array(
-            "dest_not_exists"  => Facilitator::onKeyAlreadyExists($dest),
-            "src_exists"       => Facilitator::onNoFileFound($source),
-            "is_valid_key_src" => Facilitator::onNoValidKey($source),
-            "is_valid_key_dst" => Facilitator::onNoValidKey($dest),
+            "dest_not_exists"  => ErrorMessage::keyAlreadyExists($dest),
+            "src_exists"       => ErrorMessage::noFileFound($source),
+            "is_valid_key_src" => ErrorMessage::noValidKey($source),
+            "is_valid_key_dst" => ErrorMessage::noValidKey($dest),
         );
 
         $valid = $this->validate($tests, $msgs);

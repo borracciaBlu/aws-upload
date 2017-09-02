@@ -12,43 +12,46 @@
 
 namespace AwsUpload\Command;
 
-use AwsUpload\Facilitator;
-use AwsUpload\Model\Status;
-use AwsUpload\Command\Command;
+use AwsUpload\Message\ErrorMessage;
 use AwsUpload\Setting\SettingFiles;
 
-class ListProjects extends BasicCommand implements ValidCommand
+class KeysCommand extends BasicCommand implements ValidCommand
 {
     /**
-     * It contains the projects label, if any.
-     *
      * @var array
      */
-    public $projs;
+    public $keys;
 
     /**
-     * Method used to print the projects available.
+     * Property true if app is quiet.
      *
-     * The main idea is that you can get the projects from the files in
+     * @var bool
+     */
+    public $is_quiet;
+
+    /**
+     * Method used to print the projects' keys available.
+     *
+     * The main idea is that you can get the projects' keys from the files in
      * the aws-upload home folder.
      * Eg:
-     *     - proj-1.dev.json    -> proj: proj-1
-     *     - proj-1.stagin.json -> proj: proj-1
-     *     - proj-2.prod.json   -> proj: proj-2
+     *     - proj-1.dev.json    -> key: proj-1.dev
+     *     - proj-1.stagin.json -> key: proj-1.staging
+     *     - proj-2.prod.json   -> key: proj-2.prod
      *
      * @return int The status code.
      */
     public function run()
     {
-        $quiet = $this->app->is_quiet;
-        $this->projs = SettingFiles::getProjs();
+        $this->keys     = SettingFiles::getKeys();
+        $this->is_quiet = $this->app->is_quiet;
 
-        if (!$this->isValid() && !$quiet) {
+        if (!$this->isValid() && !$this->is_quiet) {
             return $this->handleError();
         }
 
-        $projs = implode(' ', $this->projs);
-        $this->msg = $projs . "\n";
+        $keys = implode(' ', $this->keys);
+        $this->msg = $keys . "\n";
 
         return $this->handleSuccess();
     }
@@ -61,10 +64,11 @@ class ListProjects extends BasicCommand implements ValidCommand
     public function isValid()
     {
         $tests = array(
-            "is_project" => (count($this->projs) > 0),
+            "is_project" => (bool) (count($this->keys) > 0),
         );
+
         $msgs = array(
-            "is_project" => Facilitator::onNoProjects(),
+            "is_project" => ErrorMessage::noProjects(),
         );
 
         $valid = $this->validate($tests, $msgs);

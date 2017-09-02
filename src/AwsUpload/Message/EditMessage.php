@@ -10,21 +10,21 @@
  * @license   http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
-namespace AwsUpload\Command;
+namespace AwsUpload\Message;
 
-use AwsUpload\Facilitator;
-
-class Version extends BasicCommand
+class EditMessage
 {
     /**
-     * Method used to print the version.
+     * Method to support if when AwsUpload::edit is successfull.
      *
-     * @return int The status code.
+     * @param string $key E.g: proj.env
+     *
+     * @return string
      */
-    public function run()
+    public static function success($key)
     {
-        $this->msg = Facilitator::version($this->app->version);
+        $msg = "The setting file <y>" . $key . ".json</y> has been edited successfully.\n\n";
 
-        return $this->handleSuccess();
+        return $msg;
     }
 }

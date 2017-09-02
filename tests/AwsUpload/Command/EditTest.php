@@ -4,11 +4,11 @@ namespace AwsUpload\Tests\Settings;
 
 use AwsUpload\Io\Output;
 use AwsUpload\AwsUpload;
-use AwsUpload\Facilitator;
+use AwsUpload\Message\ErrorMessage;
 use AwsUpload\Tests\BaseTestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
-class EditSettingFileTest extends BaseTestCase
+class EditTest extends BaseTestCase
 {
 
     public function test_noKey_expectedNoProjectMsg()
@@ -23,7 +23,7 @@ class EditSettingFileTest extends BaseTestCase
         $aws = new AwsUpload();
         $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
-        $cmd = new \AwsUpload\Command\EditSettingFile($aws);
+        $cmd = new \AwsUpload\Command\EditCommand($aws);
         $cmd->run();
     }
 
@@ -47,7 +47,7 @@ class EditSettingFileTest extends BaseTestCase
         $aws = new AwsUpload();
         $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
-        $cmd = new \AwsUpload\Command\EditSettingFile($aws);
+        $cmd = new \AwsUpload\Command\EditCommand($aws);
         $cmd->run();
     }
 
@@ -56,7 +56,7 @@ class EditSettingFileTest extends BaseTestCase
         $filesystem = new Filesystem();
         $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{}');
 
-        $msg = Facilitator::onNoFileFound('project-2.dev');
+        $msg = ErrorMessage::noFileFound('project-2.dev');
         $msg = Output::color($msg);
         $this->expectOutputString($msg . "\n");
 
@@ -66,7 +66,7 @@ class EditSettingFileTest extends BaseTestCase
         $aws = new AwsUpload();
         $aws->setOutput(new \AwsUpload\Io\OutputEcho());
 
-        $cmd = new \AwsUpload\Command\EditSettingFile($aws);
+        $cmd = new \AwsUpload\Command\EditCommand($aws);
         $cmd->run();
     }
 }

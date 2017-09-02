@@ -80,7 +80,7 @@ class Git
      */
     public static function checkoutTag($repo_dir, $tag)
     {
-        $git_cmd =  'git checkout ' . $tag;
+        $git_cmd = 'git checkout ' . $tag;
         $cmd = self::silentGit($git_cmd);
         $cmd = self::goAndComeback($repo_dir, $cmd);
 

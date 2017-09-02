@@ -6,24 +6,40 @@ use AwsUpload\Tests\BaseTestCase;
 
 class AwsUploadTest extends BaseTestCase
 {
-    public function test_getCmdName()
+    public function test_getCmdName_envs()
     {
         self::clearArgv();
         self::pushToArgv(array('asd.php', '-e', 'asd'));
 
         $aws = new AwsUpload();
         $cmd = $aws->getCmdName();
-        $this->assertEquals('AwsUpload\Command\ListEnvs', $cmd);
+        $this->assertEquals('AwsUpload\Command\EnvsCommand', $cmd);
+
+        self::clearArgv();
+        self::pushToArgv(array('asd.php', 'envs', 'asd'));
+
+        $aws = new AwsUpload();
+        $cmd = $aws->getCmdName();
+        $this->assertEquals('AwsUpload\Command\EnvsCommand', $cmd);
+
     }
 
-    public function test_getCmdName_withQuiet()
+    public function test_getCmdName_projs_withQuiet()
     {
         self::clearArgv();
         self::pushToArgv(array('asd.php', '-p', '-q', 'asd'));
 
         $aws = new AwsUpload();
         $cmd = $aws->getCmdName();
-        $this->assertEquals('AwsUpload\Command\ListProjects', $cmd);
+        $this->assertEquals('AwsUpload\Command\ProjsCommand', $cmd);
+        $this->assertEquals(true, $aws->args->quiet);
+
+        self::clearArgv();
+        self::pushToArgv(array('asd.php', 'projs', '-q', 'asd'));
+
+        $aws = new AwsUpload();
+        $cmd = $aws->getCmdName();
+        $this->assertEquals('AwsUpload\Command\ProjsCommand', $cmd);
         $this->assertEquals(true, $aws->args->quiet);
     }
 }

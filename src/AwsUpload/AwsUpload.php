@@ -98,6 +98,7 @@ class AwsUpload
             'keys'       => array('keys', 'k'),
             'projs'      => array('projs', 'p'),
             'check'      => array('check', 'c'),
+            'import'     => array('import', 'i'),
             'version'    => array('version', 'V'),
             'selfupdate' => array('self-update', 'selfupdate'),
             'autocomplete' => array('autocomplete'),
@@ -156,7 +157,7 @@ class AwsUpload
             }
         }
 
-        return $cmd;
+        return $cmd . 'Command';
     }
 
     /**
@@ -168,17 +169,18 @@ class AwsUpload
     {
         $cmd = '';
         $cmdList = array(
-            "help"    => "AwsUpload\Command\Help",
-            "version" => "AwsUpload\Command\Version",
-            "keys"    => "AwsUpload\Command\ListKeys",
-            "projs"   => "AwsUpload\Command\ListProjects",
-            "envs"    => "AwsUpload\Command\ListEnvs",
-            "new"     => "AwsUpload\Command\NewSettingFile",
-            "edit"    => "AwsUpload\Command\EditSettingFile",
-            "check"   => "AwsUpload\Command\CheckSettingFile",
-            "copy"    => "AwsUpload\Command\CopySettingFile",
-            "selfupdate"   => "AwsUpload\Command\SelfUpdate",
-            "autocomplete" => "AwsUpload\Command\AutoComplete",
+            'help'    => 'AwsUpload\Command\Help',
+            'version' => 'AwsUpload\Command\Version',
+            'keys'    => 'AwsUpload\Command\Keys',
+            'projs'   => 'AwsUpload\Command\Projs',
+            'envs'    => 'AwsUpload\Command\Envs',
+            'new'     => 'AwsUpload\Command\New',
+            'edit'    => 'AwsUpload\Command\Edit',
+            'check'   => 'AwsUpload\Command\Check',
+            'copy'    => 'AwsUpload\Command\Copy',
+            'import'  => 'AwsUpload\Command\Import',
+            'selfupdate'   => 'AwsUpload\Command\SelfUpdate',
+            'autocomplete' => 'AwsUpload\Command\AutoComplete',
         );
 
         foreach ($cmdList as $arg => $cmdName) {

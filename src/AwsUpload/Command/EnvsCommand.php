@@ -12,12 +12,13 @@
 
 namespace AwsUpload\Command;
 
-use AwsUpload\Facilitator;
 use AwsUpload\Model\Status;
 use AwsUpload\Command\Command;
+use AwsUpload\Message\EnvsMessage;
+use AwsUpload\Message\ErrorMessage;
 use AwsUpload\Setting\SettingFiles;
 
-class ListEnvs extends BasicCommand implements ValidCommand
+class EnvsCommand extends BasicCommand implements ValidCommand
 {
     /**
      * The project to use as filter.
@@ -69,8 +70,8 @@ class ListEnvs extends BasicCommand implements ValidCommand
         );
 
         $msgs = array(
-            "is_env"     => Facilitator::onGetEnvsForProj($this->proj),
-            "is_project" => Facilitator::onNoProjects(),
+            "is_env"     => EnvsMessage::errorNoEnvsProj($this->proj),
+            "is_project" => ErrorMessage::noProjects(),
         );
 
         $valid = $this->validate($tests, $msgs);
