@@ -12,10 +12,11 @@
 
 namespace AwsUpload\Setting;
 
+use AwsUpload\System\File;
 use AwsUpload\Model\Settings;
 use AwsUpload\Setting\SettingFolder;
 
-class SettingFiles
+class SettingFile
 {
     /**
      * Returns the list or setting files in the aws-upload folder.
@@ -84,7 +85,7 @@ class SettingFiles
      */
     public static function getKeys()
     {
-        $files = SettingFiles::getList();
+        $files = SettingFile::getList();
 
         $keys = array();
         foreach ($files as $fileName) {
@@ -105,7 +106,7 @@ class SettingFiles
      */
     public static function getProjs()
     {
-        $files = SettingFiles::getList();
+        $files = SettingFile::getList();
 
         $projs = array();
         foreach ($files as $key) {
@@ -128,7 +129,7 @@ class SettingFiles
      */
     public static function getEnvs($projFilter)
     {
-        $files = SettingFiles::getList();
+        $files = SettingFile::getList();
         $store = array();
         foreach ($files as $filename) {
             list($proj, $env, $ext) = explode(".", $filename);
@@ -203,7 +204,40 @@ class SettingFiles
         $source = $path . '/' . $oldKey . '.json';
         $dest   = $path . '/' . $newKey . '.json';
 
-        copy($source, $dest);
+        File::copy($source, $dest);
+    }
+
+    /**
+     * Method to check if the setting file it does exist.
+     *
+     * @param string $key The setting file name without the extenion.
+     *
+     * @return bool
+     */
+    public static function exists($key)
+    {
+        $path = SettingFolder::getPath();
+
+        return file_exists($path . '/' . $key . '.json');
+    }
+
+
+    /**
+     * Method to check if a give key is valid.
+     *
+     * The rules are:
+     * - only one .
+     *
+     * @param string $key The setting file name without the extenion.
+     *
+     * @return bool
+     */
+    public static function isValidKey($key)
+    {
+        $parts = explode('.', $key);
+        $isValid = (count($parts) === 2);
+
+        return $isValid;
     }
 
     /**
