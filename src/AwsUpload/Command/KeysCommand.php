@@ -13,7 +13,7 @@
 namespace AwsUpload\Command;
 
 use AwsUpload\Message\ErrorMessage;
-use AwsUpload\Setting\SettingFiles;
+use AwsUpload\Setting\SettingFile;
 
 class KeysCommand extends BasicCommand implements ValidCommand
 {
@@ -43,7 +43,7 @@ class KeysCommand extends BasicCommand implements ValidCommand
      */
     public function run()
     {
-        $this->keys     = SettingFiles::getKeys();
+        $this->keys     = SettingFile::getKeys();
         $this->is_quiet = $this->app->is_quiet;
 
         if (!$this->isValid() && !$this->is_quiet) {

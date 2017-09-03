@@ -12,7 +12,7 @@
 
 namespace AwsUpload\Command;
 
-use AwsUpload\Check;
+use AwsUpload\Setting\SettingFile;
 use AwsUpload\Message\ErrorMessage;
 
 abstract class FileCommand extends BasicCommand implements Command, ValidCommand
@@ -65,8 +65,8 @@ abstract class FileCommand extends BasicCommand implements Command, ValidCommand
     public function isValid()
     {
         $tests = array(
-            "file_exists"  => Check::fileExists($this->key),
-            "is_valid_key" => Check::isValidKey($this->key),
+            "file_exists"  => SettingFile::exists($this->key),
+            "is_valid_key" => SettingFile::isValidKey($this->key),
             "has_project"   => !empty($this->key),
         );
 

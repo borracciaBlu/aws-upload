@@ -12,7 +12,7 @@
 
 namespace AwsUpload\Message;
 
-use AwsUpload\Setting\SettingFiles;
+use AwsUpload\Setting\SettingFile;
 
 class EnvsMessage
 {
@@ -26,7 +26,7 @@ class EnvsMessage
      */
     public static function errorNoEnvsProj($projFilter)
     {
-        $projs = SettingFiles::getProjs();
+        $projs = SettingFile::getProjs();
         $msg = "The project <r>" . $projFilter . "</r> you are tring to use doesn't exist." . "\n\n";
 
         $next = "These are the available projects: \n\n";

@@ -13,7 +13,7 @@
 namespace AwsUpload\Command;
 
 use AwsUpload\Message\EditMessage;
-use AwsUpload\Setting\SettingFiles;
+use AwsUpload\Setting\SettingFile;
 
 class EditCommand extends FileCommand
 {
@@ -30,7 +30,7 @@ class EditCommand extends FileCommand
      */
     public function exec()
     {
-        SettingFiles::edit($this->key);
+        SettingFile::edit($this->key);
 
         $this->msg = EditMessage::success($this->key);
     }

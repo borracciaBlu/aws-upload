@@ -80,7 +80,7 @@ class Settings
      */
     public function fileExists()
     {
-        return file_exists($this->path);
+        return file_exists($this->path) && is_file($this->path);
     }
 
     /**

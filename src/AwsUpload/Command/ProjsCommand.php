@@ -15,7 +15,7 @@ namespace AwsUpload\Command;
 use AwsUpload\Model\Status;
 use AwsUpload\Command\Command;
 use AwsUpload\Message\ErrorMessage;
-use AwsUpload\Setting\SettingFiles;
+use AwsUpload\Setting\SettingFile;
 
 class ProjsCommand extends BasicCommand implements ValidCommand
 {
@@ -41,7 +41,7 @@ class ProjsCommand extends BasicCommand implements ValidCommand
     public function run()
     {
         $quiet = $this->app->is_quiet;
-        $this->projs = SettingFiles::getProjs();
+        $this->projs = SettingFile::getProjs();
 
         if (!$this->isValid() && !$quiet) {
             return $this->handleError();

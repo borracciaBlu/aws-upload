@@ -37,7 +37,7 @@ class Rsync
      * The setting object is a object version of one of the files in the
      * aws-upload folder.
      *
-     * @see SettingFiles::getObjcet($key)
+     * @see SettingFile::getObjcet($key)
      *
      * @param \AwsUpload\Model\Settings $settings The object version of one of the
      *                                           files in the aws-upload dir.
@@ -56,7 +56,8 @@ class Rsync
     public function buildCmd()
     {
         $settings = $this->settings;
-        $cmd = "rsync -ravze \"ssh -i " . $settings->pem . "\" ";
+        // $cmd = "rsync -v -ravze \"ssh -i " . $settings->pem . "\" ";
+        $cmd = "rsync -v --stats --progress -ravze \"ssh -i " . $settings->pem . "\" ";
      
         if (isset($settings->exclude) && is_array($settings->exclude)) {
             foreach ($settings->exclude as $elem) {

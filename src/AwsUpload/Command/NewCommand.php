@@ -12,10 +12,9 @@
 
 namespace AwsUpload\Command;
 
-use AwsUpload\Check;
 use AwsUpload\Model\Status;
 use AwsUpload\Command\Command;
-use AwsUpload\Setting\SettingFiles;
+use AwsUpload\Setting\SettingFile;
 use AwsUpload\Message\ErrorMessage;
 use AwsUpload\Message\NewSettingFileMessage;
 
@@ -33,8 +32,8 @@ class NewCommand extends FileCommand
      */
     public function exec()
     {
-        SettingFiles::create($this->key);
-        SettingFiles::edit($this->key);
+        SettingFile::create($this->key);
+        SettingFile::edit($this->key);
 
         $this->msg = NewSettingFileMessage::success($this->key);
     }
@@ -47,8 +46,8 @@ class NewCommand extends FileCommand
     public function isValid()
     {
         $tests = array(
-            "file_not_exists" => !Check::fileExists($this->key),
-            "is_valid_key"    => Check::isValidKey($this->key),
+            "file_not_exists" => !SettingFile::exists($this->key),
+            "is_valid_key"    => SettingFile::isValidKey($this->key),
             "is_project"      => !empty($this->key),
         );
 

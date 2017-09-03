@@ -16,7 +16,7 @@ use AwsUpload\Model\Status;
 use AwsUpload\Command\Command;
 use AwsUpload\Message\EnvsMessage;
 use AwsUpload\Message\ErrorMessage;
-use AwsUpload\Setting\SettingFiles;
+use AwsUpload\Setting\SettingFile;
 
 class EnvsCommand extends BasicCommand implements ValidCommand
 {
@@ -47,7 +47,7 @@ class EnvsCommand extends BasicCommand implements ValidCommand
             return $this->handleError();
         }
 
-        $envs = SettingFiles::getEnvs($this->proj);
+        $envs = SettingFile::getEnvs($this->proj);
         $envs = implode(' ', $envs);
         $this->msg = $envs . "\n";
 
@@ -61,8 +61,8 @@ class EnvsCommand extends BasicCommand implements ValidCommand
      */
     public function isValid()
     {
-        $projs = SettingFiles::getProjs();
-        $envs  = SettingFiles::getEnvs($this->proj);
+        $projs = SettingFile::getProjs();
+        $envs  = SettingFile::getEnvs($this->proj);
 
         $tests = array(
             "is_env"     => count($envs) > 0,

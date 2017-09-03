@@ -13,7 +13,7 @@
 namespace AwsUpload\Command;
 
 use AwsUpload\Message\CheckMessage;
-use AwsUpload\Setting\SettingFiles;
+use AwsUpload\Setting\SettingFile;
 
 class CheckCommand extends FileCommand
 {
@@ -39,8 +39,8 @@ class CheckCommand extends FileCommand
 
     public function getReport()
     {
-        $path = SettingFiles::getPath($this->key);
-        $settings = SettingFiles::getObject($this->key);
+        $path = SettingFile::getPath($this->key);
+        $settings = SettingFile::getObject($this->key);
 
         $pem_exists    = file_exists($settings->pem);
         $pem_perms     = ($pem_exists) ? decoct(fileperms($settings->pem) & 0777) : '-';

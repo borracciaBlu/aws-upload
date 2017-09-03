@@ -14,7 +14,7 @@ namespace AwsUpload\Message;
 
 use cli\Table;
 use AwsUpload\Io\Output;
-use AwsUpload\Setting\SettingFiles;
+use AwsUpload\Setting\SettingFile;
 
 class ErrorMessage
 {
@@ -47,7 +47,6 @@ class ErrorMessage
         return $msg;
     }
 
-
     /**
      * Method to echo the help message about when the pair project
      * environment doesn't exist.
@@ -62,7 +61,7 @@ class ErrorMessage
      */
     public static function noFileFound($project, $env = null)
     {
-        $files = SettingFiles::getList();
+        $files = SettingFile::getList();
         if (count($files) === 0) {
             $msg = static::noProjects();
             return $msg;
@@ -128,7 +127,7 @@ class ErrorMessage
      */
     public static function getProjEnvTable()
     {
-        $files = SettingFiles::getList();
+        $files = SettingFile::getList();
 
         $headers = array('Project', 'Environment');
         $data = array();

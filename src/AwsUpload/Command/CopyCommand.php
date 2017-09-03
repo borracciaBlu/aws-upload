@@ -12,10 +12,9 @@
 
 namespace AwsUpload\Command;
 
-use AwsUpload\Check;
 use AwsUpload\Message\NewMessage;
 use AwsUpload\Message\ErrorMessage;
-use AwsUpload\Setting\SettingFiles;
+use AwsUpload\Setting\SettingFile;
 
 class CopyCommand extends FileCommand
 {
@@ -39,7 +38,7 @@ class CopyCommand extends FileCommand
     {
         list($source, $dest) = $this->keys;
 
-        SettingFiles::copy($source, $dest);
+        SettingFile::copy($source, $dest);
         $this->msg = NewMessage::success($dest);
     }
 
@@ -60,10 +59,10 @@ class CopyCommand extends FileCommand
         list($source, $dest) = $this->keys;
 
         $tests = array(
-            "dest_not_exists"  => !Check::fileExists($dest),
-            "src_exists"       => Check::fileExists($source),
-            "is_valid_key_src" => Check::isValidKey($source),
-            "is_valid_key_dst" => Check::isValidKey($dest),
+            "dest_not_exists"  => !SettingFile::exists($dest),
+            "src_exists"       => SettingFile::exists($source),
+            "is_valid_key_src" => SettingFile::isValidKey($source),
+            "is_valid_key_dst" => SettingFile::isValidKey($dest),
         );
 
         $msgs = array(
