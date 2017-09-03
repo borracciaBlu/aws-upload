@@ -31,6 +31,8 @@ class Rsync
      */
     public $settings;
 
+    public $is_verbose = false;
+
     /**
      * Method to initiate the rsync settings object
      *
@@ -45,7 +47,11 @@ class Rsync
     public function __construct(\AwsUpload\Model\Settings $settings)
     {
         $this->settings = $settings;
-        $this->cmd = $this->buildCmd();
+    }
+
+    public function setVerbose($verbose)
+    {
+        $this->is_verbose = (bool) $verbose;
     }
 
     /**
@@ -53,20 +59,35 @@ class Rsync
      *
      * @return string The rsync command.
      */
-    public function buildCmd()
+    public function getCmd()
     {
         $settings = $this->settings;
-        // $cmd = "rsync -v -ravze \"ssh -i " . $settings->pem . "\" ";
-        $cmd = "rsync -v --stats --progress -ravze \"ssh -i " . $settings->pem . "\" ";
-     
-        if (isset($settings->exclude) && is_array($settings->exclude)) {
-            foreach ($settings->exclude as $elem) {
-                $cmd .= " --exclude " . escapeshellarg($elem) . " ";
-            }
+
+        $cmd = "rsync ";
+        $cmd .= ($this->is_verbose) ? " -v --stats --progress " : "";
+        $cmd .= "-ravze \"ssh -i " . $settings->pem . "\" ";
+
+        // exclude
+        $cmd .= $this->getExclude();
+        $cmd .= " --exclude .DS_Store ";
+
+        $cmd .= $settings->local . " " . escapeshellarg($settings->remote);
+
+        return $cmd;
+    }
+
+    public function getExclude()
+    {
+        $settings = $this->settings;
+
+        $cmd = "";
+        if (!isset($settings->exclude) || !is_array($settings->exclude)) {
+            return $cmd;
         }
 
-        $cmd .= " --exclude .DS_Store ";
-        $cmd .= $settings->local . " " . escapeshellarg($settings->remote);
+        foreach ($settings->exclude as $elem) {
+            $cmd .= " --exclude " . escapeshellarg($elem) . " ";
+        }
 
         return $cmd;
     }
@@ -78,7 +99,7 @@ class Rsync
      */
     public function run()
     {
-        $escaped_command = $this->cmd;
+        $escaped_command = $this->getCmd();
         system($escaped_command);
     }
 

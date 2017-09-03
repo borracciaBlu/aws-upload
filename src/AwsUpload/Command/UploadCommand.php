@@ -12,10 +12,9 @@
 
 namespace AwsUpload\Command;
 
-use AwsUpload\Check;
 use AwsUpload\Model\Status;
 use AwsUpload\System\Rsync;
-use AwsUpload\Setting\SettingFiles;
+use AwsUpload\Setting\SettingFile;
 use AwsUpload\Message\RsyncMessage;
 
 class UploadCommand extends FileCommand
@@ -26,6 +25,13 @@ class UploadCommand extends FileCommand
      * @var bool
      */
     public $is_simulate;
+
+    /**
+     * Property true if app is verbose.
+     *
+     * @var bool
+     */
+    public $is_verbose;
 
     /**
      * @var string
@@ -45,9 +51,10 @@ class UploadCommand extends FileCommand
     public function init()
     {
         $items = $this->app->args->getParams('wild');
+        $this->is_verbose  = $this->app->args->verbose;
         $this->is_simulate = $this->app->args->simulate;
 
-        list($proj, $env) = SettingFiles::extractProjEnv($items);
+        list($proj, $env) = SettingFile::extractProjEnv($items);
         $this->key  = $proj . "." . $env;
         $this->proj = $proj;
         $this->env  = $env;
@@ -65,14 +72,16 @@ class UploadCommand extends FileCommand
      */
     public function exec()
     {
-        $settings = SettingFiles::getObject($this->key);
+        $settings = SettingFile::getObject($this->key);
+
         $rsync = new Rsync($settings);
+        $rsync->setVerbose($this->is_verbose);
 
         $msg = RsyncMessage::banner($this->proj, $this->env, $rsync->cmd);
         $this->app->inline($msg);
 
         if ($this->is_simulate) {
-            $this->app->inline($rsync->cmd);
+            $this->app->inline($rsync->getCmd());
             return $this->simulate();
         }
 

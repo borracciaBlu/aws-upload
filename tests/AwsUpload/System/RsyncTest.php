@@ -27,6 +27,6 @@ class RsyncTest extends BaseTestCase
         $settings = SettingFile::getObject('project-1.dev');
 
         $rsync = new Rsync($settings);
-        $this->assertEquals($rsync->cmd, $cmd);
+        $this->assertEquals($rsync->getCmd(), $cmd);
     }
 }
