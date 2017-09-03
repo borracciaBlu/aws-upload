@@ -29,7 +29,7 @@ class KeysTest extends BaseTestCase
         $this->expectOutputString("project-1.dev\n\n");
         
         $filesystem = new Filesystem();
-        $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{}');
+        $filesystem->dumpFile($this->aws_home . '/project-1.dev.json', '{}');
 
         $aws = new AwsUpload();
         $aws->setOutput(new \AwsUpload\Io\OutputEcho());
@@ -43,9 +43,9 @@ class KeysTest extends BaseTestCase
         $this->expectOutputString("project-1.dev project-1.prod project-1.staging\n\n");
 
         $filesystem = new Filesystem();
-        $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{}');
-        $filesystem->dumpFile($this->directory . '/project-1.prod.json', '{}');
-        $filesystem->dumpFile($this->directory . '/project-1.staging.json', '{}');
+        $filesystem->dumpFile($this->aws_home . '/project-1.dev.json', '{}');
+        $filesystem->dumpFile($this->aws_home . '/project-1.prod.json', '{}');
+        $filesystem->dumpFile($this->aws_home . '/project-1.staging.json', '{}');
 
         $aws = new AwsUpload();
         $aws->setOutput(new \AwsUpload\Io\OutputEcho());
@@ -59,9 +59,9 @@ class KeysTest extends BaseTestCase
         $this->expectOutputString("project-1.prod project-1.staging project-2.dev\n\n");
 
         $filesystem = new Filesystem();
-        $filesystem->dumpFile($this->directory . '/project-2.dev.json', '{}');
-        $filesystem->dumpFile($this->directory . '/project-1.prod.json', '{}');
-        $filesystem->dumpFile($this->directory . '/project-1.staging.json', '{}');
+        $filesystem->dumpFile($this->aws_home . '/project-2.dev.json', '{}');
+        $filesystem->dumpFile($this->aws_home . '/project-1.prod.json', '{}');
+        $filesystem->dumpFile($this->aws_home . '/project-1.staging.json', '{}');
 
         $aws = new AwsUpload();
         $aws->setOutput(new \AwsUpload\Io\OutputEcho());

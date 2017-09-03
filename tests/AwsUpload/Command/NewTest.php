@@ -54,7 +54,7 @@ class NewTest extends BaseTestCase
     public function test_keyExists_expectedKeyAlreadyExists()
     {
         $filesystem = new Filesystem();
-        $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{}');
+        $filesystem->dumpFile($this->aws_home . '/project-1.dev.json', '{}');
 
         $msg = ErrorMessage::keyAlreadyExists('project-1.dev');
         $msg = Output::color($msg);

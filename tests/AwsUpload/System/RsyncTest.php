@@ -4,7 +4,7 @@ namespace AwsUpload\Tests;
 
 use AwsUpload\System\Rsync;
 use AwsUpload\Tests\BaseTestCase;
-use AwsUpload\Setting\SettingFiles;
+use AwsUpload\Setting\SettingFile;
 use Symfony\Component\Filesystem\Filesystem;
 
 class RsyncTest extends BaseTestCase
@@ -23,8 +23,8 @@ class RsyncTest extends BaseTestCase
         }';
 
         $filesystem = new Filesystem();
-        $filesystem->dumpFile($this->directory . '/project-1.dev.json', $json);
-        $settings = SettingFiles::getObject('project-1.dev');
+        $filesystem->dumpFile($this->aws_home . '/project-1.dev.json', $json);
+        $settings = SettingFile::getObject('project-1.dev');
 
         $rsync = new Rsync($settings);
         $this->assertEquals($rsync->cmd, $cmd);

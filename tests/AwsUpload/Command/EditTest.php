@@ -54,7 +54,7 @@ class EditTest extends BaseTestCase
     public function test_validKeyNoExists_expectedNoFileFound()
     {   
         $filesystem = new Filesystem();
-        $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{}');
+        $filesystem->dumpFile($this->aws_home . '/project-1.dev.json', '{}');
 
         $msg = ErrorMessage::noFileFound('project-2.dev');
         $msg = Output::color($msg);

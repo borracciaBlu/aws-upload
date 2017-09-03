@@ -42,9 +42,9 @@ To get the envs from one of them, run (for example):
 ");
         
         $filesystem = new Filesystem();
-        $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{}');
-        $filesystem->dumpFile($this->directory . '/project-2.prod.json', '{}');
-        $filesystem->dumpFile($this->directory . '/project-1.staging.json', '{}');
+        $filesystem->dumpFile($this->aws_home . '/project-1.dev.json', '{}');
+        $filesystem->dumpFile($this->aws_home . '/project-2.prod.json', '{}');
+        $filesystem->dumpFile($this->aws_home . '/project-1.staging.json', '{}');
         
         self::clearArgv();
         self::pushToArgv(array('asd.php', '-e', 'proj-3'));

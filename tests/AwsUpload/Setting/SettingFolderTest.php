@@ -13,6 +13,6 @@ class SettingFolderTest extends BaseTestCase
     {
         $home = SettingFolder::getPath();
 
-        $this->assertEquals($this->directory, $home);
+        $this->assertEquals($this->aws_home, $home);
     }
 }

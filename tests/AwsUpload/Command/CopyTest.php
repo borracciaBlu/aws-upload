@@ -6,7 +6,7 @@ use AwsUpload\Io\Output;
 use AwsUpload\AwsUpload;
 use AwsUpload\Message\NewMessage;
 use AwsUpload\Tests\BaseTestCase;
-use AwsUpload\Setting\SettingFiles;
+use AwsUpload\Setting\SettingFile;
 use AwsUpload\Message\ErrorMessage;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -85,7 +85,7 @@ class CopyTest extends BaseTestCase
     public function test_validKeyNoExists_expectedNoFileFound()
     {
         $filesystem = new Filesystem();
-        $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{}');
+        $filesystem->dumpFile($this->aws_home . '/project-1.dev.json', '{}');
 
         $msg = ErrorMessage::noFileFound('project-2.dev');
         $msg = Output::color($msg);
@@ -105,8 +105,8 @@ class CopyTest extends BaseTestCase
     public function test_validKeyNoExists_expected_DestAlreadyExists()
     {
         $filesystem = new Filesystem();
-        $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{}');
-        $filesystem->dumpFile($this->directory . '/project-2.dev.json', '{}');
+        $filesystem->dumpFile($this->aws_home . '/project-1.dev.json', '{}');
+        $filesystem->dumpFile($this->aws_home . '/project-2.dev.json', '{}');
 
         $msg = ErrorMessage::keyAlreadyExists('project-2.dev');
         $msg = Output::color($msg);
@@ -125,7 +125,7 @@ class CopyTest extends BaseTestCase
     public function test_copyFile()
     {   
         $filesystem = new Filesystem();
-        $filesystem->dumpFile($this->directory . '/project-1.dev.json', '{"pem": "", "local":"", "remote":"", "exclude":[""]}');
+        $filesystem->dumpFile($this->aws_home . '/project-1.dev.json', '{"pem": "", "local":"", "remote":"", "exclude":[""]}');
 
 
         $msg = NewMessage::success('project-2.dev');
@@ -142,7 +142,7 @@ class CopyTest extends BaseTestCase
         $cmd = new \AwsUpload\Command\CopyCommand($aws);
         $cmd->run();
        
-        $settings = SettingFiles::getObject('project-2.dev');
+        $settings = SettingFile::getObject('project-2.dev');
 
         $this->assertEquals('', $settings->pem);
         $this->assertEquals('', $settings->local);

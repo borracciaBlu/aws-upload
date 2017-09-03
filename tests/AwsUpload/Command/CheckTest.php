@@ -14,21 +14,21 @@ class CheckTest extends BaseTestCase
     {   
 
         $filesystem = new Filesystem();
-        $filesystem->dumpFile($this->directory . '/file.pem', '');
-        $filesystem->mkdir($this->directory . '/local');
-        $filesystem->dumpFile($this->directory . '/project-2.dev.json', '{ "pem" : "' . $this->directory . '/file.pem", "local" : "' . $this->directory . '/local"}');
+        $filesystem->dumpFile($this->aws_home . '/file.pem', '');
+        $filesystem->mkdir($this->aws_home . '/local');
+        $filesystem->dumpFile($this->aws_home . '/project-2.dev.json', '{ "pem" : "' . $this->aws_home . '/file.pem", "local" : "' . $this->aws_home . '/local"}');
 
 
-        $pem_perms = decoct(fileperms($this->directory . '/file.pem') & 0777);
+        $pem_perms = decoct(fileperms($this->aws_home . '/file.pem') & 0777);
 
         $report = array(
-            "path" => $this->directory . '/project-2.dev.json',
+            "path" => $this->aws_home . '/project-2.dev.json',
             "is_valid_json" => true,
-            "pem" => $this->directory . '/file.pem',
+            "pem" => $this->aws_home . '/file.pem',
             "pem_exists" => true,
             "is_400" => false,
             "pem_perms" => $pem_perms,
-            "local" => $this->directory . '/local',
+            "local" => $this->aws_home . '/local',
             "local_exists" => true,
             "error_json" => ''
         );

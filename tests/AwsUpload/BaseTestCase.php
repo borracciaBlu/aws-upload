@@ -9,29 +9,38 @@ abstract class BaseTestCase extends TestCase
 {
 
     /**
+     * The directory that contain the AWSUPLOAD_HOME.
+     *
+     * Foreach test we want this folder clean.
+     * So, each time we use the class to make it unique.
+     *
      * @var string
      */
-    protected $directory;
+    protected $aws_home;
 
     /**
+     * The directory to simulate outside of AWSUPLOAD_HOME.
+     *
      * @var string
      */
-    protected $directoryBuild;
+    protected $external;
 
     /**
      * {@inheritdoc}
      */
     public function setUp()
     {
-        $this->directoryBuild = __DIR__ . '/../../build/';
-
         $uid = strtolower(get_class($this));
         $uid = str_replace('\\', '-', $uid);
-        $this->directory = __DIR__ . '/../../build/' . $uid;
-        putenv("AWSUPLOAD_HOME=" . $this->directory);
 
+
+        $this->aws_home = __DIR__ . '/../../build/' . $uid;
+        putenv("AWSUPLOAD_HOME=" . $this->aws_home);
+
+        $this->external = __DIR__ . '/../../external/' . $uid;
         $filesystem = new Filesystem();
-        $filesystem->mkdir($this->directory);
+        $filesystem->mkdir($this->aws_home);
+        $filesystem->mkdir($this->external);
     }
 
     /**
@@ -42,8 +51,8 @@ abstract class BaseTestCase extends TestCase
         unset($_ENV['AWSUPLOAD_HOME']);
 
         $filesystem = new Filesystem();
-        $filesystem->remove($this->directory);
-        $filesystem->remove($this->directoryBuild);
+        $filesystem->remove($this->aws_home);
+        $filesystem->remove($this->external);
     }
 
     /**

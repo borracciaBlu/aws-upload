@@ -27,7 +27,7 @@ class AwsUploadTest extends BaseTestCase
     public function test_getCmdName_projs_withQuiet()
     {
         self::clearArgv();
-        self::pushToArgv(array('asd.php', '-p', '-q', 'asd'));
+        self::pushToArgv(array('aws-upload', '-p', '-q', 'asd'));
 
         $aws = new AwsUpload();
         $cmd = $aws->getCmdName();
@@ -35,11 +35,28 @@ class AwsUploadTest extends BaseTestCase
         $this->assertEquals(true, $aws->args->quiet);
 
         self::clearArgv();
-        self::pushToArgv(array('asd.php', 'projs', '-q', 'asd'));
+        self::pushToArgv(array('aws-upload', 'projs', '-q', 'asd'));
 
         $aws = new AwsUpload();
         $cmd = $aws->getCmdName();
         $this->assertEquals('AwsUpload\Command\ProjsCommand', $cmd);
         $this->assertEquals(true, $aws->args->quiet);
+    }
+
+    public function test_getCmdName_import()
+    {
+        self::clearArgv();
+        self::pushToArgv(array('aws-upload', '-i', './dir/blog.test.json'));
+
+        $aws = new AwsUpload();
+        $cmd = $aws->getCmdName();
+        $this->assertEquals('AwsUpload\Command\ImportCommand', $cmd);
+
+        self::clearArgv();
+        self::pushToArgv(array('aws-upload', 'import', './dir/blog.test.json'));
+
+        $aws = new AwsUpload();
+        $cmd = $aws->getCmdName();
+        $this->assertEquals('AwsUpload\Command\ImportCommand', $cmd);
     }
 }
