@@ -100,6 +100,7 @@ class AwsUpload
             'projs'      => array('projs', 'p'),
             'check'      => array('check', 'c'),
             'import'     => array('import', 'i'),
+            'export'     => array('export', 'ex'),
             'version'    => array('version', 'V'),
             'selfupdate' => array('self-update', 'selfupdate'),
             'autocomplete' => array('autocomplete'),
@@ -181,6 +182,7 @@ class AwsUpload
             'delete'  => 'AwsUpload\Command\Delete',
             'check'   => 'AwsUpload\Command\Check',
             'import'  => 'AwsUpload\Command\Import',
+            'export'  => 'AwsUpload\Command\Export',
             'selfupdate'   => 'AwsUpload\Command\SelfUpdate',
             'autocomplete' => 'AwsUpload\Command\AutoComplete',
         );

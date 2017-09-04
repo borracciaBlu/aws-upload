@@ -41,7 +41,7 @@ class ImportCommand extends FileCommand
     }
 
     /**
-     * Exec the check on the setting file.
+     * Exec the import.
      *
      * @see FileCommand::run
      * @return void
