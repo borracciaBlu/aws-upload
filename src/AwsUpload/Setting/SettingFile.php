@@ -208,6 +208,21 @@ class SettingFile
     }
 
     /**
+     * Method to delete a setting file
+     *
+     * @param  string $key The key for the exisiting setting.
+     *
+     * @return void
+     */
+    public static function delete($key)
+    {
+        $path = SettingFolder::getPath();
+        $src = $path . '/' . $key . '.json';
+
+        File::delete($src);
+    }
+
+    /**
      * Method to check if the setting file it does exist.
      *
      * @param string $key The setting file name without the extenion.

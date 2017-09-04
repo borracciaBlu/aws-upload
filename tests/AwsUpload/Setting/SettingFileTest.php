@@ -156,7 +156,7 @@ class SettingFileTest extends BaseTestCase
         $this->assertEquals('b', $env);
     }
 
-   /**
+    /**
      * fileExists
      */
 
