@@ -48,13 +48,13 @@ class NewCommand extends FileCommand
         $tests = array(
             "file_not_exists" => !SettingFile::exists($this->key),
             "is_valid_key"    => SettingFile::isValidKey($this->key),
-            "is_project"      => !empty($this->key),
+            "has_args"        => $this->hasArgs(),
         );
 
         $msgs = array(
             "file_not_exists" => ErrorMessage::keyAlreadyExists($this->key),
             "is_valid_key"    => ErrorMessage::noValidKey($this->key),
-            "is_project"      => ErrorMessage::noProjects(),
+            "has_args"     => $this->getErrorMsg(),
         );
 
         $valid = $this->validate($tests, $msgs);

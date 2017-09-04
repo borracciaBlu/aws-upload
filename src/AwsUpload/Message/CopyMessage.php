@@ -14,28 +14,15 @@ namespace AwsUpload\Message;
 
 use AwsUpload\Message\ArgCommandMessage;
 
-class DeleteMessage implements ArgCommandMessage
+class CopyMessage implements ArgCommandMessage
 {
-    /**
-     * Method to support if when AwsUpload::new is successfull.
-     *
-     * @param string $key E.g: proj.env
-     *
-     * @return string
-     */
-    public static function success($key)
-    {
-        $msg = "The setting file <y>" . $key . ".json</y> has been deleted successfully.\n\n";
-        return $msg;
-    }
-
     public static function noArgs()
     {
         $msg = "It seems that you don't proper arguments for this command.\n\n" .
 
-                "<y>How to use delete:</y>\n\n" .
-                "    <g>aws-upload delete <key></g>\n" .
-                "    <b>E.g.:</b> aws-upload delete blog.dev\n\n" .
+                "<y>How to use copy:</y>\n\n" .
+                "    <g>aws-upload copy <src> <dest></g>\n" .
+                "    <b>E.g.:</b> aws-upload copy blog.dev blog.prod\n\n" .
                 "\n";
 
         return $msg;

@@ -12,7 +12,9 @@
 
 namespace AwsUpload\Message;
 
-class NewMessage
+use AwsUpload\Message\ArgCommandMessage;
+
+class NewMessage implements ArgCommandMessage
 {
     /**
      * Method to support if when AwsUpload::new is successfull.
@@ -27,6 +29,18 @@ class NewMessage
              . "To edit again the file type:\n"
              . "    <g>aws-upload edit " . $key . "</g>\n"
              . "\n";
+        return $msg;
+    }
+
+    public static function noArgs()
+    {
+        $msg = "It seems that you don't proper arguments for this command.\n\n" .
+
+                "<y>How to use new:</y>\n\n" .
+                "    <g>aws-upload new <key></g>\n" .
+                "    <b>E.g.:</b> aws-upload new blog.prod\n\n" .
+                "\n";
+
         return $msg;
     }
 }

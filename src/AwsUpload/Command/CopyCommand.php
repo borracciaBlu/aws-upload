@@ -13,6 +13,7 @@
 namespace AwsUpload\Command;
 
 use AwsUpload\Message\NewMessage;
+use AwsUpload\Message\CopyMessage;
 use AwsUpload\Message\ErrorMessage;
 use AwsUpload\Setting\SettingFile;
 
@@ -50,7 +51,7 @@ class CopyCommand extends FileCommand
     public function isValid()
     {
         if (!$this->isValidArgs($this->keys)) {
-            $this->error_msg = ErrorMessage::noCopyArgs();
+            $this->error_msg = CopyMessage::noArgs();
             $valid = false;
 
             return $valid;

@@ -20,14 +20,13 @@ class ErrorMessage
 {
 
     /**
-     * Method to echo the help message about no project.
+     * Generic method for when no args.
      *
      * @return string
      */
-    public static function noProjects()
+    public static function noArgs()
     {
-        $msg = "It seems that you don't have any project setup.\nTry to type:\n\n"
-             . "    <g>aws-upload new project.test</g>\n"
+        $msg = "<r>It seems that you don't have the correct args for this command.</r>\n"
              . "\n";
 
         return $msg;
@@ -38,12 +37,11 @@ class ErrorMessage
      *
      * @return string
      */
-    public static function noCopyArgs()
+    public static function noProjects()
     {
-        $msg = "It seems that you don't proper arguments for this command.\nTry to type:\n\n"
-             . "    <g>aws-upload copy oldproject.test project.test</g>\n"
+        $msg = "It seems that you don't have any project setup.\nTry to type:\n\n"
+             . "    <g>aws-upload new project.test</g>\n"
              . "\n";
-
         return $msg;
     }
 

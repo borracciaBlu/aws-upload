@@ -12,10 +12,12 @@
 
 namespace AwsUpload\Message;
 
-class ImportMessage
+use AwsUpload\Message\ArgCommandMessage;
+
+class ImportMessage implements ArgCommandMessage
 {
     /**
-     * Method to support if when AwsUpload::new is successfull.
+     * Method to support if when AwsUpload::import is successfull.
      *
      * @param string $key E.g: proj.env
      *
@@ -46,6 +48,18 @@ class ImportMessage
                 "    <b>-</b> no file given\n" .
                 "    <b>-</b> the argument give was a folder\n" .
                 "    <b>-</b> the argument give was a file but it doesn't exist\n" .
+                "\n";
+
+        return $msg;
+    }
+
+    public static function noArgs()
+    {
+        $msg = "It seems that you don't proper arguments for this command.\n\n" .
+
+                "<y>How to use import:</y>\n\n" .
+                "    <g>aws-upload import <src></g>\n" .
+                "    <b>E.g.:</b> aws-upload import ~/Desktop/blog.dev.json\n\n" .
                 "\n";
 
         return $msg;

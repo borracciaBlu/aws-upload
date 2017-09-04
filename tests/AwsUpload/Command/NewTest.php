@@ -4,8 +4,9 @@ namespace AwsUpload\Tests\Settings;
 
 use AwsUpload\Io\Output;
 use AwsUpload\AwsUpload;
-use AwsUpload\Message\ErrorMessage;
+use AwsUpload\Message\NewMessage;
 use AwsUpload\Tests\BaseTestCase;
+use AwsUpload\Message\ErrorMessage;
 use Symfony\Component\Filesystem\Filesystem;
 
 class NewTest extends BaseTestCase
@@ -13,9 +14,9 @@ class NewTest extends BaseTestCase
 
     public function test_noKey_expectedNoProjectMsg()
     {
-        $this->expectOutputString("It seems that you don't have any project setup.\nTry to type:\n\n"
-             . "    \e[32maws-upload new project.test\e[0m\n"
-             . "\n" . "\n");
+        $msg = NewMessage::noArgs();
+        $msg = Output::color($msg);
+        $this->expectOutputString($msg . "\n");
 
         self::clearArgv();
         self::pushToArgv(array('asd.php', 'new'));

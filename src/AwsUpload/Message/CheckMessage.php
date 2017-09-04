@@ -13,8 +13,9 @@
 namespace AwsUpload\Message;
 
 use AwsUpload\Message\CommonMessage;
+use AwsUpload\Message\ArgCommandMessage;
 
-class CheckMessage
+class CheckMessage implements ArgCommandMessage
 {
     /**
      * Method to echo the aws-upload check report.
@@ -67,6 +68,18 @@ class CheckMessage
               . "   <b>Local Folder:</b>\n"
               . "   <y>" . $report['local'] . "</y>" . "\n"
               . "   " . $check_loc . " Folder    " . $local_exists . "\n";
+
+        return $msg;
+    }
+
+    public static function noArgs()
+    {
+        $msg = "It seems that you don't proper arguments for this command.\n\n" .
+
+                "<y>How to use check:</y>\n\n" .
+                "    <g>aws-upload check <key></g>\n" .
+                "    <b>E.g.:</b> aws-upload check blog.dev\n\n" .
+                "\n";
 
         return $msg;
     }

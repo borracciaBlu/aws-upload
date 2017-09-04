@@ -57,6 +57,23 @@ abstract class FileCommand extends BasicCommand implements Command, ValidCommand
         return $this->handleSuccess();
     }
 
+    public function hasArgs()
+    {
+        return !empty($this->key);
+    }
+
+    public function getErrorMsg()
+    {
+        $class = str_replace('Command', 'Message', static::class);
+        $msg = ErrorMessage::noArgs();
+
+        if (class_exists($class)) {
+            $msg = call_user_func(array($class, 'noArgs'));
+        }
+
+        return $msg;
+    }
+
     /**
      * Method to check if key isValid and good to proceed.
      *
@@ -67,13 +84,13 @@ abstract class FileCommand extends BasicCommand implements Command, ValidCommand
         $tests = array(
             "file_exists"  => SettingFile::exists($this->key),
             "is_valid_key" => SettingFile::isValidKey($this->key),
-            "has_project"   => !empty($this->key),
+            "has_args"     => $this->hasArgs(),
         );
 
         $msgs = array(
             "file_exists"  => ErrorMessage::noFileFound($this->key),
             "is_valid_key" => ErrorMessage::noValidKey($this->key),
-            "has_project"   => ErrorMessage::noProjects(),
+            "has_args"     => $this->getErrorMsg(),
         );
 
         $valid = $this->validate($tests, $msgs);

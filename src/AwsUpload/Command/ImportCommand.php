@@ -74,12 +74,14 @@ class ImportCommand extends FileCommand
             "is_valid_key"    => SettingFile::isValidKey($this->new_key),
             "dest_not_exists" => !SettingFile::exists($this->new_key),
             "src_exists"      => $new_settings->fileExists(),
+            "has_arg"         => !empty($this->setting_path),
         );
 
         $msgs = array(
             "dest_not_exists" => ErrorMessage::keyAlreadyExists($this->new_key),
             "is_valid_key"    => ErrorMessage::noValidKey($this->new_key),
             "src_exists"      => ImportMessage::errorNotFound($this->setting_path),
+            "has_arg"         => ImportMessage::noArgs(),
         );
 
         $valid = $this->validate($tests, $msgs);

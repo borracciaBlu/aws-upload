@@ -16,7 +16,7 @@ class ImportTest extends BaseTestCase
     // test no arguments passed
     public function test_noKey_expected_NoArgsMsg()
     {
-        $msg = ImportMessage::errorNotFound('');
+        $msg = ImportMessage::noArgs('');
         $msg = Output::color($msg);
         $this->expectOutputString($msg . "\n");
 

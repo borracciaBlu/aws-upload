@@ -7,6 +7,7 @@ use AwsUpload\AwsUpload;
 use AwsUpload\Message\NewMessage;
 use AwsUpload\Tests\BaseTestCase;
 use AwsUpload\Setting\SettingFile;
+use AwsUpload\Message\CopyMessage;
 use AwsUpload\Message\ErrorMessage;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -16,7 +17,7 @@ class CopyTest extends BaseTestCase
     // test isValidArgs
     public function test_noKey_expected_NoArgsMsg()
     {
-        $msg = ErrorMessage::noCopyArgs();
+        $msg = CopyMessage::noArgs();
         $msg = Output::color($msg);
         $this->expectOutputString($msg . "\n");
 
@@ -33,7 +34,7 @@ class CopyTest extends BaseTestCase
     // test isValidArgs
     public function test_noValidKey_expected_NoArgsMsg_oneParam()
     {
-        $msg = ErrorMessage::noCopyArgs();
+        $msg = CopyMessage::noArgs();
         $msg = Output::color($msg);
         $this->expectOutputString($msg . "\n");
 

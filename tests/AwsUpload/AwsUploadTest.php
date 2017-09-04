@@ -59,4 +59,21 @@ class AwsUploadTest extends BaseTestCase
         $cmd = $aws->getCmdName();
         $this->assertEquals('AwsUpload\Command\ImportCommand', $cmd);
     }
+
+    public function test_getCmdName_export()
+    {
+        self::clearArgv();
+        self::pushToArgv(array('aws-upload', '-ex', 'test.env', './dir/blog.test.json'));
+
+        $aws = new AwsUpload();
+        $cmd = $aws->getCmdName();
+        $this->assertEquals('AwsUpload\Command\ExportCommand', $cmd);
+
+        self::clearArgv();
+        self::pushToArgv(array('aws-upload', 'export', 'test.env', './dir/blog.test.json'));
+
+        $aws = new AwsUpload();
+        $cmd = $aws->getCmdName();
+        $this->assertEquals('AwsUpload\Command\ExportCommand', $cmd);
+    }
 }
