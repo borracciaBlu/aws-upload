@@ -22,11 +22,21 @@ use AwsUpload\Setting\SettingFolder;
 class ImportCommand extends FileCommand
 {
     /**
+     * @var string
+     */
+    public $setting_path;
+
+    /**
+     * @var string
+     */
+    public $new_key;
+
+    /**
      * Initializes the command.
      */
     public function init()
     {
-        $this->setting_path =  $this->app->args->getFirst('import');
+        $this->setting_path = $this->app->args->getFirst('import');
         $this->new_key = basename($this->setting_path, ".json");
     }
 
