@@ -8,7 +8,7 @@ use AwsUpload\Message\ErrorMessage;
 use AwsUpload\Tests\BaseTestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
-class EditTest extends BaseTestCase
+class DeleteTest extends BaseTestCase
 {
 
     public function test_noKey_expectedNoProjectMsg()
