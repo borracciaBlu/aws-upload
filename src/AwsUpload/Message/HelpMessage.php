@@ -37,6 +37,7 @@ class HelpMessage
   aws-upload copy <src> <dest>       # <src> and <dest> are in the <key> format proj.env
   aws-upload delete <key>            # The <key> format is proj.env eg: landing.test
   aws-upload import <src>            # The <src> is the path to a json file.
+  aws-upload export <key> [<dest>]   # The <dest> is a the directory path.
   aws-upload check <key>             # The <key> format is proj.env eg: landing.test
 
   aws-upload (self-update | selfupdate)
@@ -64,6 +65,7 @@ class HelpMessage
   <g>-cp|copy <src> <dest></g>       Copy a setting file.
   <g>-rm|delete <key></g>            Delete a setting file.
   <g>-i|import <src></g>             Import a setting file.
+  <g>-ex|export <key> <dest></g>     Export a setting file.
   <g>-c|check <key></g>              Check a setting file for debug.
   <g>self-update</g>                 Updates aws-upload to the latest version.
   <g>selfupdate</g>                  Updates aws-upload to the latest version.
