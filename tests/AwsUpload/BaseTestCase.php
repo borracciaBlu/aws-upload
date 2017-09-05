@@ -8,6 +8,10 @@ use Symfony\Component\Filesystem\Filesystem;
 abstract class BaseTestCase extends TestCase
 {
 
+    protected $main_external;
+
+    protected $main_aws_home;
+
     /**
      * The directory that contain the AWSUPLOAD_HOME.
      *
@@ -34,10 +38,13 @@ abstract class BaseTestCase extends TestCase
         $uid = str_replace('\\', '-', $uid);
 
 
-        $this->aws_home = __DIR__ . '/../../build/' . $uid;
+        $this->main_aws_home = __DIR__ . '/../../aws_upload/';
+        $this->aws_home = $this->main_aws_home . $uid;
         putenv("AWSUPLOAD_HOME=" . $this->aws_home);
 
-        $this->external = __DIR__ . '/../../external/' . $uid;
+        $this->main_external = __DIR__ . '/../../external/';
+        $this->external = $this->main_external . $uid;
+
         $filesystem = new Filesystem();
         $filesystem->mkdir($this->aws_home);
         $filesystem->mkdir($this->external);
@@ -51,8 +58,8 @@ abstract class BaseTestCase extends TestCase
         unset($_ENV['AWSUPLOAD_HOME']);
 
         $filesystem = new Filesystem();
-        $filesystem->remove($this->aws_home);
-        $filesystem->remove($this->external);
+        $filesystem->remove($this->main_aws_home);
+        $filesystem->remove($this->main_external);
     }
 
     /**
