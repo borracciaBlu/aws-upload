@@ -1,6 +1,25 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+
+## 1.9.0 - 2017-09-05
+### Added
+- Add new feature `aws-upload import` to enable import in `aws-upload`.
+- Add new feature `aws-upload export` to enable export in `aws-upload`.
+- Add new feature `aws-upload delete` to enable delete in `aws-upload`.
+- Add `--dry-run` as alias of `--simulate`.
+- Use phpstan in dev.
+
+### Changed
+- Changed behaviour `autocomplete`. Now it update the zsh plugin as well.
+- Allow verbose output on upload.
+- Refactor Facilitator to Message.
+- Merge Check to SettingFile.
+- Improve help section.
+
+### Fixed
+- namespace for tests
+
 ## 1.8.0 - 2017-07-27
 ### Added
 - Add new feature `aws-upload autocomplete` to enable autocomplete in `aws-upload`.
