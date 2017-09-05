@@ -28,6 +28,9 @@ class ExportCommand extends FileCommand
 
     /**
      * Initializes the command.
+     *
+     * @see FileCommand::init
+     * @return void
      */
     public function init()
     {
@@ -95,7 +98,7 @@ class ExportCommand extends FileCommand
 
         $msgs = array(
             "is_valid_key"    => ErrorMessage::noValidKey($this->key),
-            "src_exists" => ErrorMessage::noFileFound($this->key),
+            "src_exists"      => ErrorMessage::noFileFound($this->key),
             "dest_not_exists" => 'file alreay present',
             "no_args" => ExportMessage::noArgs(),
         );

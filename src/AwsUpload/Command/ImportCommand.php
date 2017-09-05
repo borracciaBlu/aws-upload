@@ -33,6 +33,9 @@ class ImportCommand extends FileCommand
 
     /**
      * Initializes the command.
+     *
+     * @see FileCommand::init
+     * @return void
      */
     public function init()
     {

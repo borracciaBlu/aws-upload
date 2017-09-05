@@ -1,6 +1,6 @@
 <?php
 
-namespace AwsUpload\Tests\Settings;
+namespace AwsUpload\Tests\Command;
 
 use AwsUpload\Io\Output;
 use AwsUpload\AwsUpload;
@@ -14,7 +14,7 @@ class EditTest extends BaseTestCase
 
     public function test_noKey_expectedNoProjectMsg()
     {
-        $msg = EditMessage::noArgs('');
+        $msg = EditMessage::noArgs();
         $msg = Output::color($msg);
         $this->expectOutputString($msg . "\n");
 

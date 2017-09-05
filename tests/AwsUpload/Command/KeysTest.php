@@ -1,6 +1,6 @@
 <?php
 
-namespace AwsUpload\Tests\Settings;
+namespace AwsUpload\Tests\Command;
 
 use AwsUpload\AwsUpload;
 use AwsUpload\Tests\BaseTestCase;

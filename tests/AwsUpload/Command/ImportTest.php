@@ -1,6 +1,6 @@
 <?php
 
-namespace AwsUpload\Tests\Settings;
+namespace AwsUpload\Tests\Command;
 
 use AwsUpload\Io\Output;
 use AwsUpload\AwsUpload;
@@ -16,7 +16,7 @@ class ImportTest extends BaseTestCase
     // test no arguments passed
     public function test_noKey_expected_NoArgsMsg()
     {
-        $msg = ImportMessage::noArgs('');
+        $msg = ImportMessage::noArgs();
         $msg = Output::color($msg);
         $this->expectOutputString($msg . "\n");
 

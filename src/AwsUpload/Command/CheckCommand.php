@@ -42,11 +42,11 @@ class CheckCommand extends FileCommand
         $path = SettingFile::getPath($this->key);
         $settings = SettingFile::getObject($this->key);
 
-        $pem_exists    = file_exists($settings->pem);
-        $pem_perms     = ($pem_exists) ? decoct(fileperms($settings->pem) & 0777) : '-';
-        $is_400        = ($pem_perms === '400');
-        $clean_local   = str_replace('*', '', $settings->local);
-        $local_exists  = file_exists($clean_local);
+        $pem_exists   = file_exists($settings->pem);
+        $pem_perms    = ($pem_exists) ? decoct(fileperms($settings->pem) & 0777) : '-';
+        $is_400       = ($pem_perms === '400');
+        $clean_local  = str_replace('*', '', $settings->local);
+        $local_exists = file_exists($clean_local);
 
         $report = array(
             "path" => $path,

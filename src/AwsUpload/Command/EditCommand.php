@@ -17,6 +17,11 @@ use AwsUpload\Setting\SettingFile;
 
 class EditCommand extends FileCommand
 {
+
+    /**
+     * @see FileCommand::init
+     * @return void
+     */
     public function init()
     {
         $this->key = $this->app->args->getFirst('edit');

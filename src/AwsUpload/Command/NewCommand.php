@@ -14,9 +14,9 @@ namespace AwsUpload\Command;
 
 use AwsUpload\Model\Status;
 use AwsUpload\Command\Command;
+use AwsUpload\Message\NewMessage;
 use AwsUpload\Setting\SettingFile;
 use AwsUpload\Message\ErrorMessage;
-use AwsUpload\Message\NewSettingFileMessage;
 
 class NewCommand extends FileCommand
 {
@@ -35,7 +35,7 @@ class NewCommand extends FileCommand
         SettingFile::create($this->key);
         SettingFile::edit($this->key);
 
-        $this->msg = NewSettingFileMessage::success($this->key);
+        $this->msg = NewMessage::success($this->key);
     }
 
     /**

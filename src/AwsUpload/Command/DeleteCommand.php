@@ -12,11 +12,16 @@
 
 namespace AwsUpload\Command;
 
-use AwsUpload\Message\DeleteMessage;
 use AwsUpload\Setting\SettingFile;
+use AwsUpload\Message\DeleteMessage;
 
 class DeleteCommand extends FileCommand
 {
+
+    /**
+     * @see FileCommand::init
+     * @return void
+     */
     public function init()
     {
         $this->key = $this->app->args->getFirst('delete');

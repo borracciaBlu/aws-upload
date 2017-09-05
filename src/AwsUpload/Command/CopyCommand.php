@@ -24,6 +24,10 @@ class CopyCommand extends FileCommand
      */
     public $keys;
 
+    /**
+     * @see FileCommand::init
+     * @return void
+     */
     public function init()
     {
         $this->keys = $this->app->args->getParams('copy');

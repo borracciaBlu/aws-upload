@@ -33,7 +33,6 @@ class AutoCompleteCommand extends BasicCommand
 
         if (!$this->isValidSystem()) {
             $this->app->inline($this->error_msg);
-
             return Status::SYSTEM_NOT_READY;
         }
 

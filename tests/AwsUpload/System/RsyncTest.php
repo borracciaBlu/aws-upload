@@ -1,6 +1,6 @@
 <?php
 
-namespace AwsUpload\Tests;
+namespace AwsUpload\Tests\System;
 
 use AwsUpload\System\Rsync;
 use AwsUpload\Tests\BaseTestCase;
