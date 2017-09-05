@@ -1,3 +1,5 @@
 /vendor/
+/aws_upload/
+/external/
 /build/
 composer.phar
