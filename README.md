@@ -12,7 +12,7 @@
 
 ## What is aws-upload?
 aws-upload is cli tool that allows you to rapid upload files in an elegant and efficient way. The main idea is that deploy files should be brain zero. Quick and fast. No thoughts.  
-aws-upload try to remove the pain from deployment process following tree core values:
+aws-upload try to remove the pain from deployment process following three core values:
 
 - Explore: No need to remember all your projects. Guess and tab.
 - Support: It helps you in the configuration process and during the debug.
