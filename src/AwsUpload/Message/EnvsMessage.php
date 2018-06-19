@@ -26,19 +26,19 @@ class EnvsMessage
      */
     public static function errorNoEnvsProj($projFilter)
     {
-        $projs = SettingFile::getProjs();
-        $msg = "The project <r>" . $projFilter . "</r> you are tring to use doesn't exist." . "\n\n";
+        $projList = SettingFile::getProjs();
+        $text = "The project <r>" . $projFilter . "</r> you are tring to use doesn't exist." . "\n\n";
 
         $next = "These are the available projects: \n\n";
-        foreach ($projs as $proj) {
+        foreach ($projList as $proj) {
             $next .= "  +  <g>" . $proj . "</g>\n";
         }
 
-        if (count($projs) > 0) {
+        if (count($projList) > 0) {
             $next .= "\nTo get the envs from one of them, run (for example):\n\n" .
-                     "   aws-upload -e " . $projs[0] . "\n";
+                     "   aws-upload -e " . $projList[0] . "\n";
         }
 
-        return $msg . $next . "\n";
+        return $text . $next . "\n";
     }
 }

@@ -12,6 +12,8 @@
 
 namespace AwsUpload\System;
 
+use AwsUpload\System\RsyncCommands;
+
 class Rsync
 {
     /**
@@ -22,7 +24,7 @@ class Rsync
     public $cmd;
 
     /**
-     * It containg the settings object
+     * It contains the settings object
      *
      * Eg:
      * { pem , exclude, remote, local }
@@ -30,6 +32,14 @@ class Rsync
      * @var object
      */
     public $settings;
+
+    /**
+     * It contains the action to perform
+     *
+     * @see AwsUpload\System\RsyncCommands
+     * @var string
+     */
+    public $action;
 
     public $is_verbose = false;
 
@@ -54,6 +64,11 @@ class Rsync
         $this->is_verbose = (bool) $verbose;
     }
 
+    public function setAction($action)
+    {
+        $this->action = $action;
+    }
+
     /**
      * Method to build the rsync command from the settings object
      *
@@ -61,21 +76,69 @@ class Rsync
      */
     public function getCmd()
     {
-        $settings = $this->settings;
+        $cmd = "";
 
-        $cmd = "rsync ";
-        $cmd .= ($this->is_verbose) ? " -v --stats --progress " : "";
-        $cmd .= "-ravze \"ssh -i " . $settings->pem . "\" ";
+        if (RsyncCommands::UPLOAD === $this->action) {
+            $cmd = $this->getUploadCommand();
+        }
 
-        // exclude
-        $cmd .= $this->getExclude();
-        $cmd .= " --exclude .DS_Store ";
-
-        $cmd .= $settings->local . " " . escapeshellarg($settings->remote);
+        if (RsyncCommands::DIFF === $this->action) {
+            $cmd = $this->getDiffCommand();
+        }
 
         return $cmd;
     }
 
+    /**
+     * @return string
+     */
+    public function getUploadCommand()
+    {
+        $cmd = "rsync ";
+        $cmd .= $this->getVerboseFlags();
+        $cmd .= $this->getSshDetails();
+        $cmd .= $this->getExclude();
+        $cmd .= $this->getLocal();
+        $cmd .= $this->getRemote();
+
+        return $cmd;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDiffCommand()
+    {
+         $cmd = "rsync --dry-run ";
+
+        $cmd .= $this->getVerboseFlags();
+        $cmd .= $this->getSshDetails();
+        $cmd .= $this->getExclude();
+        $cmd .= $this->getOnlyPathLocal();
+        $cmd .= $this->getRemote();
+
+        return $cmd;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVerboseFlags()
+    {
+        return ($this->is_verbose) ? " -v --stats --progress " : "";
+    }
+
+    /**
+     * @return string
+     */
+    public function getSshDetails()
+    {
+        return "-ravze \"ssh -i " . $this->settings->pem . "\" ";
+    }
+
+    /**
+     * @return string
+     */
     public function getExclude()
     {
         $settings = $this->settings;
@@ -89,7 +152,39 @@ class Rsync
             $cmd .= " --exclude " . escapeshellarg($elem) . " ";
         }
 
+        $cmd .= " --exclude .DS_Store ";
+
         return $cmd;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocal()
+    {
+        return $this->settings->local . " ";
+    }
+
+    /**
+     * @return string
+     */
+    public function getOnlyPathLocal()
+    {
+        $local = trim($this->settings->local);
+
+        if (strpos($local, '*') === strlen($local) - 1) {
+            $local = substr($local, 0, -1);
+        }
+
+        return escapeshellarg($local) . " ";
+    }
+
+    /**
+     * @return string
+     */
+    public function getRemote()
+    {
+        return escapeshellarg($this->settings->remote) . " ";
     }
 
     /**

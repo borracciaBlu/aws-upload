@@ -25,22 +25,25 @@ class NewMessage implements ArgCommandMessage
      */
     public static function success($key)
     {
-        $msg = "The setting file <y>" . $key . ".json</y> has been created successfully.\n\n"
-             . "To edit again the file type:\n"
-             . "    <g>aws-upload edit " . $key . "</g>\n"
-             . "\n";
-        return $msg;
+        $text = "The setting file <y>" . $key . ".json</y> has been created successfully.\n\n" .
+                "To edit again the file type:\n" .
+                "    <g>aws-upload edit " . $key . "</g>\n" .
+                "\n";
+
+        return $text;
     }
 
+    /**
+     * @return string
+     */
     public static function noArgs()
     {
-        $msg = "It seems that you don't proper arguments for this command.\n\n" .
-
+        $text = "It seems that you don't proper arguments for this command.\n\n" .
                 "<y>How to use new:</y>\n\n" .
                 "    <g>aws-upload new <key></g>\n" .
                 "    <b>E.g.:</b> aws-upload new blog.prod\n\n" .
                 "\n";
 
-        return $msg;
+        return $text;
     }
 }

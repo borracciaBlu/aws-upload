@@ -49,7 +49,7 @@ class DeleteCommand extends FileCommand
     {
         $this->app->inline("<r>Are you sure you want delete " . $this->key . "?(y|n)</r>");
 
-        $handle = fopen("php://stdin","r");
+        $handle = fopen("php://stdin", "r");
         $line = fgets($handle);
         fclose($handle);
 

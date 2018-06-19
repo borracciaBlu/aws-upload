@@ -13,6 +13,7 @@
 namespace AwsUpload\Setting;
 
 use AwsUpload\System\File;
+use AwsUpload\System\System;
 use AwsUpload\Model\Settings;
 use AwsUpload\Setting\SettingFolder;
 
@@ -186,8 +187,9 @@ class SettingFile
     public static function edit($key)
     {
         $path = SettingFolder::getPath();
+        $editor = System::getEditor();
 
-        system('$EDITOR ' . $path . '/' . $key . '.json  < `tty` > `tty`');
+        system($editor . ' ' . $path . '/' . $key . '.json  < `tty` > `tty`');
     }
 
     /**

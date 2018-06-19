@@ -25,21 +25,22 @@ class ImportMessage implements ArgCommandMessage
      */
     public static function success($key)
     {
-        $msg = "The setting file <y>" . $key . ".json</y> has been imported successfully.\n\n" .
+        $text = "The setting file <y>" . $key . ".json</y> has been imported successfully.\n\n" .
                 "<y>To edit again the file type:</y>\n" .
                 "    <g>aws-upload edit " . $key . "</g>\n" .
                 "\n";
-        return $msg;
+
+        return $text;
     }
 
     public static function errorNotFound($path)
     {
-        $msg = "It seems that you don't proper arguments for this command.\n\n" .
+        $text = "It seems that you don't proper arguments for this command.\n\n" .
 
                 "<y>Argument given:</y>\n\n" .
                 "    <b>src:</b> " . $path . "\n\n" .
 
-               
+
                 "<y>How to use import:</y>\n\n" .
                 "    <g>aws-upload import <src></g>\n" .
                 "    <b>E.g.:</b> aws-upload import ~/Desktop/blog.dev.json\n\n" .
@@ -50,18 +51,18 @@ class ImportMessage implements ArgCommandMessage
                 "    <b>-</b> the argument give was a file but it doesn't exist\n" .
                 "\n";
 
-        return $msg;
+        return $text;
     }
 
     public static function noArgs()
     {
-        $msg = "It seems that you don't proper arguments for this command.\n\n" .
+        $text = "It seems that you don't proper arguments for this command.\n\n" .
 
                 "<y>How to use import:</y>\n\n" .
                 "    <g>aws-upload import <src></g>\n" .
                 "    <b>E.g.:</b> aws-upload import ~/Desktop/blog.dev.json\n\n" .
                 "\n";
 
-        return $msg;
+        return $text;
     }
 }

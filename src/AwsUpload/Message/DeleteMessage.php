@@ -25,19 +25,20 @@ class DeleteMessage implements ArgCommandMessage
      */
     public static function success($key)
     {
-        $msg = "The setting file <y>" . $key . ".json</y> has been deleted successfully.\n\n";
-        return $msg;
+        $text = "The setting file <y>" . $key . ".json</y> has been deleted successfully.\n\n";
+
+        return $text;
     }
 
     public static function noArgs()
     {
-        $msg = "It seems that you don't proper arguments for this command.\n\n" .
+        $text = "It seems that you don't proper arguments for this command.\n\n" .
 
                 "<y>How to use delete:</y>\n\n" .
                 "    <g>aws-upload delete <key></g>\n" .
                 "    <b>E.g.:</b> aws-upload delete blog.dev\n\n" .
                 "\n";
 
-        return $msg;
+        return $text;
     }
 }

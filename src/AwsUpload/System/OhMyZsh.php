@@ -12,6 +12,8 @@
 
 namespace AwsUpload\System;
 
+use AwsUpload\Setting\SettingFolder;
+
 class OhMyZsh
 {
     /**
@@ -23,6 +25,7 @@ class OhMyZsh
     {
         $dir  = self::getPath();
         $file = self::getPath() . '/oh-my-zsh.sh';
+
         return is_dir($dir) && is_file($file);
     }
 
@@ -33,11 +36,12 @@ class OhMyZsh
      */
     public static function errorMsg()
     {
-        $msg = "\n   It seems that oh-my-zsh is not installed.\n" .
+        $text = "\n   It seems that oh-my-zsh is not installed.\n" .
                 "   Please run (or equivalent for your system):\n\n" .
                 "       <y>sh -c \"$(wget https://raw.githubusercontent.com/" .
                 "robbyrussell/oh-my-zsh/master/tools/install.sh -O -)\"</y>\n";
-        return $msg;
+
+        return $text;
     }
 
     /**
@@ -72,17 +76,18 @@ class OhMyZsh
     public static function isPluginActive()
     {
         $isActive = exec("grep aws-upload ~/.zshrc");
+
         return (strlen($isActive) > 0);
     }
 
     /**
      * Activate the plugin.
      *
-     * @return bool
+     * @return void
      */
     public static function activate()
     {
-        $cmd = "sed -i '/^plugins=(/ s/)$/ aws-upload)/' ~/.zshrc";
-        return exec($cmd);
+        $zshrc = new Zshrc();
+        $zshrc->enablePlugin('aws-upload');
     }
 }

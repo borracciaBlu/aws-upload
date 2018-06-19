@@ -26,10 +26,10 @@ class ErrorMessage
      */
     public static function noArgs()
     {
-        $msg = "<r>It seems that you don't have the correct args for this command.</r>\n"
-             . "\n";
+        $text = "<r>It seems that you don't have the correct args for this command.</r>\n" .
+                "\n";
 
-        return $msg;
+        return $text;
     }
 
     /**
@@ -39,10 +39,11 @@ class ErrorMessage
      */
     public static function noProjects()
     {
-        $msg = "It seems that you don't have any project setup.\nTry to type:\n\n"
-             . "    <g>aws-upload new project.test</g>\n"
-             . "\n";
-        return $msg;
+        $text = "It seems that you don't have any project setup.\nTry to type:\n\n" .
+                "    <g>aws-upload new project.test</g>\n" .
+                "\n";
+
+        return $text;
     }
 
     /**
@@ -61,21 +62,21 @@ class ErrorMessage
     {
         $files = SettingFile::getList();
         if (count($files) === 0) {
-            $msg = static::noProjects();
-            return $msg;
+            $text = static::noProjects();
+            return $text;
         }
 
-        $msg = "It seems that there is <r>NO</r> setting files for <y>" . $project .
-               "</y>, <y>" . $env . "</y>\n\n";
+        $text = "It seems that there is <r>NO</r> setting files for <y>" . $project .
+                "</y>, <y>" . $env . "</y>\n\n";
 
         if (is_null($env)) {
-            $msg = "It seems that there is <r>NO</r> setting files for <y>" . $project .
-               "</y>\n\n";
+            $text = "It seems that there is <r>NO</r> setting files for <y>" . $project .
+                    "</y>\n\n";
         }
 
-        $msg .= static::getProjEnvTable();
+        $text .= static::getProjEnvTable();
 
-        return $msg;
+        return $text;
     }
 
     /**
@@ -87,18 +88,19 @@ class ErrorMessage
      */
     public static function noValidKey($key)
     {
-        $msg = "It seems that the key <y>" . $key . "</y> is not valid:\n\n"
-             . "Please try to use this format:\n"
-             . "    - [project].[environmet]\n\n"
-             . "Examples of valid key to create a new setting file:\n"
-             . "    - <g>my-site.staging</g>\n"
-             . "    - <g>my-site.dev</g>\n"
-             . "    - <g>my-site.prod</g>\n\n"
-             . "Tips on choosing the key name:\n"
-             . "    - for [project] and [environmet] try to be: short, sweet, to the point\n"
-             . "    - use only one 'dot' . in the name\n"
-             . "\n";
-        return $msg;
+        $text = "It seems that the key <y>" . $key . "</y> is not valid:\n\n" .
+                "Please try to use this format:\n" .
+                "    - [project].[environmet]\n\n" .
+                "Examples of valid key to create a new setting file:\n" .
+                "    - <g>my-site.staging</g>\n" .
+                "    - <g>my-site.dev</g>\n" .
+                "    - <g>my-site.prod</g>\n\n" .
+                "Tips on choosing the key name:\n" .
+                "    - for [project] and [environmet] try to be: short, sweet, to the point\n" .
+                "    - use only one 'dot' . in the name\n" .
+                "\n";
+
+        return $text;
     }
 
     /**
@@ -110,11 +112,12 @@ class ErrorMessage
      */
     public static function keyAlreadyExists($key)
     {
-        $msg = "It seems that the key <y>" . $key . "</y> already exists try to use another one.\n\n"
-             . "Please consider you already have the following elements:\n"
-             . static::getProjEnvTable()
-             . "\n";
-        return $msg;
+        $text = "It seems that the key <y>" . $key . "</y> already exists try to use another one.\n\n" .
+                "Please consider you already have the following elements:\n" .
+                static::getProjEnvTable() .
+                "\n";
+
+        return $text;
     }
 
 

@@ -102,11 +102,11 @@ class SettingFileTest extends BaseTestCase
 
         $projs = SettingFile::getProjs();
         $envs = SettingFile::getEnvs('project-1');
-        
+
         $this->assertEquals(['project-1'], $projs);
         $this->assertEquals(['dev', 'prod', 'staging'], $envs);
     }
-    
+
     public function testGetProjsMoreFilesDiffProj()
     {
         $filesystem = new Filesystem();

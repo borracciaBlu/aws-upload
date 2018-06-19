@@ -13,6 +13,7 @@
 namespace AwsUpload\Command;
 
 use AwsUpload\Model\Status;
+use AwsUpload\System\OhMyZsh;
 
 class SelfUpdateCommand extends BasicCommand
 {
@@ -26,6 +27,10 @@ class SelfUpdateCommand extends BasicCommand
         $this->app->inline('Self-update running..');
         system('composer -vvv global require aws-upload/aws-upload');
         $this->app->inline("Self-update completed");
+
+        if (OhMyZsh::isPluginActive()) {
+            system('aws-upload autocomplete');
+        }
 
         return Status::SUCCESS;
     }

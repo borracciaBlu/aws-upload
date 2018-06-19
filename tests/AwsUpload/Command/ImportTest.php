@@ -50,7 +50,6 @@ class ImportTest extends BaseTestCase
         $cmd->run();
     }
 
-    // "file_exists" => SettingFile::fileExists($dest),
     public function test_validKeyNoExists_expected_DestAlreadyExists()
     {
         $filesystem = new Filesystem();
@@ -89,7 +88,7 @@ class ImportTest extends BaseTestCase
 
         $cmd = new \AwsUpload\Command\ImportCommand($aws);
         $cmd->run();
-       
+
         $settings = SettingFile::getObject('project-1.dev');
 
         $this->assertEquals('', $settings->pem);

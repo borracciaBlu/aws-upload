@@ -18,7 +18,7 @@ use AwsUpload\Setting\SettingFile;
 use AwsUpload\Message\RsyncMessage;
 use AwsUpload\System\RsyncCommands;
 
-class UploadCommand extends FileCommand
+class DiffCommand extends FileCommand
 {
     /**
      * Property true if app is simulate.
@@ -51,23 +51,17 @@ class UploadCommand extends FileCommand
 
     public function init()
     {
-        $items = $this->app->args->getParams('wild');
+        $this->key = $this->app->args->getFirst('diff');
         $this->is_verbose  = $this->app->args->verbose;
         $this->is_simulate = $this->app->args->simulate;
 
-        list($proj, $env) = SettingFile::extractProjEnv($items);
-        $this->key  = $proj . "." . $env;
+        list($proj, $env) = explode('.', $this->key);
         $this->proj = $proj;
         $this->env  = $env;
     }
 
     /**
      * Method to run the rsync cmd.
-     *
-     * The main idea is:
-     *     1 - get [$proj].[$env].json file
-     *     2 - convert the file to an obj
-     *     3 - run rsync with the details in the obj
      *
      * @return mixed The status code.
      */
@@ -77,7 +71,7 @@ class UploadCommand extends FileCommand
 
         $rsync = new Rsync($settings);
         $rsync->setVerbose($this->is_verbose);
-        $rsync->setAction(RsyncCommands::UPLOAD);
+        $rsync->setAction(RsyncCommands::DIFF);
 
         $msg = RsyncMessage::banner($this->proj, $this->env, $rsync->cmd);
         $this->app->inline($msg);

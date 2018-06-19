@@ -1,6 +1,19 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 1.10.0
+## Added
+- Add new feature `aws-upload diff` to see files not yet in sync.
+- Use `.editorconfig` to have clean files.
+
+### Changed
+- Refactor System\Rsync to handle multiple commands.
+- Improve tests Rsync.
+- Improve help section.
+
+### Fixed
+- Bug when no $EDITOR variable is defined.
+- Bug sed error code m.
 
 ## 1.9.0 - 2017-09-05
 ### Added
@@ -17,9 +30,6 @@ All notable changes to this project will be documented in this file.
 - Merge Check to SettingFile.
 - Improve help section.
 
-### Fixed
-- namespace for tests
-
 ## 1.8.0 - 2017-07-27
 ### Added
 - Add new feature `aws-upload autocomplete` to enable autocomplete in `aws-upload`.
@@ -32,7 +42,7 @@ All notable changes to this project will be documented in this file.
 - Clean up the script section.
 
 ### Fixed
-- namespace for tests
+- Namespace for tests
 
 ## 1.7.2 - 2017-07-12
 ### Changed
@@ -144,7 +154,7 @@ All notable changes to this project will be documented in this file.
 - Added `.travis.yml` `phpunit.xml.dist`.
 
 ## 0.0.2 - 2017-03-06
-### Added  
+### Added
 - Added LICENCE file for MIT.
 
 ### Changed

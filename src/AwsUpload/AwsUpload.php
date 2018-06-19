@@ -93,6 +93,7 @@ class AwsUpload
             'new'        => array('new', 'n'),
             'envs'       => array('envs', 'e'),
             'edit'       => array('edit', 'E'),
+            'diff'       => array('diff', 'df'),
             'delete'     => array('delete', 'rm'),
             'copy'       => array('copy', 'cp'),
             'help'       => array('help', 'h'),
@@ -121,7 +122,7 @@ class AwsUpload
         if ($this->args->verbose) {
             $this->is_verbose = true;
         }
-        
+
         if ($this->args->quiet) {
             $this->is_quiet = true;
         }
@@ -177,6 +178,7 @@ class AwsUpload
             'projs'   => 'AwsUpload\Command\Projs',
             'envs'    => 'AwsUpload\Command\Envs',
             'new'     => 'AwsUpload\Command\New',
+            'diff'    => 'AwsUpload\Command\Diff',
             'edit'    => 'AwsUpload\Command\Edit',
             'copy'    => 'AwsUpload\Command\Copy',
             'delete'  => 'AwsUpload\Command\Delete',
@@ -186,7 +188,6 @@ class AwsUpload
             'selfupdate'   => 'AwsUpload\Command\SelfUpdate',
             'autocomplete' => 'AwsUpload\Command\AutoComplete',
         );
-
         foreach ($cmdList as $arg => $cmdName) {
             if ($this->args->{$arg} && empty($cmd)) {
                 $cmd = $cmdName;

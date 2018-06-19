@@ -10,22 +10,10 @@
  * @license   http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
-namespace AwsUpload\Message;
+namespace AwsUpload\System;
 
-class VersionMessage
+interface RsyncCommands
 {
-    /**
-     * Method to echo the current version.
-     *
-     * @param string $version The version.
-     *
-     * @return string
-     */
-    public static function success($version)
-    {
-        $text = "<g>aws-upload</g> version <y>" . $version . "</y> \n";
-
-        return $text;
-    }
+    const UPLOAD = 'UPLOAD';
+    const DIFF = 'DIFF';
 }
-

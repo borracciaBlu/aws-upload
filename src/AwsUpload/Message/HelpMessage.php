@@ -22,7 +22,7 @@ class HelpMessage
      */
     public static function success()
     {
-        $msg = <<<EOT
+        $text = <<<EOT
 
 <y>Usage:</y>
 
@@ -32,6 +32,7 @@ class HelpMessage
   aws-upload projs [-q|--quiet]
   aws-upload envs <proj> [-q|--quiet]
 
+  aws-upload diff <key>              # The <key> format is proj.env eg: landing.test
   aws-upload new <key>               # The <key> format is proj.env eg: landing.test
   aws-upload edit <key>              # The <key> format is proj.env eg: landing.test
   aws-upload copy <src> <dest>       # <src> and <dest> are in the <key> format proj.env
@@ -57,6 +58,7 @@ class HelpMessage
 
 <y>Available commands:</y>
 
+  <g>-df|diff <key></g>              Show the files that are not yet synced.
   <g>-k|keys</g>                     Print all the projects' keys.
   <g>-p|projs</g>                    Print all the projects.
   <g>-e|envs <proj></g>              Print all the environments for a specific project.
@@ -73,6 +75,6 @@ class HelpMessage
 
 
 EOT;
-        return $msg;
+        return $text;
     }
 }

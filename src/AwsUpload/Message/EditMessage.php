@@ -25,19 +25,20 @@ class EditMessage implements ArgCommandMessage
      */
     public static function success($key)
     {
-        $msg = "The setting file <y>" . $key . ".json</y> has been edited successfully.\n\n";
-        return $msg;
+        $text = "The setting file <y>" . $key . ".json</y> has been edited successfully.\n\n";
+
+        return $text;
     }
 
     public static function noArgs()
     {
-        $msg = "It seems that you don't proper arguments for this command.\n\n" .
+        $text = "It seems that you don't proper arguments for this command.\n\n" .
 
                 "<y>How to use edit:</y>\n\n" .
                 "    <g>aws-upload edit <key></g>\n" .
                 "    <b>E.g.:</b> aws-upload edit blog.dev\n\n" .
                 "\n";
 
-        return $msg;
+        return $text;
     }
 }

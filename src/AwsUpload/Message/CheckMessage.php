@@ -43,44 +43,44 @@ class CheckMessage implements ArgCommandMessage
         $local_exists  = CommonMessage::plot($report['local_exists'], $exist_labels);
 
         // Json
-        $msg = "Checking...\n\n"
-             . "   <b>File analysing:</b>\n"
-             . "   <y>" . $report['path'] . "</y>" . "\n"
-             . "   " . $check_json . " Json      " . $is_valid_json . "\n"
-             . "   " . $report['error_json'];
+        $text = "Checking...\n\n" .
+                "   <b>File analysing:</b>\n" .
+                "   <y>" . $report['path'] . "</y>" . "\n" .
+                "   " . $check_json . " Json      " . $is_valid_json . "\n" .
+                "   " . $report['error_json'];
 
         // Pem
-        $msg .= "\n"
-              . "   <b>Pem File:</b>\n"
-              . "   <y>" . $report['pem'] . "</y>\n"
-              . "   " . $check_pem . " Pem       " . $pem_exists . "\n";
+        $text .= "\n" .
+                "   <b>Pem File:</b>\n" .
+                "   <y>" . $report['pem'] . "</y>\n" .
+                "   " . $check_pem . " Pem       " . $pem_exists . "\n";
 
         if ($report['pem_exists']) {
-            $msg .= "   " . $check_400 . " Pem Perm  " . $is_400_perms . "\n";
+            $text .= "   " . $check_400 . " Pem Perm  " . $is_400_perms . "\n";
 
             if (!$report['is_400']) {
-                $msg .= '    Try to type: chmod 400 ' . $report['pem'] . "\n";
+                $text .= '    Try to type: chmod 400 ' . $report['pem'] . "\n";
             }
         }
 
         // Local
-        $msg .= "\n"
-              . "   <b>Local Folder:</b>\n"
-              . "   <y>" . $report['local'] . "</y>" . "\n"
-              . "   " . $check_loc . " Folder    " . $local_exists . "\n";
+        $text .= "\n" .
+                "   <b>Local Folder:</b>\n" .
+                "   <y>" . $report['local'] . "</y>" . "\n" .
+                "   " . $check_loc . " Folder    " . $local_exists . "\n";
 
-        return $msg;
+        return $text;
     }
 
     public static function noArgs()
     {
-        $msg = "It seems that you don't proper arguments for this command.\n\n" .
+        $text = "It seems that you don't proper arguments for this command.\n\n" .
 
                 "<y>How to use check:</y>\n\n" .
                 "    <g>aws-upload check <key></g>\n" .
                 "    <b>E.g.:</b> aws-upload check blog.dev\n\n" .
                 "\n";
 
-        return $msg;
+        return $text;
     }
 }

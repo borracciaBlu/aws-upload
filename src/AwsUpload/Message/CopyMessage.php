@@ -18,13 +18,13 @@ class CopyMessage implements ArgCommandMessage
 {
     public static function noArgs()
     {
-        $msg = "It seems that you don't proper arguments for this command.\n\n" .
+        $text = "It seems that you don't proper arguments for this command.\n\n" .
 
                 "<y>How to use copy:</y>\n\n" .
                 "    <g>aws-upload copy <src> <dest></g>\n" .
                 "    <b>E.g.:</b> aws-upload copy blog.dev blog.prod\n\n" .
                 "\n";
 
-        return $msg;
+        return $text;
     }
 }

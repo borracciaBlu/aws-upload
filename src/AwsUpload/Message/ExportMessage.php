@@ -25,13 +25,14 @@ class ExportMessage implements ArgCommandMessage
      */
     public static function success($key)
     {
-        $msg = "The setting file <y>" . $key . ".json</y> has been exported successfully.\n\n";
-        return $msg;
+        $text = "The setting file <y>" . $key . ".json</y> has been exported successfully.\n\n";
+
+        return $text;
     }
 
     public static function noArgs()
     {
-        $msg = "It seems that you don't proper arguments for this command.\n\n" .
+        $text = "It seems that you don't proper arguments for this command.\n\n" .
 
                 "<y>How to use export:</y>\n\n" .
                 "    <g>aws-upload export <key> [<dir>]</g>\n" .
@@ -40,6 +41,6 @@ class ExportMessage implements ArgCommandMessage
 
                 "\n";
 
-        return $msg;
+        return $text;
     }
 }

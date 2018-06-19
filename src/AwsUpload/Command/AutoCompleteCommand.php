@@ -53,8 +53,10 @@ class AutoCompleteCommand extends BasicCommand
             $this->app->inline('   <b>•</b> Plugin already activated');
         }
 
-
         $this->app->inline("\nProcedure complete. Please reload the shell.");
+
+        system('zsh');
+
         return Status::SUCCESS;
     }
 
@@ -97,23 +99,23 @@ class AutoCompleteCommand extends BasicCommand
         $zsh = Zsh::isInstalled();
         $omz = OhMyZsh::isInstalled();
 
-        $git_msg = "   " .
-                   CommonMessage::plot($git, $check) .
-                   " Git      \t" .
-                   CommonMessage::plot($git, $labels);
-        $zsh_msg = "   " .
-                   CommonMessage::plot($zsh, $check) .
-                   " Zsh      \t" .
-                   CommonMessage::plot($zsh, $labels);
-        $omz_msg = "   " .
-                   CommonMessage::plot($omz, $check) .
-                   " Oh-my-zsh \t" .
-                   CommonMessage::plot($omz, $labels);
+        $git_line = "   " .
+                    CommonMessage::plot($git, $check) .
+                    " Git      \t" .
+                    CommonMessage::plot($git, $labels);
+        $zsh_line = "   " .
+                    CommonMessage::plot($zsh, $check) .
+                    " Zsh      \t" .
+                    CommonMessage::plot($zsh, $labels);
+        $omz_line = "   " .
+                    CommonMessage::plot($omz, $check) .
+                    " Oh-my-zsh \t" .
+                    CommonMessage::plot($omz, $labels);
 
         $this->app->inline("");
-        $this->app->inline($git_msg);
-        $this->app->inline($zsh_msg);
-        $this->app->inline($omz_msg);
+        $this->app->inline($git_line);
+        $this->app->inline($zsh_line);
+        $this->app->inline($omz_line);
         $this->app->inline("");
     }
 

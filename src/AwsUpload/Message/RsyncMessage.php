@@ -26,10 +26,10 @@ class RsyncMessage
      */
     public static function banner($proj, $env, $cmd)
     {
-        $env    = escapeshellarg($env);
-        $proj   = escapeshellarg($proj);
+        $env  = escapeshellarg($env);
+        $proj = escapeshellarg($proj);
 
-        $msg = <<<EOT
+        $text = <<<EOT
 <b>==================================================================</b>
 <g>
                                           _                 _
@@ -51,6 +51,6 @@ class RsyncMessage
 <b>==================================================================</b>
 
 EOT;
-        return $msg;
+        return $text;
     }
 }

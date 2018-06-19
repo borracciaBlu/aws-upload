@@ -126,7 +126,7 @@ class Settings
             JSON_ERROR_UTF8 => " - Malformed UTF-8 characters, possibly incorrectly encoded\n",
         );
         $last_error = json_last_error();
-        
+
         $msg = ' - Unknown error';
         if (array_key_exists($last_error, $errors)) {
             $msg = $errors[$last_error];
