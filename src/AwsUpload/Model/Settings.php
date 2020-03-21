@@ -86,7 +86,7 @@ class Settings
     /**
      * Method to get the json if the file exists.
      *
-     * @return bool
+     * @return string 
      */
     public function getJson()
     {
