@@ -39,7 +39,7 @@ class ImportCommand extends FileCommand
      */
     public function init()
     {
-        $this->setting_path = $this->app->args->getFirst('import');
+        $this->setting_path = $this->args->getFirst('import');
         $this->new_key = basename($this->setting_path, ".json");
     }
 

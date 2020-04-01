@@ -22,6 +22,16 @@ abstract class BasicCommand implements Command
     public $app;
 
     /**
+     * @var \AwsUpload\Io\Args
+     */
+    public $args;
+
+    /**
+     * @var \AwsUpload\Io\Output
+     */
+    public $output;
+
+    /**
      * The success messsage.
      *
      * @var string
@@ -41,16 +51,18 @@ abstract class BasicCommand implements Command
      * The main purpose is to define the app for the script
      * and populate `$this->app`.
      */
-    public function __construct($app)
+    public function __construct($app, $args, $output)
     {
         $this->app = $app;
+        $this->args = $args;
+        $this->output = $output;
     }
 
     /**
      * Method to check to set the error msg.
      *
-     * @param  array  $tests The conditions checked.
-     * @param  array  $msgs  The msgs for each test condition.
+     * @param array $tests The conditions checked.
+     * @param array $msgs  The msgs for each test condition.
      *
      * @return boolean
      */
@@ -75,7 +87,7 @@ abstract class BasicCommand implements Command
      */
     public function handleError()
     {
-        $this->app->inline($this->error_msg);
+        $this->output->write($this->error_msg);
 
         return Status::ERROR_INVALID;
     }
@@ -87,7 +99,7 @@ abstract class BasicCommand implements Command
      */
     public function handleSuccess()
     {
-        $this->app->inline($this->msg);
+        $this->output->write($this->msg);
 
         return Status::SUCCESS;
     }

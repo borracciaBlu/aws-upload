@@ -2,7 +2,7 @@
 
 namespace AwsUpload\Tests\Command;
 
-use AwsUpload\Io\Output;
+use function AwsUpload\Io\color;
 use AwsUpload\AwsUpload;
 use AwsUpload\Tests\BaseTestCase;
 use AwsUpload\Message\ErrorMessage;
@@ -15,16 +15,17 @@ class EnvsTest extends BaseTestCase
     public function test_noProjects_expectedNoProjectMsg()
     {
         $msg = ErrorMessage::noProjects();
-        $msg = Output::color($msg);
-        $this->expectOutputString($msg . "\n");
+        $msg = color($msg);
+        $this->expectOutputString($msg);
 
         self::clearArgv();
         self::pushToArgv(array('asd.php', '-e', 'proj-3'));
 
         $aws = new AwsUpload();
-        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
+        $args = $aws->getArgs();
+        $output = new \AwsUpload\Io\OutputEcho($args);
 
-        $cmd = new \AwsUpload\Command\EnvsCommand($aws);
+        $cmd = new \AwsUpload\Command\EnvsCommand($aws, $args, $output);
         $cmd->run();
     }
 
@@ -38,14 +39,15 @@ class EnvsTest extends BaseTestCase
         self::clearArgv();
         self::pushToArgv(array('asd.php', '-e', 'proj-3'));
 
-        $error = EnvsMessage::errorNoEnvsProj('proj-3') . "\n";
-        $error = Output::color($error);
+        $error = EnvsMessage::errorNoEnvsProj('proj-3');
+        $error = color($error);
         $this->expectOutputString($error);
 
         $aws = new AwsUpload();
-        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
+        $args = $aws->getArgs();
+        $output = new \AwsUpload\Io\OutputEcho($args);
 
-        $cmd = new \AwsUpload\Command\EnvsCommand($aws);
+        $cmd = new \AwsUpload\Command\EnvsCommand($aws, $args, $output);
         $cmd->run();
     }
 }

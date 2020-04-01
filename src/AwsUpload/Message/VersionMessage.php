@@ -28,4 +28,3 @@ class VersionMessage
         return $text;
     }
 }
-

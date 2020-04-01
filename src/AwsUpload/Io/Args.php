@@ -234,7 +234,7 @@ class Args
     /**
      * The parser.
      *
-     * @param  array $input The cleaned input array.
+     * @param array $input The cleaned input array.
      *
      * @return void
      */
@@ -260,7 +260,7 @@ class Args
     /**
      * Check if it's a isFlag
      *
-     * @param  string  $arg One of the input values.
+     * @param string $arg One of the input values.
      *
      * @return boolean
      */
@@ -284,7 +284,7 @@ class Args
     /**
      * Check if it's a isCmd
      *
-     * @param  string  $arg One of the input values.
+     * @param string $arg One of the input values.
      *
      * @return boolean
      */

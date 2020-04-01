@@ -2,7 +2,7 @@
 
 namespace AwsUpload\Tests\Command;
 
-use AwsUpload\Io\Output;
+use function AwsUpload\Io\color;
 use AwsUpload\AwsUpload;
 use AwsUpload\Tests\BaseTestCase;
 use AwsUpload\Message\CheckMessage;
@@ -11,7 +11,7 @@ use Symfony\Component\Filesystem\Filesystem;
 class CheckTest extends BaseTestCase
 {
     public function test_validKeyNoExists_expectedNoFileFound()
-    {   
+    {
 
         $filesystem = new Filesystem();
         $filesystem->dumpFile($this->aws_home . '/file.pem', '');
@@ -34,16 +34,18 @@ class CheckTest extends BaseTestCase
         );
 
         $msg = CheckMessage::report($report);
-        $msg = Output::color($msg);
-        $this->expectOutputString($msg . "\n");
+        $msg = color($msg);
+        $this->expectOutputString($msg);
 
         self::clearArgv();
         self::pushToArgv(array('asd.php', 'check', 'project-2.dev'));
 
         $aws = new AwsUpload();
-        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
+        $args = $aws->getArgs();
 
-        $cmd = new \AwsUpload\Command\CheckCommand($aws);
+        $output = new \AwsUpload\Io\OutputEcho($args);
+
+        $cmd = new \AwsUpload\Command\CheckCommand($aws, $args, $output);
         $cmd->run();
     }
 }

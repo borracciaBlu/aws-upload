@@ -40,8 +40,8 @@ class EnvsCommand extends BasicCommand implements ValidCommand
      */
     public function run()
     {
-        $quiet      = $this->app->is_quiet;
-        $this->proj = $this->app->args->getFirst('envs');
+        $quiet      = $this->args->is_quiet;
+        $this->proj = $this->args->getFirst('envs');
 
         if (!$this->isValid() && !$quiet) {
             return $this->handleError();

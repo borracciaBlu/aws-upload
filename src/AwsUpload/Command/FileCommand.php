@@ -22,9 +22,9 @@ abstract class FileCommand extends BasicCommand implements Command, ValidCommand
      */
     public $key;
 
-    public function __construct($app)
+    public function __construct($app, $args, $output)
     {
-        parent::__construct($app);
+        parent::__construct($app, $args, $output);
         $this->init();
     }
 

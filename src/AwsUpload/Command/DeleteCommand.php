@@ -24,7 +24,7 @@ class DeleteCommand extends FileCommand
      */
     public function init()
     {
-        $this->key = $this->app->args->getFirst('delete');
+        $this->key = $this->args->getFirst('delete');
     }
 
     /**
@@ -37,7 +37,7 @@ class DeleteCommand extends FileCommand
     {
         $line = $this->getConfirmation();
         if (! $this->isYes($line)) {
-            $this->app->inline("Aborting delete operation");
+            $this->output->write("Aborting delete operation");
             return;
         }
 
@@ -47,7 +47,7 @@ class DeleteCommand extends FileCommand
 
     public function getConfirmation()
     {
-        $this->app->inline("<r>Are you sure you want delete " . $this->key . "?(y|n)</r>");
+        $this->output->write("<r>Are you sure you want delete " . $this->key . "?(y|n)</r>");
 
         $handle = fopen("php://stdin", "r");
         $line = fgets($handle);

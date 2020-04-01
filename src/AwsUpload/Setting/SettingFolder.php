@@ -16,6 +16,7 @@ class SettingFolder
 {
     /**
      * Returns the location of the user directory from the environment.
+     *
      * @throws RuntimeException If the environment value does not exists
      *
      * @return string
@@ -58,6 +59,7 @@ class SettingFolder
 
     /**
      * Returns the aws-upload home directory, creating it if required.
+     *
      * @throws RuntimeException If the directory cannot be created
      *
      * @return string

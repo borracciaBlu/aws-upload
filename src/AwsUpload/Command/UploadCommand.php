@@ -51,9 +51,9 @@ class UploadCommand extends FileCommand
 
     public function init()
     {
-        $items = $this->app->args->getParams('wild');
-        $this->is_verbose  = $this->app->args->verbose;
-        $this->is_simulate = $this->app->args->simulate;
+        $items = $this->args->getParams('wild');
+        $this->is_verbose  = $this->args->verbose;
+        $this->is_simulate = $this->args->simulate;
 
         list($proj, $env) = SettingFile::extractProjEnv($items);
         $this->key  = $proj . "." . $env;
@@ -80,10 +80,10 @@ class UploadCommand extends FileCommand
         $rsync->setAction(RsyncCommands::UPLOAD);
 
         $msg = RsyncMessage::banner($this->proj, $this->env, $rsync->cmd);
-        $this->app->inline($msg);
+        $this->output->write($msg);
 
         if ($this->is_simulate) {
-            $this->app->inline($rsync->getCmd());
+            $this->output->write($rsync->getCmd());
             return $this->simulate();
         }
 

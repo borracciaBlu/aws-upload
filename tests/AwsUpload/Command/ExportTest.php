@@ -2,7 +2,7 @@
 
 namespace AwsUpload\Tests\Command;
 
-use AwsUpload\Io\Output;
+use function AwsUpload\Io\color;
 use AwsUpload\AwsUpload;
 use AwsUpload\Model\Settings;
 use AwsUpload\Tests\BaseTestCase;
@@ -17,16 +17,18 @@ class ExportTest extends BaseTestCase
     public function test_noKey_expected_NoArgsMsg()
     {
         $msg = ExportMessage::noArgs();
-        $msg = Output::color($msg);
-        $this->expectOutputString($msg . "\n");
+        $msg = color($msg);
+        $this->expectOutputString($msg);
 
         self::clearArgv();
         self::pushToArgv(array('aws-upload', 'export'));
 
         $aws = new AwsUpload();
-        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
+        $args = $aws->getArgs();
 
-        $cmd = new \AwsUpload\Command\ExportCommand($aws);
+        $output = new \AwsUpload\Io\OutputEcho($args);
+
+        $cmd = new \AwsUpload\Command\ExportCommand($aws, $args, $output);
         $cmd->run();
     }
 
@@ -34,8 +36,8 @@ class ExportTest extends BaseTestCase
     public function test_noValidKey_expected_NoArgsMsg_oneParam()
     {
         $msg = ErrorMessage::noValidKey('aaa');
-        $msg = Output::color($msg);
-        $this->expectOutputString($msg . "\n");
+        $msg = color($msg);
+        $this->expectOutputString($msg);
 
         $filesystem = new Filesystem();
         $filesystem->dumpFile($this->aws_home . '/blog.dev.json', '{}');
@@ -44,9 +46,11 @@ class ExportTest extends BaseTestCase
         self::pushToArgv(array('asd.php', 'export', 'aaa'));
 
         $aws = new AwsUpload();
-        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
+        $args = $aws->getArgs();
 
-        $cmd = new \AwsUpload\Command\ExportCommand($aws);
+        $output = new \AwsUpload\Io\OutputEcho($args);
+
+        $cmd = new \AwsUpload\Command\ExportCommand($aws, $args, $output);
         $cmd->run();
     }
 
@@ -58,16 +62,18 @@ class ExportTest extends BaseTestCase
         $filesystem->dumpFile($this->external . '/project-1.dev.json', '{}');
 
         $msg = 'file alreay present';
-        $msg = Output::color($msg);
-        $this->expectOutputString($msg . "\n");
+        $msg = color($msg);
+        $this->expectOutputString($msg);
 
         self::clearArgv();
         self::pushToArgv(array('asd.php', 'export', 'project-1.dev', $this->external . '/'));
 
         $aws = new AwsUpload();
-        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
+        $args = $aws->getArgs();
 
-        $cmd = new \AwsUpload\Command\ExportCommand($aws);
+        $output = new \AwsUpload\Io\OutputEcho($args);
+
+        $cmd = new \AwsUpload\Command\ExportCommand($aws, $args, $output);
         $cmd->run();
     }
 
@@ -78,18 +84,20 @@ class ExportTest extends BaseTestCase
                               '{"pem": "", "local":"", "remote":"", "exclude":[""]}');
 
         $msg = ExportMessage::success('project-1.dev');
-        $msg = Output::color($msg);
-        $this->expectOutputString($msg . "\n");
+        $msg = color($msg);
+        $this->expectOutputString($msg);
 
         self::clearArgv();
         self::pushToArgv(array('asd.php', 'export', 'project-1.dev', $this->external));
 
         $aws = new AwsUpload();
-        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
+        $args = $aws->getArgs();
 
-        $cmd = new \AwsUpload\Command\ExportCommand($aws);
+        $output = new \AwsUpload\Io\OutputEcho($args);
+
+        $cmd = new \AwsUpload\Command\ExportCommand($aws, $args, $output);
         $cmd->run();
-       
+
         $settings = new Settings($this->external . '/project-1.dev.json');
 
         $this->assertEquals('', $settings->pem);

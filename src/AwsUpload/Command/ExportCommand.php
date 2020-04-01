@@ -34,8 +34,8 @@ class ExportCommand extends FileCommand
      */
     public function init()
     {
-        $this->key = $this->app->args->getFirst('export');
-        $this->keys = $this->app->args->getParams('export');
+        $this->key = $this->args->getFirst('export');
+        $this->keys = $this->args->getParams('export');
     }
 
     /**

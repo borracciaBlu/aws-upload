@@ -13,7 +13,7 @@
 namespace AwsUpload\Message;
 
 use cli\Table;
-use AwsUpload\Io\Output;
+use function AwsUpload\Io\color;
 use AwsUpload\Setting\SettingFile;
 
 class ErrorMessage
@@ -134,8 +134,8 @@ class ErrorMessage
         $data = array();
         foreach ($files as $file) {
             list($proj, $env, $ext) = explode(".", $file);
-            $proj = Output::color("<g>" . $proj . "</g>");
-            $env = Output::color("<g>" . $env . "</g>");
+            $proj = color("<g>" . $proj . "</g>");
+            $env = color("<g>" . $env . "</g>");
 
             $data[] = array($proj, $env);
         }

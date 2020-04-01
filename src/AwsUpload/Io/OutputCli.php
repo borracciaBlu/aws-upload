@@ -12,15 +12,17 @@
 
 namespace AwsUpload\Io;
 
-use AwsUpload\Io\Output;
+use function cli\out;
 use function AwsUpload\Io\color;
 
-class OutputEcho extends Output
+class OutputCli extends Output
 {
     /**
-     * Method to render the text with echo.
+     * Write text in the bash output.
      *
-     * @param string $text The text to echo.
+     * The method is going to write on the STDOUT.
+     *
+     * @param string $text The text to put on STDOUT.
      *
      * @return void
      */
@@ -28,6 +30,6 @@ class OutputEcho extends Output
     {
         $text = color($text);
 
-        echo $text;
+        out($text . "\n");
     }
 }

@@ -2,7 +2,7 @@
 
 namespace AwsUpload\Tests\Command;
 
-use AwsUpload\Io\Output;
+use function AwsUpload\Io\color;
 use AwsUpload\AwsUpload;
 use AwsUpload\Message\NewMessage;
 use AwsUpload\Tests\BaseTestCase;
@@ -15,16 +15,18 @@ class NewTest extends BaseTestCase
     public function test_noKey_expectedNoProjectMsg()
     {
         $msg = NewMessage::noArgs();
-        $msg = Output::color($msg);
-        $this->expectOutputString($msg . "\n");
+        $msg = color($msg);
+        $this->expectOutputString($msg);
 
         self::clearArgv();
         self::pushToArgv(array('asd.php', 'new'));
 
         $aws = new AwsUpload();
-        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
+        $args = $aws->getArgs();
 
-        $cmd = new \AwsUpload\Command\NewCommand($aws);
+        $output = new \AwsUpload\Io\OutputEcho($args);
+
+        $cmd = new \AwsUpload\Command\NewCommand($aws, $args, $output);
         $cmd->run();
     }
 
@@ -40,15 +42,17 @@ class NewTest extends BaseTestCase
              . "Tips on choosing the key name:\n"
              . "    - for [project] and [environmet] try to be: short, sweet, to the point\n"
              . "    - use only one 'dot' . in the name\n"
-             . "\n" . "\n");
+             . "\n");
 
         self::clearArgv();
         self::pushToArgv(array('asd.php', 'new', 'aaa'));
 
         $aws = new AwsUpload();
-        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
+        $args = $aws->getArgs();
 
-        $cmd = new \AwsUpload\Command\NewCommand($aws);
+        $output = new \AwsUpload\Io\OutputEcho($args);
+
+        $cmd = new \AwsUpload\Command\NewCommand($aws, $args, $output);
         $cmd->run();
     }
 
@@ -58,16 +62,18 @@ class NewTest extends BaseTestCase
         $filesystem->dumpFile($this->aws_home . '/project-1.dev.json', '{}');
 
         $msg = ErrorMessage::keyAlreadyExists('project-1.dev');
-        $msg = Output::color($msg);
-        $this->expectOutputString($msg . "\n");
-        
+        $msg = color($msg);
+        $this->expectOutputString($msg);
+
         self::clearArgv();
         self::pushToArgv(array('asd.php', 'new', 'project-1.dev'));
 
         $aws = new AwsUpload();
-        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
+        $args = $aws->getArgs();
 
-        $cmd = new \AwsUpload\Command\NewCommand($aws);
+        $output = new \AwsUpload\Io\OutputEcho($args);
+
+        $cmd = new \AwsUpload\Command\NewCommand($aws, $args, $output);
         $cmd->run();
     }
 }

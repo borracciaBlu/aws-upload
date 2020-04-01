@@ -9,7 +9,7 @@
             "email": "marco.asdman@gmail.com"
         }
     ],
-    "minimum-stability": "stable",    
+    "minimum-stability": "stable",
     "license": "MIT",
     "type": "library",
     "require": {
@@ -24,7 +24,10 @@
     "autoload": {
         "psr-4": {
             "AwsUpload\\": "src/AwsUpload"
-        }
+        },
+        "files": [
+            "src/AwsUpload/Io/color.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

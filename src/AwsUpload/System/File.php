@@ -18,8 +18,8 @@ class File
     /**
      * Copy a file.
      *
-     * @param  string $src The current file path.
-     * @param  string $dst The new file path.
+     * @param string $src The current file path.
+     * @param string $dst The new file path.
      *
      * @return bool
      */
@@ -31,8 +31,8 @@ class File
     /**
      * Move a file.
      *
-     * @param  string $src The current file path.
-     * @param  string $dst The new file path.
+     * @param string $src The current file path.
+     * @param string $dst The new file path.
      *
      * @return bool
      */
@@ -44,7 +44,7 @@ class File
     /**
      * Delete a file.
      *
-     * @param  string $src The file path.
+     * @param string $src The file path.
      *
      * @return bool
      */

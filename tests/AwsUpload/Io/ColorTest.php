@@ -2,21 +2,21 @@
 
 namespace AwsUpload\Tests\Io;
 
-use AwsUpload\Io\Output;
+use function AwsUpload\Io\color;
 use AwsUpload\Tests\BaseTestCase;
 
-class OutputTest extends BaseTestCase
+class ColorTest extends BaseTestCase
 {
 
     public function test_color_allColors_true()
     {
-        $redText = Output::color("<r>red</r>");
+        $redText = color("<r>red</r>");
         $this->assertEquals($redText, "\e[31mred\e[0m");
 
-        $greenText = Output::color("<g>green</g>");
+        $greenText = color("<g>green</g>");
         $this->assertEquals($greenText, "\e[32mgreen\e[0m");
 
-        $yellowText = Output::color("<y>yellow</y>");
+        $yellowText = color("<y>yellow</y>");
         $this->assertEquals($yellowText, "\e[33myellow\e[0m");
     }
 }

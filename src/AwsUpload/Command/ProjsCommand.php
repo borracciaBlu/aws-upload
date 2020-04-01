@@ -40,7 +40,7 @@ class ProjsCommand extends BasicCommand implements ValidCommand
      */
     public function run()
     {
-        $quiet = $this->app->is_quiet;
+        $quiet = $this->args->is_quiet;
         $this->projs = SettingFile::getProjs();
 
         if (!$this->isValid() && !$quiet) {

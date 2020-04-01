@@ -24,7 +24,7 @@ class EditCommand extends FileCommand
      */
     public function init()
     {
-        $this->key = $this->app->args->getFirst('edit');
+        $this->key = $this->args->getFirst('edit');
     }
 
     /**

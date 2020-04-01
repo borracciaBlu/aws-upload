@@ -51,9 +51,9 @@ class DiffCommand extends FileCommand
 
     public function init()
     {
-        $this->key = $this->app->args->getFirst('diff');
-        $this->is_verbose  = $this->app->args->verbose;
-        $this->is_simulate = $this->app->args->simulate;
+        $this->key = $this->args->getFirst('diff');
+        $this->is_verbose  = $this->args->verbose;
+        $this->is_simulate = $this->args->simulate;
 
         list($proj, $env) = explode('.', $this->key);
         $this->proj = $proj;
@@ -74,10 +74,10 @@ class DiffCommand extends FileCommand
         $rsync->setAction(RsyncCommands::DIFF);
 
         $msg = RsyncMessage::banner($this->proj, $this->env, $rsync->cmd);
-        $this->app->inline($msg);
+        $this->output->write($msg);
 
         if ($this->is_simulate) {
-            $this->app->inline($rsync->getCmd());
+            $this->output->write($rsync->getCmd());
             return $this->simulate();
         }
 

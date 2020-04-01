@@ -22,7 +22,7 @@ class NewCommand extends FileCommand
 {
     public function init()
     {
-        $this->key = $this->app->args->getFirst('new');
+        $this->key = $this->args->getFirst('new');
     }
 
     /**

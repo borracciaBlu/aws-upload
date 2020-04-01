@@ -13,7 +13,7 @@
 namespace AwsUpload;
 
 use AwsUpload\Io\Args;
-use AwsUpload\Io\Output;
+use AwsUpload\Io\OutputCli;
 
 class AwsUpload
 {
@@ -41,35 +41,7 @@ class AwsUpload
      * @see http://semver.org/
      * @var string VERSION
      */
-    public $plugin;
-
-    /**
-     * It define if aws-upload has to print additional info.
-     *
-     * @var bool
-     */
-    public $is_verbose = false;
-
-    /**
-     * It define if aws-upload has to stay quiet and do not print additional information.
-     *
-     * @var bool
-     */
-    public $is_quiet = false;
-
-    /**
-     * It containst to arguments passed to the shell script.
-     *
-     * @var \AwsUpload\Io\Args
-     */
-    public $args;
-
-    /**
-     * It containst output class to manage the script output.
-     *
-     * @var Output
-     */
-    protected $out;
+    public $zshPlugin;
 
     /**
      * Initializes the command.
@@ -77,18 +49,44 @@ class AwsUpload
      * The main purpose is to define the args for the script
      * and populate `$this->args`.
      */
-    public function __construct($version = 'test', $plugin = 'test')
+    public function __construct($version = 'test', $zshPlugin = 'test')
     {
 
         $this->version = $version;
-        $this->plugin = $plugin;
+        $this->zshPlugin = $zshPlugin;
+    }
 
+    /**
+     * Method to run the aws-upload cmd.
+     *
+     * @return int The status code.
+     */
+    public function run()
+    {
+        $args = $this->getArgs();
+        $output = new OutputCli($args);
+
+        $cmdName = $this->getCmdName($args);
+        $cmd = new $cmdName($this, $args, $output);
+
+        return $cmd->run();
+    }
+
+    /**
+     * Method to get the args passed in cli
+     *
+     * @return \AwsUpload\Io\Args
+     */
+    public function getArgs()
+    {
         $args = new Args();
+
         $args->addFlags(array(
             'quiet'    => array('quiet', 'q'),
             'verbose'  => array('verbose', 'v'),
             'simulate' => array('simulate', 'dry-run')
         ));
+
         $args->addCmds(array(
             'new'        => array('new', 'n'),
             'envs'       => array('envs', 'e'),
@@ -106,69 +104,19 @@ class AwsUpload
             'selfupdate' => array('self-update', 'selfupdate'),
             'autocomplete' => array('autocomplete'),
         ));
+
         $args->parse();
 
-        $this->args = $args;
-        $this->out = new Output();
-    }
-
-    /**
-     * Method to run the aws-upload cmd.
-     *
-     * @return int The status code.
-     */
-    public function run()
-    {
-        if ($this->args->verbose) {
-            $this->is_verbose = true;
-        }
-
-        if ($this->args->quiet) {
-            $this->is_quiet = true;
-        }
-
-        $cmdName = $this->getCmdName();
-        $cmd = new $cmdName($this);
-
-        return $cmd->run();
-    }
-
-    /**
-     * Method to set different output.
-     *
-     * @return void
-     */
-    public function setOutput(\AwsUpload\Io\Output $output)
-    {
-        $this->out = $output;
+        return $args;
     }
 
     /**
      * Method to decide which cmd to run.
      *
+     * @var \AwsUpload\Io\Args $argList
      * @return string
      */
-    public function getCmdName()
-    {
-        $cmd = $this->fetchArgsCmd();
-
-        if (empty($cmd)) {
-            $cmd = 'AwsUpload\Command\FullInfo';
-
-            if ($this->args->wild) {
-                $cmd = 'AwsUpload\Command\Upload';
-            }
-        }
-
-        return $cmd . 'Command';
-    }
-
-    /**
-     * Method to check cmd to run against list of cmds with arguments.
-     *
-     * @return string
-     */
-    public function fetchArgsCmd()
+    public function getCmdName($argList)
     {
         $cmd = '';
         $cmdList = array(
@@ -188,41 +136,21 @@ class AwsUpload
             'selfupdate'   => 'AwsUpload\Command\SelfUpdate',
             'autocomplete' => 'AwsUpload\Command\AutoComplete',
         );
+
         foreach ($cmdList as $arg => $cmdName) {
-            if ($this->args->{$arg} && empty($cmd)) {
+            if ($argList->{$arg} && empty($cmd)) {
                 $cmd = $cmdName;
             }
         }
 
-        return $cmd;
-    }
+        if (empty($cmd)) {
+            $cmd = 'AwsUpload\Command\FullInfo';
 
-    /**
-     * Method to wrap render and graceExit.
-     *
-     * The main idea is to setup the system to print and be ready
-     * for phpunit.
-     *
-     * @param string|null $msg
-     *
-     * @return  void
-     */
-    public function inline($msg)
-    {
-        $this->out->render($msg . "\n");
-    }
-
-    /**
-     * Method used to print additional text with the flag verbose.
-     *
-     * @param string $msg The text to print in verbose state
-     *
-     * @return void
-     */
-    public function verbose($msg)
-    {
-        if ($this->is_verbose) {
-            $this->inline($msg . "\n\n");
+            if ($argList->wild) {
+                $cmd = 'AwsUpload\Command\Upload';
+            }
         }
+
+        return $cmd . 'Command';
     }
 }

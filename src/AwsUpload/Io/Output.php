@@ -13,52 +13,56 @@
 namespace AwsUpload\Io;
 
 use function cli\out;
+use function AwsUpload\Io\color;
 
-class Output
+abstract class Output
 {
 
     /**
-     * Method to color the bash output.
+     * It define if aws-upload has to print additional info.
      *
-     * The method is going to replace some custom tags with the equivalent
-     * color in bash.
-     *
-     * Eg:
-     *     <r> -> \e[31m
-     *     <g> -> \e[32m
-     *     <y> -> \e[33m
-     *
-     * @param string $text The text to parse and inject with the colors.
-     *
-     * @return string
+     * @var bool
      */
-    public static function color($text)
-    {
-        $text = str_replace("<r>", "\e[31m", $text);
-        $text = str_replace("</r>", "\e[0m", $text);
-        $text = str_replace("<g>", "\e[32m", $text);
-        $text = str_replace("</g>", "\e[0m", $text);
-        $text = str_replace('<y>', "\e[33m", $text);
-        $text = str_replace('</y>', "\e[0m", $text);
-        $text = str_replace('<b>', "\e[34m", $text);
-        $text = str_replace('</b>', "\e[0m", $text);
+    public $is_verbose = false;
 
-        return  $text;
+    /**
+     * It define if aws-upload has to stay quiet and do not print additional information.
+     *
+     * @var bool
+     */
+    public $is_quiet = false;
+
+
+    public function __construct($args)
+    {
+        if ($args->verbose) {
+            $this->is_verbose = true;
+        }
+
+        if ($args->quiet) {
+            $this->is_quiet = true;
+        }
     }
 
     /**
-     * Method to render the text in the bash output.
-     *
-     * The method is going to write on the STDOUT.
      *
      * @param string $text The text to put on STDOUT.
      *
+     * @return mixed
+     */
+    abstract public function write($text);
+
+    /**
+     * Method used to print additional text with the flag verbose.
+     *
+     * @param string $msg The text to print in verbose state
+     *
      * @return void
      */
-    public function render($text)
+    public function verbose($msg)
     {
-        $text = $this->color($text);
-
-        out($text);
+        if ($this->is_verbose) {
+            $this->write($msg . "\n\n");
+        }
     }
 }

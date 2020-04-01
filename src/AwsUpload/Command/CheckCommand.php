@@ -22,7 +22,7 @@ class CheckCommand extends FileCommand
      */
     public function init()
     {
-        $this->key = $this->app->args->getFirst('check');
+        $this->key = $this->args->getFirst('check');
     }
 
     /**

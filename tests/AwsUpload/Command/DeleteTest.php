@@ -2,7 +2,7 @@
 
 namespace AwsUpload\Tests\Command;
 
-use AwsUpload\Io\Output;
+use function AwsUpload\Io\color;
 use AwsUpload\AwsUpload;
 use AwsUpload\Tests\BaseTestCase;
 use AwsUpload\Message\DeleteMessage;
@@ -15,16 +15,17 @@ class DeleteTest extends BaseTestCase
     public function test_noKey_expectedNoProjectMsg()
     {
         $msg = DeleteMessage::noArgs();
-        $msg = Output::color($msg);
-        $this->expectOutputString($msg . "\n");
+        $msg = color($msg);
+        $this->expectOutputString($msg);
 
         self::clearArgv();
         self::pushToArgv(array('asd.php', 'delete'));
 
         $aws = new AwsUpload();
-        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
+        $args = $aws->getArgs();
+        $output = new \AwsUpload\Io\OutputEcho($args);
 
-        $cmd = new \AwsUpload\Command\DeleteCommand($aws);
+        $cmd = new \AwsUpload\Command\DeleteCommand($aws, $args, $output);
         $cmd->run();
     }
 
@@ -40,34 +41,36 @@ class DeleteTest extends BaseTestCase
              . "Tips on choosing the key name:\n"
              . "    - for [project] and [environmet] try to be: short, sweet, to the point\n"
              . "    - use only one 'dot' . in the name\n"
-             . "\n\n");
+             . "\n");
 
         self::clearArgv();
         self::pushToArgv(array('asd.php', 'delete', 'aaa'));
 
         $aws = new AwsUpload();
-        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
+        $args = $aws->getArgs();
+        $output = new \AwsUpload\Io\OutputEcho($args);
 
-        $cmd = new \AwsUpload\Command\DeleteCommand($aws);
+        $cmd = new \AwsUpload\Command\DeleteCommand($aws, $args, $output);
         $cmd->run();
     }
 
     public function test_validKeyNoExists_expectedNoFileFound()
-    {   
+    {
         $filesystem = new Filesystem();
         $filesystem->dumpFile($this->aws_home . '/project-1.dev.json', '{}');
 
         $msg = ErrorMessage::noFileFound('project-2.dev');
-        $msg = Output::color($msg);
-        $this->expectOutputString($msg . "\n");
+        $msg = color($msg);
+        $this->expectOutputString($msg);
 
         self::clearArgv();
         self::pushToArgv(array('asd.php', 'delete', 'project-2.dev'));
 
         $aws = new AwsUpload();
-        $aws->setOutput(new \AwsUpload\Io\OutputEcho());
+        $args = $aws->getArgs();
+        $output = new \AwsUpload\Io\OutputEcho($args);
 
-        $cmd = new \AwsUpload\Command\DeleteCommand($aws);
+        $cmd = new \AwsUpload\Command\DeleteCommand($aws, $args, $output);
         $cmd->run();
     }
 }

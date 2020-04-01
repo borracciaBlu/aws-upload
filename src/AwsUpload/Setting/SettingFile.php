@@ -195,8 +195,8 @@ class SettingFile
     /**
      * Method to copy a setting file
      *
-     * @param  string $oldKey The key for the exisiting setting.
-     * @param  string $newKey The key for the new setting.
+     * @param string $oldKey The key for the exisiting setting.
+     * @param string $newKey The key for the new setting.
      *
      * @return void
      */
@@ -212,7 +212,7 @@ class SettingFile
     /**
      * Method to delete a setting file
      *
-     * @param  string $key The key for the exisiting setting.
+     * @param string $key The key for the exisiting setting.
      *
      * @return void
      */

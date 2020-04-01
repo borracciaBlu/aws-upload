@@ -27,33 +27,33 @@ class AutoCompleteCommand extends BasicCommand
      */
     public function run()
     {
-        $this->app->inline('Checking System:');
+        $this->output->write('Checking System:');
 
         $this->printSystemStatus();
 
         if (!$this->isValidSystem()) {
-            $this->app->inline($this->error_msg);
+            $this->output->write($this->error_msg);
             return Status::SYSTEM_NOT_READY;
         }
 
-        $this->app->inline("Procede to the installation:\n");
+        $this->output->write("Procede to the installation:\n");
 
         if (!OhMyZsh::hasPluginFiles()) {
-            $this->app->inline('   <b>•</b> Download plugin');
+            $this->output->write('   <b>•</b> Download plugin');
             $this->clone();
         } else {
-            $this->app->inline('   <b>•</b> Plugin files already present.');
+            $this->output->write('   <b>•</b> Plugin files already present.');
             $this->pull();
         }
 
         if (!OhMyZsh::isPluginActive()) {
-            $this->app->inline('   <b>•</b> Activating plugin');
+            $this->output->write('   <b>•</b> Activating plugin');
             OhMyZsh::activate();
         } else {
-            $this->app->inline('   <b>•</b> Plugin already activated');
+            $this->output->write('   <b>•</b> Plugin already activated');
         }
 
-        $this->app->inline("\nProcedure complete. Please reload the shell.");
+        $this->output->write("\nProcedure complete. Please reload the shell.");
 
         system('zsh');
 
@@ -112,11 +112,11 @@ class AutoCompleteCommand extends BasicCommand
                     " Oh-my-zsh \t" .
                     CommonMessage::plot($omz, $labels);
 
-        $this->app->inline("");
-        $this->app->inline($git_line);
-        $this->app->inline($zsh_line);
-        $this->app->inline($omz_line);
-        $this->app->inline("");
+        $this->output->write("");
+        $this->output->write($git_line);
+        $this->output->write($zsh_line);
+        $this->output->write($omz_line);
+        $this->output->write("");
     }
 
     /**
@@ -136,10 +136,10 @@ class AutoCompleteCommand extends BasicCommand
     {
         $repo = OhMyZsh::getPath() . '/plugins/aws-upload/';
 
-        $this->app->inline('     <y>-</y> Update repo');
+        $this->output->write('     <y>-</y> Update repo');
         Git::pull($repo);
 
-        $this->app->inline('     <y>-</y> Checkout version v' . $this->app->plugin);
+        $this->output->write('     <y>-</y> Checkout version v' . $this->app->plugin);
         Git::checkoutTag($repo, 'v' . $this->app->plugin);
     }
 }

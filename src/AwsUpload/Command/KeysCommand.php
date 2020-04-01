@@ -44,7 +44,7 @@ class KeysCommand extends BasicCommand implements ValidCommand
     public function run()
     {
         $this->keys     = SettingFile::getKeys();
-        $this->is_quiet = $this->app->is_quiet;
+        $this->is_quiet = $this->args->is_quiet;
 
         if (!$this->isValid() && !$this->is_quiet) {
             return $this->handleError();

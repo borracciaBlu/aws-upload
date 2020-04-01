@@ -30,7 +30,7 @@ class CopyCommand extends FileCommand
      */
     public function init()
     {
-        $this->keys = $this->app->args->getParams('copy');
+        $this->keys = $this->args->getParams('copy');
     }
 
     /**
@@ -85,7 +85,7 @@ class CopyCommand extends FileCommand
     /**
      * Method to check the validity of the copy arguments
      *
-     * @param  array  $keys The copy arguments.
+     * @param array $keys The copy arguments.
      *
      * @return boolean
      */

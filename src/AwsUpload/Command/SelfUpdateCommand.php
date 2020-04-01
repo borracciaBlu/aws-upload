@@ -24,9 +24,9 @@ class SelfUpdateCommand extends BasicCommand
      */
     public function run()
     {
-        $this->app->inline('Self-update running..');
+        $this->output->write('Self-update running..');
         system('composer -vvv global require aws-upload/aws-upload');
-        $this->app->inline("Self-update completed");
+        $this->output->write("Self-update completed");
 
         if (OhMyZsh::isPluginActive()) {
             system('aws-upload autocomplete');
